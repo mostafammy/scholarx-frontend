@@ -394,7 +394,8 @@ export const fetchSubscriptions = createAsyncThunk(
 
       const rawData = response.data?.data;
       const basePagination = createEmptyPagination();
-      const limitValue = typeof limit === "number" ? limit : basePagination.limit;
+      const limitValue =
+        typeof limit === "number" ? limit : basePagination.limit;
 
       if (Array.isArray(rawData)) {
         return {
