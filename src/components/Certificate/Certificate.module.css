@@ -1,0 +1,320 @@
+.certificateContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 2rem;
+}
+
+/* Canvas-based Certificate (Text embedded in image) */
+.canvasCertificate {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+.certificateCanvas {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    background: white;
+}
+
+.loadingMessage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 400px;
+    font-size: 1.2rem;
+    color: #4a5568;
+    background: #f7fafc;
+    border-radius: 12px;
+    padding: 2rem;
+    border: 2px dashed #cbd5e0;
+}
+
+.downloadSection {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.downloadBtn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.downloadBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.downloadBtn:active {
+    transform: translateY(0);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .certificateCanvas {
+        width: 100%;
+        max-width: 600px;
+    }
+    
+    .downloadBtn {
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .certificateCanvas {
+        max-width: 400px;
+    }
+    
+    .downloadBtn {
+        padding: 0.7rem 1.2rem;
+        font-size: 0.9rem;
+    }
+}
+
+.certificate {
+    background: white;
+    width: 800px;
+    max-width: 100%;
+    padding: 3rem;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.certificate::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 20%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(118, 75, 162, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 2rem;
+    position: relative;
+    z-index: 1;
+}
+
+.logo img {
+    height: 60px;
+    margin-bottom: 1rem;
+}
+
+.title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #2d3748;
+    margin: 0 0 0.5rem 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    color: #4a5568;
+    margin: 0;
+    font-style: italic;
+}
+
+.content {
+    text-align: center;
+    margin: 3rem 0;
+    position: relative;
+    z-index: 1;
+}
+
+.studentName {
+    font-size: 2.8rem;
+    font-weight: 600;
+    color: #667eea;
+    margin: 0 0 1rem 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.completionText {
+    font-size: 1.3rem;
+    color: #4a5568;
+    margin: 0 0 1.5rem 0;
+}
+
+.courseName {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #764ba2;
+    margin: 0 0 2rem 0;
+    padding: 1rem;
+    background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+    border-radius: 12px;
+    border-left: 4px solid #667eea;
+}
+
+.details {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin: 2rem 0;
+    text-align: left;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.detailItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border-left: 3px solid #667eea;
+}
+
+.label {
+    font-weight: 600;
+    color: #2d3748;
+}
+
+.value {
+    color: #4a5568;
+    font-family: 'Courier New', monospace;
+}
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: 3rem;
+    position: relative;
+    z-index: 1;
+}
+
+.signature {
+    text-align: center;
+}
+
+.signatureLine {
+    width: 200px;
+    height: 2px;
+    background: #2d3748;
+    margin-bottom: 0.5rem;
+}
+
+.signatureText {
+    font-weight: 600;
+    color: #2d3748;
+    margin: 0;
+}
+
+.date {
+    text-align: right;
+}
+
+.date p {
+    color: #4a5568;
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+.verification {
+    text-align: center;
+    margin-top: 2rem;
+    padding: 1rem;
+    background: #e2e8f0;
+    border-radius: 8px;
+    position: relative;
+    z-index: 1;
+}
+
+.verification p {
+    color: #4a5568;
+    margin: 0;
+    font-size: 0.9rem;
+    font-family: 'Courier New', monospace;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .certificateContainer {
+        padding: 1rem;
+    }
+    
+    .certificate {
+        padding: 2rem;
+    }
+    
+    .title {
+        font-size: 2rem;
+    }
+    
+    .studentName {
+        font-size: 2.2rem;
+    }
+    
+    .courseName {
+        font-size: 1.6rem;
+    }
+    
+    .footer {
+        flex-direction: column;
+        gap: 2rem;
+        text-align: center;
+    }
+    
+    .signatureLine {
+        width: 150px;
+    }
+}
+
+@media (max-width: 480px) {
+    .certificate {
+        padding: 1.5rem;
+    }
+    
+    .title {
+        font-size: 1.8rem;
+    }
+    
+    .studentName {
+        font-size: 1.8rem;
+    }
+    
+    .courseName {
+        font-size: 1.4rem;
+    }
+    
+    .details {
+        gap: 0.5rem;
+    }
+    
+    .detailItem {
+        padding: 0.5rem;
+        font-size: 0.9rem;
+    }
+}
+

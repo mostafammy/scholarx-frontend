@@ -1,0 +1,40 @@
+.my-courses-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.my-courses-page h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.courses-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+}
+
+@media (max-width: 768px) {
+  .my-courses-page {
+    padding: 1rem 0.5rem;
+  }
+  .courses-list {
+    gap: 1rem;
+    grid-template-columns: 1fr;
+  }
+  .my-courses-page h2 {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .my-courses-page {
+    padding: 0.5rem 0.2rem;
+  }
+  .my-courses-page h2 {
+    font-size: 1.2rem;
+  }
+} 

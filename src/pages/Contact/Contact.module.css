@@ -1,0 +1,168 @@
+.header{
+  color: #3399CC;
+  font-size: 50px;
+  font-weight: 700;
+}
+
+
+.contactContainer {
+    border: 1px solid #3399CC;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1), 0px 10px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  .formGroup {
+    margin-bottom: 1rem;
+  }
+  
+  .formLabel {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+  }
+  
+  .formInput {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+  }
+  
+  .formInput:focus {
+    outline: none;
+    border-color: #3399CC;
+  }
+  
+  .submitBtn {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #3399CC;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .submitBtn:hover {
+    background-color: #0b5ed7;
+  }
+  
+  .infoItem {
+    font-weight: 600;
+    margin-bottom: 1rem;
+    font-size: larger;
+  }
+  
+  .icon {
+    color: #3399CC;
+    margin-right: 0.75rem;
+    font-size: 1.50rem;
+  }
+  
+  .socialLinks {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .socialLink {
+    color: #333;
+    transition: color 0.3s ease;
+  }
+  
+  .socialLink:hover {
+    color: #3399CC;
+  }
+  
+  .newsletterSection {
+    border-top: 2px solid #E5E7EB;
+  }
+  
+  .newsletterForm {
+    display: flex;
+    gap: 0.5rem;
+  }
+  
+  .newsletterBtn {
+    padding: 0.10rem 1rem;
+    background-color: #3399CC;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .newsletterBtn:hover {
+    background-color: #3399CC;
+  }
+  
+  .emailLink {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  .emailLink:hover {
+    color: #3399CC;
+  }
+  
+  .phoneLink {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  .phoneLink:hover {
+    color: #3399CC;
+  }
+
+.successMessage {
+  color: #28a745;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.errorMessage {
+  color: #dc3545;
+  /* margin-top: 1rem; */
+  text-align: center;
+}
+
+.notification {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.notificationContent {
+  padding: 0.75rem;
+  border-radius: 4px;
+  font-weight: 500;
+  animation: slideIn 0.3s ease-out;
+}
+
+.success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

@@ -1,0 +1,473 @@
+.signup-header {
+  position: absolute; /* Or fixed if you want it to stay on top when scrolling */
+  top: 20px;
+  left: 80px;
+  right: 0;
+  padding: 10px 0; /* Optional, to add space around the logo */
+  z-index: 1000; /* Ensures it stays above other content */
+}
+
+.imageContainer {
+    position: relative;
+    width: 380px;
+    margin-top: 20px;
+    height: 380px;
+    margin-left: auto;
+    background-color: #3399CC;
+    border-radius: 63% 37% 54% 46% / 55% 48% 52% 45%;
+    background-image: url('/home-page/hero1.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  @keyframes spin {
+    0% {
+      transform: translate(-50%, -50%) rotate(0deg);
+    }
+    100% {
+      transform: translate(-50%, -50%) rotate(360deg);
+    }
+  }
+  
+  .imageContainer::after {
+    content: '';
+    position: absolute;
+    width: 410px;
+    height: 410px;
+    border: 2px solid #3399CC;
+    border-radius: 65% 35% 50% 50% / 40% 62% 38% 60%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: spin 6s linear infinite; /* ← Continuous spin */
+  }
+  
+
+  .image {
+    display: flex;
+    align-items: center;       /* Vertically center */
+    justify-content: flex-start; /* Align to left */
+    padding: 30px;
+    background-color: #E7F3F9;
+  
+  }
+
+.signup-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  background-color: #E7F3F9;
+  justify-content: center;
+  padding: 20px;
+}
+
+.signup-header {
+  padding: 10px 20px;
+}
+
+.logo-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #333;
+  gap: 8px;
+}
+
+.logo {
+  width: 32px;
+  height: 32px;
+}
+
+.logo-text {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.signup-content {
+  display: flex;
+  width: 100%;
+  max-width: 1000px;
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.image-section {
+  flex: 1;
+  background-color: #3498db;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  position: relative;
+}
+
+
+.graduate-image-container::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+}
+
+.graduate-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.form-section {
+  flex: 1;
+  padding: 30px 40px;
+  display: flex;
+  padding-top: 90px;
+  flex-direction: column;
+  background-color: #E7F3F9;
+}
+
+.form-title {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 25px;
+}
+
+.form-group {
+  /* margin-bottom: 16px; */
+}
+
+.form-group label {
+  display: block;
+  font-size: 13px;
+  color: #3399CC;
+  /* margin-bottom: 6px; */
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.3s;
+}
+
+.form-group input:focus {
+  border-color: #3399CC;
+  outline: none;
+}
+
+.signup-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #3399CC;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 8px;
+}
+
+.signup-button:hover {
+  background-color: #2980b9;
+}
+.linkk{
+  text-align: center;
+  /* margin: 16px 0; */
+  color: #666;
+  font-size: 14px;
+}
+.login-link {
+  text-align: center;
+  margin: 16px 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.login-link a {
+  color: #FF6633;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.login-link a:hover {
+  text-decoration: underline;
+}
+
+.divider {
+  text-align: center;
+  position: relative;
+  /* margin: 16px 0; */
+}
+
+/* .divider::before,
+.divider::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 45%;
+  height: 1px;
+  background-color: #ddd;
+}
+
+.divider::before {
+  left: 0;
+}
+
+.divider::after {
+  right: 0;
+} */
+
+.divider span {
+  background-color: #E7F3F9;
+  padding: 0 10px;
+  color: #666;
+  font-size: 13px;
+}
+
+.google-signup {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 235px;
+  padding: 10px;
+  background-color: white;
+  border: 1px solid #ffffff;
+  border-radius: 15px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  
+  margin: 0 auto; 
+}
+
+.google-signup:hover {
+  background-color: #f8f9fa;
+}
+
+.google-icon {
+  width: 18px;
+  height: 18px;
+  margin-left: 2px;
+}
+
+.error {
+    color: red;
+    font-size: 13px;
+    margin-top: 1px;
+    display: block;
+  }
+  
+
+@media (max-width: 992px) {
+  .signup-content {
+    flex-direction: column;
+    margin: 20px;
+    max-width: 500px;
+  }
+
+  .image {
+    width: 100%;
+    padding: 20px;
+  }
+
+  .imageContainer {
+    width: 300px;
+    height: 300px;
+    margin: 0 auto;
+  }
+
+  .imageContainer::after {
+    width: 320px;
+    height: 320px;
+  }
+
+  .form-section {
+    width: 100%;
+    padding: 30px;
+  }
+}
+
+@media (max-width: 576px) {
+  .signup-header {
+    left: 20px;
+  }
+
+  .signup-content {
+    margin-top: 60px;
+  }
+
+  .imageContainer {
+    width: 250px;
+    height: 250px;
+  }
+
+  .imageContainer::after {
+    width: 270px;
+    height: 270px;
+  }
+
+  .form-title {
+    font-size: 24px;
+  }
+
+  .form-group1 input {
+    padding: 10px;
+  }
+
+  .signup-button {
+    padding: 10px;
+  }
+}
+
+.form-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.error {
+    color: #dc3545;
+    font-size: 14px;
+    /* margin-top: 5px; */
+    display: block;
+}
+
+.error-message {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.login-button:disabled,
+.signup-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.error-input {
+    border-color: #ff4d4f !important;
+    box-shadow: 0 0 0 2px rgba(255, 77, 79, 0.2) !important;
+}
+
+.error {
+    color: #ff4d4f;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    display: block;
+}
+
+/* Phone Input Styles */
+.phone-input-container {
+    width: 100% !important;
+    margin-bottom: 0 !important;
+}
+
+.phone-input-container .form-input {
+    width: 100% !important;
+    height: 42px !important;
+    padding-left: 48px !important;
+    border: 1px solid #ddd !important;
+    border-radius: 4px !important;
+    font-size: 16px !important;
+    transition: border-color 0.3s ease !important;
+}
+
+.phone-input-container .form-input:focus {
+    border-color: #007bff !important;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25) !important;
+}
+
+.phone-input-button {
+    background: transparent !important;
+    border: none !important;
+    border-right: 1px solid #ddd !important;
+    border-radius: 4px 0 0 4px !important;
+}
+
+.phone-input-dropdown {
+    width: 300px !important;
+    max-height: 200px !important;
+    overflow-y: auto !important;
+    background: white !important;
+    border: 1px solid #ddd !important;
+    border-radius: 4px !important;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;
+}
+
+.phone-input-search {
+    width: 100% !important;
+    padding: 8px !important;
+    border: 1px solid #ddd !important;
+    border-radius: 4px !important;
+    margin-bottom: 8px !important;
+}
+
+.phone-input-dropdown .country {
+    padding: 8px !important;
+    cursor: pointer !important;
+    transition: background-color 0.2s !important;
+}
+
+.phone-input-dropdown .country:hover {
+    background-color: #f5f5f5 !important;
+}
+
+.phone-input-dropdown .country.highlight {
+    background-color: #e6f3ff !important;
+}
+
+/* Password Requirements Styles */
+.password-requirements {
+    margin-top: 8px;
+    padding: 8px;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+.password-requirement {
+    display: flex;
+    align-items: center;
+    margin: 4px 0;
+    color: #666;
+}
+
+.password-requirement.met {
+    color: #28a745;
+}
+
+.requirement-icon {
+    margin-right: 8px;
+    font-size: 14px;
+}
+
+.requirement-text {
+    font-size: 12px;
+}
+
+.password-requirement.met .requirement-icon {
+    color: #28a745;
+}
+  

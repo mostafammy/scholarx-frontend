@@ -1,0 +1,80 @@
+.reset-page-container {
+    min-height: 100vh;
+    background-color: #f8f9fa;
+    padding: 20px;
+}
+
+.logo-container {
+    padding: 20px;
+    text-align: center;
+}
+
+.logo-container a {
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.scholar-logo {
+    height: 40px;
+    width: auto;
+}
+
+.logo-text {
+    font-size: 24px;
+    font-weight: bold;
+    color: #0d6efd;
+}
+
+.page-title {
+    color: #333;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.page-subtitle {
+    color: #666;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.reset-card {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+.reset-btn {
+    background-color: #0d6efd;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-weight: 500;
+    transition: background-color 0.3s;
+}
+
+.reset-btn:hover {
+    background-color: #0b5ed7;
+}
+
+.reset-btn:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+}
+
+.form-control {
+    padding: 12px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+.form-control:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+} 

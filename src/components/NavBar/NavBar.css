@@ -1,0 +1,291 @@
+.sx-navbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem 2rem;
+  background-color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: 70px;
+}
+
+.sx-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.sx-navbar-logo {
+  display: flex;
+  align-items: center;
+}
+
+.sx-navbar-logo a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.sx-navbar-logo img {
+  height: 32px;
+  width: auto;
+  margin-right: 10px;
+}
+
+.sx-navbar-logo span {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.sx-navbar-links {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.sx-navbar-links a, .sx-navbar-links a:visited {
+  color: #333;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: color 0.3s;
+  position: relative;
+}
+
+.sx-navbar-links a:hover {
+  color: #3399CC;
+}
+
+.sx-navbar-links a.sx-active {
+  color: #3399CC;
+}
+
+.sx-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.sx-navbar-auth {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.sx-login-btn, .sx-signup-btn {
+  padding: 0.4rem 1.5rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.sx-login-btn {
+  background: transparent;
+  border: 1px solid #3399CC;
+  color: #3399CC;
+}
+
+.sx-signup-btn {
+  background: #3399CC;
+  border: none;
+  color: white;
+}
+
+.sx-login-btn:hover {
+  background-color: rgba(51, 153, 204, 0.1);
+}
+
+.sx-signup-btn:hover {
+  background-color: #2980b9;
+}
+
+.sx-mobile-menu-btn {
+  display: none;
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #333;
+}
+
+.sx-logout-btn {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 0.4rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.sx-logout-btn:hover {
+  background-color: #c82333;
+}
+
+.sx-mobile-auth {
+  display: none;
+}
+
+.sx-user-avatar-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.sx-user-avatar {
+  cursor: pointer;
+  border-radius: 50%;
+  overflow: hidden;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #e0e0e0;
+  background: #fff;
+  transition: box-shadow 0.2s;
+}
+
+.sx-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.sx-user-dropdown {
+  position: absolute;
+  top: 48px;
+  right: 0;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  border-radius: 8px;
+  min-width: 160px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  padding: 8px 0;
+}
+
+.sx-dropdown-item {
+  background: none;
+  border: none;
+  text-align: left;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #222;
+  cursor: pointer;
+  transition: background 0.2s;
+  width: 100%;
+}
+.sx-dropdown-item:hover {
+  background: #f5f5f5;
+}
+
+@media (max-width: 992px) {
+  .sx-navbar {
+    padding: 0.8rem 1.5rem;
+  }
+
+  .sx-navbar-links {
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .sx-navbar {
+    padding: 0.8rem 1rem;
+  }
+
+  .sx-mobile-menu-btn {
+    display: block;
+  }
+
+  .sx-navbar-links {
+    position: absolute;
+    top: 70px;
+    left: 0;
+    flex-direction: column;
+    background-color: white;
+    width: 100%;
+    padding: 1rem 0;
+    gap: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: none;
+  }
+
+  .sx-navbar-links.sx-active {
+    display: flex;
+  }
+
+  .sx-navbar-links a {
+    padding: 0.5rem 2rem;
+    width: 100%;
+    text-align: center;
+  }
+
+  .sx-dropdown {
+    width: 100%;
+    text-align: center;
+  }
+
+  .sx-mobile-auth {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-top: 0.5rem;
+    padding-top: 1rem;
+    gap: 1rem;
+  }
+
+  .sx-mobile-auth-link {
+    width: 80%;
+    margin-bottom: 0.5rem;
+  }
+
+  .sx-mobile-auth button {
+    width: 100%;
+  }
+
+  .sx-desktop-auth {
+    display: none;
+  }
+
+  .sx-user-avatar-wrapper {
+    display: none;
+  }
+  .sx-navbar-auth.sx-desktop-auth {
+    display: none !important;
+  }
+
+  .sx-mobile-nav-item {
+    padding: 0.5rem 2rem;
+    width: 100%;
+    text-align: center;
+    color: #333;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    background: none;
+    border: none;
+  }
+
+  .sx-mobile-nav-item:hover {
+    color: #3399CC;
+  }
+
+  .sx-logout-mobile-btn {
+    color: #dc3545;
+  }
+}
+

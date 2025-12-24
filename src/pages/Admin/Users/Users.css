@@ -1,0 +1,261 @@
+.admin-users {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.admin-users h1 {
+    color: #333;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.search-bar {
+    margin-bottom: 2rem;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.users-table {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background: #f8f9fa;
+    font-weight: 600;
+    color: #333;
+}
+
+tr:hover {
+    background: #f8f9fa;
+}
+
+select {
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: white;
+}
+
+.edit-btn, .delete-btn, .block-btn, .unblock-btn, .block-confirm-btn {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.edit-btn {
+    background: #007bff;
+    color: white;
+}
+
+.delete-btn {
+    background: #dc3545;
+    color: white;
+}
+
+.block-btn {
+    background: #ffc107;
+    color: #212529;
+}
+
+.unblock-btn {
+    background: #28a745;
+    color: white;
+}
+
+.block-confirm-btn {
+    background: #dc3545;
+    color: white;
+}
+
+.edit-btn:hover {
+    background: #0056b3;
+}
+
+.delete-btn:hover {
+    background: #c82333;
+}
+
+.block-btn:hover {
+    background: #e0a800;
+}
+
+.unblock-btn:hover {
+    background: #218838;
+}
+
+.block-confirm-btn:hover {
+    background: #c82333;
+}
+
+.status-badge {
+    padding: 0.25rem 0.5rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.status-badge.active {
+    background: #d4edda;
+    color: #155724;
+}
+
+.status-badge.blocked {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.block-reason {
+    font-size: 0.75rem;
+    color: #6c757d;
+    margin-top: 0.25rem;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+    gap: 1rem;
+}
+
+.pagination button {
+    padding: 0.5rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: white;
+    cursor: pointer;
+}
+
+.pagination button:disabled {
+    background: #f8f9fa;
+    cursor: not-allowed;
+}
+
+.pagination span {
+    color: #666;
+}
+
+.loading {
+    text-align: center;
+    padding: 2rem;
+    font-size: 1.2rem;
+    color: #666;
+}
+
+.error {
+    text-align: center;
+    padding: 2rem;
+    color: #dc3545;
+    background: #f8d7da;
+    border-radius: 5px;
+    margin: 1rem 0;
+}
+
+.update-message {
+    text-align: center;
+    padding: 1rem;
+    border-radius: 5px;
+    margin: 1rem 0;
+    font-weight: 500;
+}
+
+.update-message.success {
+    color: #155724;
+    background: #d4edda;
+    border: 1px solid #c3e6cb;
+}
+
+.update-message.error {
+    color: #721c24;
+    background: #f8d7da;
+    border: 1px solid #f5c6cb;
+}
+
+@media (max-width: 768px) {
+  .admin-users {
+    padding: 1rem;
+    max-width: 100%;
+  }
+  .users-table table,
+  .users-table thead,
+  .users-table tbody,
+  .users-table th,
+  .users-table td,
+  .users-table tr {
+    display: block;
+    width: 100%;
+  }
+  .users-table tr {
+    margin-bottom: 1rem;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    padding: 1rem 0.5rem;
+  }
+  .users-table td {
+    border: none;
+    position: relative;
+    padding-left: 50%;
+    min-height: 40px;
+  }
+  .users-table td:before {
+    position: absolute;
+    left: 1rem;
+    top: 0;
+    width: 45%;
+    white-space: nowrap;
+    font-weight: bold;
+    color: #666;
+    content: attr(data-label);
+  }
+  .users-table th {
+    display: none;
+  }
+  .pagination {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .modal-content {
+    padding: 1rem;
+    max-width: 95vw;
+  }
+  .search-bar input {
+    font-size: 1rem;
+    min-height: 44px;
+  }
+  .edit-btn, .delete-btn {
+    width: 100%;
+    margin: 0.25rem 0;
+    font-size: 1rem;
+    min-height: 44px;
+  }
+} 

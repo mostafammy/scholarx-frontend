@@ -1,0 +1,39 @@
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translate3d(0, -20px, 0);
+    }
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+.animated {
+    animation-duration: 0.5s;
+    animation-fill-mode: both;
+}
+
+.fadeInDown {
+    animation-name: fadeInDown;
+}
+
+/* Custom SweetAlert2 styles */
+.swal2-popup {
+    font-size: 1.1rem !important;
+    border-radius: 15px !important;
+}
+
+.swal2-title {
+    color: #2c3e50 !important;
+    font-size: 1.5rem !important;
+}
+
+.swal2-timer-progress-bar {
+    background: #4CAF50 !important;
+}
+
+.swal2-icon.swal2-success {
+    border-color: #4CAF50 !important;
+    color: #4CAF50 !important;
+} 

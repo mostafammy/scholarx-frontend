@@ -1,0 +1,32 @@
+.search-results {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .results-title {
+    font-size: 32px;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .loading {
+    text-align: center;
+    color: #666;
+    font-size: 16px;
+  }
+  
+  .error {
+    text-align: center;
+    color: #dc3545;
+    font-size: 16px;
+    /* margin-bottom: 20px; */
+  }
+  
+  .results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
