@@ -84,6 +84,15 @@ const CourseCard = ({ course, section = "latest" }) => {
 
   const handleEnroll = async (e) => {
     e.preventDefault();
+    console.log(import.meta.env.MODE);
+
+    // in Development mode, directly navigate to course lessons
+    if (import.meta.env.MODE === "development") {
+      console.log("Development");
+      navigate(`/course/${course._id}/lessons`);
+      return;
+    }
+
     // Temporarily disable Paymob and show admin contact option
     if (!authService.isAuthenticated()) {
       Swal.fire({
