@@ -122,11 +122,35 @@ export const useCourseEnrollment = (course, options = {}) => {
   }, [courseId, courseTitle, user]);
 
   const handleFreeEnrollment = useCallback(async () => {
-    const enrollmentData = await courseService.enrollFreeCourse(courseId);
+    const attemptEnrollment = async () => {
+      try {
+        return await courseService.enrollFreeCourse(courseId);
+      } catch (error) {
+        const status = error?.response?.status;
+        const message = formatErrorMessage(error).toLowerCase();
+        if (status === 404 || message.includes("not found")) {
+          return await courseService.enrollPaidCourse(courseId);
+        }
+        throw error;
+      }
+    };
+
+    const enrollmentData = await attemptEnrollment();
+
+    if (enrollmentData?.paymentUrl) {
+      window.location.href = enrollmentData.paymentUrl;
+      return;
+    }
+
+    const successMessage =
+      enrollmentData?.message ||
+      enrollmentData?.data?.message ||
+      "You now have access to this course.";
+
     await Swal.fire({
       icon: "success",
       title: "Enrollment Successful",
-      text: enrollmentData?.message || "You now have access to this course.",
+      text: successMessage,
       confirmButtonText: "Start Learning",
     });
     setHasJustEnrolled(true);
