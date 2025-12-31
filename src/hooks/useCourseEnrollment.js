@@ -53,7 +53,9 @@ export const useCourseEnrollment = (course, options = {}) => {
 
     const normalizedCourseId = String(courseId);
     const userCourses = Array.isArray(user.courses) ? user.courses : [];
-    return userCourses.some((entry) => normalizeId(entry) === normalizedCourseId);
+    return userCourses.some(
+      (entry) => normalizeId(entry) === normalizedCourseId
+    );
   }, [user, courseId]);
 
   const externalAccessFlag = Boolean(
