@@ -9,9 +9,10 @@ const AUTH_TOKEN_KEY = "sx_auth";
 const USER_ROLE_KEY = "sx_role";
 
 // Cookie options
+const isProduction = import.meta.env.MODE === "production";
 const cookieOptions = {
-  secure: process.env.NODE_ENV === "production", // Only send over HTTPS in production
-  sameSite: "strict", // Protect against CSRF
+  secure: isProduction, // Only send over HTTPS in production
+  sameSite: isProduction ? "none" : "lax", // Allow cross-site API calls in prod
   path: "/", // Cookie is available for all paths
   expires: 7, // 7 days
 };
