@@ -136,6 +136,17 @@ const SecureVideoPlayer = ({
     event.preventDefault();
   };
 
+  if (!videoUrl) {
+    return (
+      <div className="secure-player-wrapper" onContextMenu={handleContextMenu}>
+        <div className="secure-player-loading">
+          <span className="secure-player-loading-spinner" aria-hidden="true" />
+          <p>Loading lesson video…</p>
+        </div>
+      </div>
+    );
+  }
+
   if (!videoId) {
     return (
       <div className="secure-player-wrapper" onContextMenu={handleContextMenu}>

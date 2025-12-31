@@ -571,6 +571,45 @@
     align-items: center;
 }
 
+.login-required {
+    max-width: 600px;
+    margin: 4rem auto;
+    text-align: center;
+    padding: 2rem;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+}
+
+.login-required h2 {
+    color: #1f2937;
+    margin-bottom: 1rem;
+}
+
+.login-required p {
+    color: #4b5563;
+    margin-bottom: 1.5rem;
+}
+
+.login-required-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.85rem 1.75rem;
+    border-radius: 10px;
+    font-weight: 600;
+    text-decoration: none;
+    color: #fff;
+    background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+    box-shadow: 0 10px 20px rgba(124, 58, 237, 0.25);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.login-required-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 25px rgba(37, 99, 235, 0.35);
+}
+
 /* .login-form {
     width: 100%;
     max-width: 400px;
