@@ -12,16 +12,23 @@ import {
   FaMoneyBill,
 } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
-import api, { authService } from "../../services/api";
-import Swal from "sweetalert2";
+import { courseService } from "../../services/api";
 import { useUser } from "../../context/UserContext";
 import CourseCardSkeleton from "./CourseCardSkeleton";
+import useCourseEnrollment from "../../hooks/useCourseEnrollment";
 
 const CourseCard = ({ course, section = "latest" }) => {
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(false);
   const [isDataLoading, setIsDataLoading] = useState(true);
   const { user } = useUser();
+  const {
+    isLoading,
+    isFreeCourse,
+    canAccessCourse,
+    enrollButtonLabel,
+    handleEnroll,
+    handleOpenCourse,
+  } = useCourseEnrollment(course);
 
   // if we are in development mode, we should console.log the course
   if (import.meta.env.NODE_ENV === "development") {
@@ -80,90 +87,9 @@ const CourseCard = ({ course, section = "latest" }) => {
   };
 
   // Use isSubscribed property from backend
-  const isSubscribed = course.isSubscribed;
-
-  const handleEnroll = async (e) => {
+  const handleEnrollClick = async (e) => {
     e.preventDefault();
-    console.log(import.meta.env.MODE);
-
-    // in Development mode, directly navigate to course lessons
-    if (import.meta.env.MODE === "development") {
-      console.log("Development");
-      navigate(`/course/${course._id}/lessons`);
-      return;
-    }
-
-    // Temporarily disable Paymob and show admin contact option
-    if (!authService.isAuthenticated()) {
-      Swal.fire({
-        title: "Login Required",
-        text: "Please login to request access to this course",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Login",
-        cancelButtonText: "Cancel",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          navigate("/login");
-        }
-      });
-      return;
-    }
-
-    const result = await Swal.fire({
-      icon: "info",
-      title: "Payments temporarily unavailable",
-      html: "Our payment gateway is undergoing maintenance. If you want access now, you can contact the admin and we will assist you manually.",
-      showCancelButton: true,
-      confirmButtonText: "Send Message to Admin",
-      cancelButtonText: "Close",
-    });
-
-    if (result.isConfirmed) {
-      await handleContactAdmin();
-    }
-  };
-
-  const handleContactAdmin = async () => {
-    try {
-      setIsLoading(true);
-      const firstName = user?.firstName || "Unknown";
-      const lastName = user?.lastName || "";
-      const email = user?.email || "unknown@unknown.com";
-      const message = `The user requests manual access while payments are offline.`;
-
-      const res = await api.post("/email", {
-        firstName,
-        lastName,
-        email,
-        message,
-        type: "access_request",
-        course: { title: course.title, id: course._id },
-      });
-      if (res.data?.success) {
-        Swal.fire({
-          icon: "success",
-          title: "Request sent",
-          text: "Your request has been sent to the admin. We will contact you shortly. Please check your email for the response.",
-        });
-      } else {
-        throw new Error("Failed to send email");
-      }
-    } catch (err) {
-      console.error("Contact admin error:", err);
-      Swal.fire({
-        icon: "error",
-        title: "Could not send request",
-        text: err.message || "Please try again later.",
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleOpenCourse = (e) => {
-    e.preventDefault();
-    navigate(`/course/${course._id}/lessons`);
+    await handleEnroll();
   };
 
   return (
@@ -201,20 +127,23 @@ const CourseCard = ({ course, section = "latest" }) => {
           </h5>
           <div className="d-flex align-items-center justify-content-between mb-2">
             <div>
-              {isSubscribed ? (
+              {canAccessCourse ? (
                 <button
                   className="btn btn-success w-100 mb-2"
-                  onClick={handleOpenCourse}
+                  onClick={(event) => {
+                    event.preventDefault();
+                    handleOpenCourse();
+                  }}
                 >
                   Open Course
                 </button>
               ) : (
                 <button
                   className="btn btn-primary w-100 mb-2"
-                  onClick={handleEnroll}
+                  onClick={handleEnrollClick}
                   disabled={isLoading}
                 >
-                  {isLoading ? "Sending..." : "Enroll Now"}
+                  {enrollButtonLabel}
                 </button>
               )}
             </div>

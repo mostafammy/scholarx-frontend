@@ -1,0 +1,55 @@
+:root {
+  --plyr-color-main: #3b82f6;
+}
+
+.secure-player-wrapper {
+  width: 100%;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #000;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+  position: relative;
+}
+
+.secure-player-wrapper .plyr__video-wrapper {
+  background: #000;
+}
+
+.secure-player-wrapper .plyr__video-embed iframe {
+  transform: scale(1.15);
+  transform-origin: center;
+  pointer-events: none;
+  border: 0;
+}
+
+.secure-player-wrapper .plyr__control--overlaid {
+  background: rgba(59, 130, 246, 0.92);
+}
+
+.secure-player-wrapper .plyr__controls {
+  padding: 0.75rem 1rem;
+  backdrop-filter: blur(18px);
+  background: rgba(10, 10, 10, 0.65);
+}
+
+.secure-player-wrapper .plyr__menu__container {
+  border-radius: 12px;
+}
+
+.secure-player-error {
+  color: #f9fafb;
+  text-align: center;
+  padding: 2rem 1.5rem;
+  background: #111827;
+}
+
+.secure-player-error h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.25rem;
+}
+
+.secure-player-error p {
+  margin: 0;
+  color: #9ca3af;
+  font-size: 0.95rem;
+}
