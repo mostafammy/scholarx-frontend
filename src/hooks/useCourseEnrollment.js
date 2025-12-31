@@ -28,7 +28,41 @@ export const useCourseEnrollment = (course, options = {}) => {
     [course]
   );
   const isSubscribed = Boolean(course?.isSubscribed);
-  const canAccessCourse = isSubscribed || hasJustEnrolled;
+
+  const userOwnsCourse = useMemo(() => {
+    if (!user || !courseId) {
+      return false;
+    }
+
+    const normalizeId = (value) => {
+      if (!value) return null;
+      if (typeof value === "string" || typeof value === "number") {
+        return String(value);
+      }
+      if (typeof value === "object") {
+        return (
+          value._id ||
+          value.id ||
+          value.courseId ||
+          value.course?._id ||
+          (typeof value.toString === "function" ? value.toString() : null)
+        );
+      }
+      return null;
+    };
+
+    const normalizedCourseId = String(courseId);
+    const userCourses = Array.isArray(user.courses) ? user.courses : [];
+    return userCourses.some((entry) => normalizeId(entry) === normalizedCourseId);
+  }, [user, courseId]);
+
+  const externalAccessFlag = Boolean(
+    options.initialAccess ?? options.isEnrolledOverride ?? false
+  );
+
+  const canAccessCourse = Boolean(
+    isSubscribed || userOwnsCourse || externalAccessFlag || hasJustEnrolled
+  );
 
   const navigateToLessons = useCallback(() => {
     if (!courseId) return;

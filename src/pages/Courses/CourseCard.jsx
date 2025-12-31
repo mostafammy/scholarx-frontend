@@ -11,24 +11,14 @@ import {
   FaPlayCircle,
   FaMoneyBill,
 } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
-import { courseService } from "../../services/api";
+import { Link } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 import CourseCardSkeleton from "./CourseCardSkeleton";
-import useCourseEnrollment from "../../hooks/useCourseEnrollment";
+import EnrollmentButton from "../../components/EnrollmentButton/EnrollmentButton";
 
 const CourseCard = ({ course, section = "latest" }) => {
-  const navigate = useNavigate();
   const [isDataLoading, setIsDataLoading] = useState(true);
   const { user } = useUser();
-  const {
-    isLoading,
-    isFreeCourse,
-    canAccessCourse,
-    enrollButtonLabel,
-    handleEnroll,
-    handleOpenCourse,
-  } = useCourseEnrollment(course);
 
   // if we are in development mode, we should console.log the course
   if (import.meta.env.NODE_ENV === "development") {
@@ -87,11 +77,6 @@ const CourseCard = ({ course, section = "latest" }) => {
   };
 
   // Use isSubscribed property from backend
-  const handleEnrollClick = async (e) => {
-    e.preventDefault();
-    await handleEnroll();
-  };
-
   return (
     <Link to={`/CoursePage/${course._id}`} className="text-decoration-none">
       <div className="card h-100 shadow-sm">
@@ -127,25 +112,16 @@ const CourseCard = ({ course, section = "latest" }) => {
           </h5>
           <div className="d-flex align-items-center justify-content-between mb-2">
             <div>
-              {canAccessCourse ? (
-                <button
-                  className="btn btn-success w-100 mb-2"
-                  onClick={(event) => {
-                    event.preventDefault();
-                    handleOpenCourse();
-                  }}
-                >
-                  Open Course
-                </button>
-              ) : (
-                <button
-                  className="btn btn-primary w-100 mb-2"
-                  onClick={handleEnrollClick}
-                  disabled={isLoading}
-                >
-                  {enrollButtonLabel}
-                </button>
-              )}
+              <EnrollmentButton
+                course={course}
+                courseId={course._id}
+                courseTitle={title}
+                openLabel="Open Course"
+                openClassName="btn btn-success w-100 mb-2"
+                enrollClassName="btn btn-primary w-100 mb-2"
+                preventDefault
+                useDefaultStyles={false}
+              />
             </div>
             <div>
               <span className="fw-bold text-primary me-2">{price} EGP</span>

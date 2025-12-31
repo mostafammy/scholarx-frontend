@@ -11,7 +11,7 @@ import {
   fetchCourseDetails,
   clearCurrentCourse,
 } from "../../store/slices/courseSlice";
-import useCourseEnrollment from "../../hooks/useCourseEnrollment";
+import EnrollmentButton from "../../components/EnrollmentButton/EnrollmentButton";
 
 function CoursePage() {
   const { courseId } = useParams();
@@ -77,17 +77,6 @@ function CoursePage() {
     : courseData.targetAudience;
   const ratingCountLabel = totalRatings ? `(${totalRatings})` : null;
 
-  const {
-    isLoading: isEnrolling,
-    canAccessCourse,
-    enrollButtonLabel,
-    handleEnroll,
-    handleOpenCourse,
-  } = useCourseEnrollment(course, {
-    courseIdOverride: courseId,
-    courseTitleOverride: courseTitle,
-  });
-
   const renderStars = (rating) => {
     const stars = [];
     for (let i = 1; i <= 5; i++) {
@@ -147,22 +136,15 @@ function CoursePage() {
               )}
             </div>
 
-            {canAccessCourse ? (
-              <button className="enroll-button" onClick={handleOpenCourse}>
-                Open Course
-              </button>
-            ) : (
-              <button
-                className="enroll-button"
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleEnroll();
-                }}
-                disabled={isEnrolling}
-              >
-                {enrollButtonLabel}
-              </button>
-            )}
+            <EnrollmentButton
+              course={course}
+              courseId={courseId}
+              courseTitle={courseTitle}
+              openLabel="Open Course"
+              openClassName="enroll-button"
+              enrollClassName="enroll-button"
+              useDefaultStyles={false}
+            />
           </div>
           <div className="course-stats">
             <div className="stat-item">
