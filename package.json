@@ -17,6 +17,7 @@
     "formik": "^2.4.6",
     "framer-motion": "^12.6.3",
     "js-cookie": "^3.0.5",
+    "plyr": "^3.8.3",
     "react": "^19.0.0",
     "react-datepicker": "^8.2.1",
     "react-dom": "^19.0.0",
