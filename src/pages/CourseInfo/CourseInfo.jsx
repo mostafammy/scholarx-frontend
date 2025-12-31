@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { FaStar, FaRegStar } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -12,11 +12,16 @@ import {
   clearCurrentCourse,
 } from "../../store/slices/courseSlice";
 import EnrollmentButton from "../../components/EnrollmentButton/EnrollmentButton";
+import api from "../../services/api";
 
 function CoursePage() {
   const { courseId } = useParams();
   const { user } = useUser();
   const dispatch = useDispatch();
+  const [subscriptionStatus, setSubscriptionStatus] = useState({
+    loading: false,
+    isSubscribed: false,
+  });
   const courseState = useSelector((state) => state?.course) || {};
   const {
     currentCourse,
@@ -33,7 +38,49 @@ function CoursePage() {
     };
   }, [dispatch, courseId]);
 
+  useEffect(() => {
+    let isMounted = true;
+
+    const fetchSubscription = async () => {
+      if (!user?._id || !courseId) {
+        setSubscriptionStatus((prev) => ({ ...prev, isSubscribed: false }));
+        return;
+      }
+
+      try {
+        setSubscriptionStatus((prev) => ({ ...prev, loading: true }));
+        const response = await api.get(
+          `/courses/${courseId}/subscription-status`,
+          {
+            params: { userId: user._id },
+          }
+        );
+
+        if (!isMounted) return;
+        setSubscriptionStatus({
+          loading: false,
+          isSubscribed: Boolean(response.data?.data?.isSubscribed),
+        });
+      } catch (error) {
+        if (!isMounted) return;
+        setSubscriptionStatus({ loading: false, isSubscribed: false });
+      }
+    };
+
+    fetchSubscription();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [user?._id, courseId]);
+
   const course = currentCourse || courseData;
+  const courseWithAccess = useMemo(() => {
+    if (subscriptionStatus.isSubscribed) {
+      return { ...course, isSubscribed: true };
+    }
+    return course;
+  }, [course, subscriptionStatus.isSubscribed]);
   const headerImage =
     course.headerImage ||
     course.bannerImage ||
@@ -137,13 +184,16 @@ function CoursePage() {
             </div>
 
             <EnrollmentButton
-              course={course}
+              course={courseWithAccess}
               courseId={courseId}
               courseTitle={courseTitle}
               openLabel="Open Course"
               openClassName="enroll-button"
               enrollClassName="enroll-button"
               useDefaultStyles={false}
+              hookOptions={{
+                isEnrolledOverride: subscriptionStatus.isSubscribed,
+              }}
             />
           </div>
           <div className="course-stats">
