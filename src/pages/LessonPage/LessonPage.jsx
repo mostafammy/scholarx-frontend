@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 import "./LessonPage.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -93,15 +93,17 @@ const LessonPage = () => {
     }
   }, [dispatch, courseId, user]);
 
-  // Force refresh completion data when current lesson changes
+  // Force refresh completion data when current lesson changes (only for authenticated users)
   useEffect(() => {
-    if (courseId && currentLesson) {
-      dispatch(getCompletedLessons(courseId));
-      dispatch(getCourseCompletionStatus(courseId));
+    if (!user || !courseId || !currentLesson) {
+      return;
     }
-  }, [dispatch, courseId, currentLesson]);
+    dispatch(getCompletedLessons(courseId));
+    dispatch(getCourseCompletionStatus(courseId));
+  }, [dispatch, courseId, currentLesson, user]);
 
   const isFreeCourse = courseService.isFreeCourse(course);
+  const hasCourseAccess = Boolean(isSubscribed || course?.isSubscribed);
 
   // Progress calculation - combine local state and Redux state for real-time updates
   const totalLessons = sections.reduce(
@@ -138,7 +140,7 @@ const LessonPage = () => {
     return 0;
   };
   const handleLessonComplete = useCallback(() => {
-    if (!currentLesson || !courseId) {
+    if (!currentLesson || !courseId || !user) {
       return;
     }
 
@@ -171,7 +173,7 @@ const LessonPage = () => {
       () => setShowCompletionNotification(false),
       5000
     );
-  }, [dispatch, currentLesson, courseId]);
+  }, [dispatch, currentLesson, courseId, user]);
 
   const handlePlaybackProgress = useCallback(
     ({ currentTime = 0, duration = 0 }) => {
@@ -215,14 +217,44 @@ const LessonPage = () => {
     );
   }
 
-  if (!isSubscribed && !isFreeCourse) {
+  if (!user && !userLoading) {
+    return (
+      <div className="login-required">
+        <h2>Log In Required</h2>
+        <p>Please sign in to continue the lesson and track your progress.</p>
+        <Link to="/login" className="login-required-link">
+          Go to Login
+        </Link>
+      </div>
+    );
+  }
+
+  if (!hasCourseAccess) {
+    if (isFreeCourse) {
+      return (
+        <div className="enrollment-required">
+          <h2>Enroll to Access Lessons</h2>
+          <p>
+            You need to enroll in this course before you can watch the lessons
+            and track your progress.
+          </p>
+          <button
+            className="enrollment-required-link"
+            onClick={() => navigate(`/CoursePage/${courseId}`)}
+          >
+            Go to Course Page
+          </button>
+        </div>
+      );
+    }
+
     return (
       <div className="subscription-required">
         <h2>Subscription Required</h2>
         <p>You need to subscribe to this course to access its lessons.</p>
         <button
           className="btn btn-primary"
-          onClick={() => navigate(`/courses/${courseId}`)}
+          onClick={() => navigate(`/CoursePage/${courseId}`)}
         >
           View Course Details
         </button>
