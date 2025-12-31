@@ -103,6 +103,7 @@ const LessonPage = () => {
   }, [dispatch, courseId, currentLesson, user]);
 
   const isFreeCourse = courseService.isFreeCourse(course);
+  const hasCourseAccess = Boolean(isSubscribed || course?.isSubscribed);
 
   // Progress calculation - combine local state and Redux state for real-time updates
   const totalLessons = sections.reduce(
@@ -228,14 +229,32 @@ const LessonPage = () => {
     );
   }
 
-  if (!isSubscribed && !isFreeCourse) {
+  if (!hasCourseAccess) {
+    if (isFreeCourse) {
+      return (
+        <div className="enrollment-required">
+          <h2>Enroll to Access Lessons</h2>
+          <p>
+            You need to enroll in this course before you can watch the lessons
+            and track your progress.
+          </p>
+          <button
+            className="enrollment-required-link"
+            onClick={() => navigate(`/CoursePage/${courseId}`)}
+          >
+            Go to Course Page
+          </button>
+        </div>
+      );
+    }
+
     return (
       <div className="subscription-required">
         <h2>Subscription Required</h2>
         <p>You need to subscribe to this course to access its lessons.</p>
         <button
           className="btn btn-primary"
-          onClick={() => navigate(`/courses/${courseId}`)}
+          onClick={() => navigate(`/CoursePage/${courseId}`)}
         >
           View Course Details
         </button>
