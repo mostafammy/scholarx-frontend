@@ -1,0 +1,22 @@
+.ratingContainer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.starsWrapper {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.star {
+  color: #F2A33A;
+  transition: transform 0.2s ease;
+}
+
+.ratingCount {
+  color: inherit;
+  font-size: 0.9rem;
+  opacity: 0.9;
+}

@@ -1,0 +1,269 @@
+/* LoadingState Styles */
+
+.container {
+  display: flex;
+  gap: 32px;
+  padding: 32px;
+  max-width: 1400px;
+  margin: 0 auto;
+  animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Left Column */
+.left {
+  flex: 2;
+}
+
+.videoSkeleton {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: linear-gradient(145deg, #e2e8f0 0%, #f1f5f9 100%);
+  border-radius: 20px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.playButton {
+  width: 80px;
+  height: 80px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+}
+
+.playIcon {
+  width: 0;
+  height: 0;
+  border-left: 24px solid rgba(255, 255, 255, 0.6);
+  border-top: 14px solid transparent;
+  border-bottom: 14px solid transparent;
+  margin-left: 6px;
+}
+
+.headerSkeleton {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.titleSkeleton {
+  width: 60%;
+  height: 28px;
+  background: linear-gradient(90deg, #e2e8f0 0%, #f1f5f9 50%, #e2e8f0 100%);
+  background-size: 200% 100%;
+  border-radius: 8px;
+  animation: shimmerMove 1.5s ease-in-out infinite;
+}
+
+.subtitleSkeleton {
+  width: 40%;
+  height: 20px;
+  background: linear-gradient(90deg, #e2e8f0 0%, #f1f5f9 50%, #e2e8f0 100%);
+  background-size: 200% 100%;
+  border-radius: 6px;
+  animation: shimmerMove 1.5s ease-in-out infinite 0.1s;
+}
+
+@keyframes shimmerMove {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Right Column */
+.right {
+  flex: 1;
+}
+
+.sidebarSkeleton {
+  position: relative;
+  background: white;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.sidebarHeader {
+  width: 50%;
+  height: 24px;
+  background: #e2e8f0;
+  border-radius: 6px;
+  margin-bottom: 16px;
+}
+
+.progressSkeleton {
+  background: #f1f5f9;
+  padding: 16px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+
+.progressBar {
+  height: 10px;
+  background: linear-gradient(90deg, #e2e8f0 0%, #cbd5e1 50%, #e2e8f0 100%);
+  background-size: 200% 100%;
+  border-radius: 5px;
+  animation: shimmerMove 1.5s ease-in-out infinite;
+}
+
+.sectionSkeleton {
+  margin-bottom: 12px;
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 14px;
+  animation: fadeInUp 0.4s ease-out both;
+  animation-delay: var(--delay, 0s);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.sectionHeader {
+  width: 70%;
+  height: 18px;
+  background: #e2e8f0;
+  border-radius: 4px;
+  margin-bottom: 12px;
+}
+
+.lessonsList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.lessonItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  background: white;
+  border-radius: 8px;
+}
+
+.lessonIcon {
+  width: 28px;
+  height: 28px;
+  background: #e2e8f0;
+  border-radius: 50%;
+}
+
+.lessonContent {
+  flex: 1;
+}
+
+.lessonTitle {
+  width: 80%;
+  height: 14px;
+  background: #e2e8f0;
+  border-radius: 4px;
+}
+
+.lessonDuration {
+  width: 50px;
+  height: 14px;
+  background: #e2e8f0;
+  border-radius: 4px;
+}
+
+/* Global Shimmer Overlay */
+.shimmer {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    transparent 100%
+  );
+  animation: shimmerSlide 2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes shimmerSlide {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .container {
+    flex-direction: column;
+    padding: 20px;
+    gap: 24px;
+  }
+  
+  .left,
+  .right {
+    flex: none;
+    width: 100%;
+  }
+}
+
+@media (max-width: 576px) {
+  .container {
+    padding: 16px;
+  }
+  
+  .videoSkeleton {
+    border-radius: 12px;
+  }
+  
+  .playButton {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .playIcon {
+    border-left-width: 18px;
+    border-top-width: 10px;
+    border-bottom-width: 10px;
+  }
+}

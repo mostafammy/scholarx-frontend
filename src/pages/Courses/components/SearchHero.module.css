@@ -1,0 +1,181 @@
+.hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  padding: 60px 20px;
+  background-color: #3399cc0d;
+  overflow: hidden;
+}
+
+.backgroundOverlay {
+  position: absolute;
+  inset: 0;
+  background-image: url('/assets/Images/bg.png');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.1;
+  z-index: 0;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 800px;
+  width: 100%;
+  animation: fadeInDown 0.6s ease-out;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.subtitle {
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: #3399cc;
+  margin-bottom: 8px;
+  animation: fadeInDown 0.6s ease-out 0.1s both;
+}
+
+.title {
+  font-size: 3rem;
+  font-weight: 600;
+  color: #3399cc;
+  margin: 0 0 16px 0;
+  animation: fadeInDown 0.6s ease-out 0.2s both;
+}
+
+.description {
+  font-size: 1.125rem;
+  color: #808080;
+  margin: 0 0 32px 0;
+  animation: fadeInDown 0.6s ease-out 0.3s both;
+}
+
+.searchForm {
+  width: 100%;
+  max-width: 500px;
+  animation: fadeInUp 0.6s ease-out 0.4s both;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.inputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.inputWrapper:focus-within {
+  box-shadow: 0 8px 30px rgba(51, 153, 204, 0.2);
+  transform: translateY(-2px);
+}
+
+.searchIcon {
+  position: absolute;
+  left: 16px;
+  width: 24px;
+  height: 24px;
+  color: #9ca3af;
+  transition: color 0.2s ease;
+}
+
+.inputWrapper:focus-within .searchIcon {
+  color: #3399cc;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 16px 48px;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  outline: none;
+  background: transparent;
+}
+
+.searchInput::placeholder {
+  color: #9ca3af;
+}
+
+.clearButton {
+  position: absolute;
+  right: 16px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e5e7eb;
+  border: none;
+  border-radius: 50%;
+  font-size: 1.25rem;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.clearButton:hover {
+  background: #d1d5db;
+  color: #374151;
+  transform: scale(1.1);
+}
+
+/* Tablet */
+@media (max-width: 768px) {
+  .title {
+    font-size: 2.25rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+
+  .description {
+    font-size: 1rem;
+  }
+}
+
+/* Mobile */
+@media (max-width: 576px) {
+  .hero {
+    min-height: 40vh;
+    padding: 40px 16px;
+  }
+
+  .title {
+    font-size: 1.75rem;
+  }
+
+  .searchInput {
+    padding: 14px 44px;
+    font-size: 0.9rem;
+  }
+}

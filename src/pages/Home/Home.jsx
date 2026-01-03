@@ -1,56 +1,56 @@
-import React from 'react';
-import Hero from './components/Hero/Hero';
-import Features from './components/Features/Features';
-import Services from './components/Services/Services';
-import waterMark from "../../assets/Images/WaterMark.png"
-import waterMark2 from "../../assets/Images/image.png"
-import Impact from './components/Impact/Impact';
-import { GrGroup } from "react-icons/gr";  
-import { TfiWorld } from "react-icons/tfi";  
+/**
+ * Home Page
+ * Main landing page with Hero, Features, Services, and Impact sections
+ */
 
-import { PiBookOpenTextThin } from "react-icons/pi";
-import { VscBriefcase } from "react-icons/vsc";
-import './Home.css';
+import React, { memo } from "react";
+import Hero from "./components/Hero/Hero";
+import Features from "./components/Features/Features";
+import ServicesSection from "./components/ServicesSection/ServicesSection";
+import ImpactSection from "./components/ImpactSection/ImpactSection";
+import {
+  WHY_CHOOSE_SECTION,
+  WHY_CHOOSE_SERVICES,
+  WHO_WE_HELP_SECTION,
+  WHO_WE_HELP_SERVICES,
+} from "./constants";
+import waterMark from "../../assets/Images/WaterMark.png";
+import waterMark2 from "../../assets/Images/image.png";
+import styles from "./Home.module.css";
 
-function Home() {
+const Home = memo(function Home() {
   return (
-    <>
+    <main className={styles.page}>
+      {/* Hero Section */}
       <Hero />
+
+      {/* Features Section */}
       <Features />
-      <Services
-       clas="bacground"
-        waterMark={waterMark}
-         title="Why Choose"
-          titleBlue="ScholarX?"
-          paragraf="We're dedicated to making education accessible and providing the resources students need to succeed globally." 
-          head1="Scholarship Research "
-          head2="Mentorship" 
-          head3="Opportunities" 
-          text1="Access curated local and international scholarships"
-          clasOrage="orange" 
-          icon1={<TfiWorld />}
-          icon2={<GrGroup />}
-          icon3={<TfiWorld />} 
-          />
-         <Services
-       clas="bacground2"
-        waterMark={waterMark2}
-         title="Who We "
-          titleBlue="Help?"
-          paragraf="We support students at every stage of their educational journey, providing tailored resources for their specific needs." 
-          head1="High School Students "
-          head2="University Students" 
-          head3="Recent Graduates" 
-          text1="Discover scholarships and prepare for university applications early."
-          text2="Access mentorship, internships, and study-abroad opportunities."
-          text3="Find career guidance, advanced degrees, and professional development."
-          clasOrage="black" 
-          icon1={<PiBookOpenTextThin />}
-          icon2={<GrGroup />}
-          icon3={<VscBriefcase />} />
-         <Impact  waterMark={waterMark}/>
-    </>
+
+      {/* Why Choose ScholarX Section */}
+      <ServicesSection
+        title={WHY_CHOOSE_SECTION.title}
+        highlight={WHY_CHOOSE_SECTION.highlight}
+        description={WHY_CHOOSE_SECTION.description}
+        services={WHY_CHOOSE_SERVICES}
+        theme={WHY_CHOOSE_SECTION.theme}
+        watermarkImage={waterMark}
+      />
+
+      {/* Who We Help Section */}
+      <ServicesSection
+        title={WHO_WE_HELP_SECTION.title}
+        highlight={WHO_WE_HELP_SECTION.highlight}
+        description={WHO_WE_HELP_SECTION.description}
+        services={WHO_WE_HELP_SERVICES}
+        theme={WHO_WE_HELP_SECTION.theme}
+        watermarkImage={waterMark2}
+      />
+
+      {/* Impact Section */}
+      <ImpactSection watermarkImage={waterMark} />
+    </main>
   );
-}
+});
 
 export default Home;

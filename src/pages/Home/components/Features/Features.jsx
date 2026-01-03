@@ -1,49 +1,65 @@
-import React from 'react';
-import styles from './Features.module.css';
-import { Link } from 'react-router-dom';
+/**
+ * Features Component
+ * Welcome section showcasing ScholarX's value proposition
+ */
 
-const Features = () => {
+import React, { memo } from "react";
+import { Link } from "react-router-dom";
+import { FEATURES_CONTENT, FEATURES_LIST } from "../../constants";
+import styles from "./Features.module.css";
+
+const Features = memo(function Features() {
   return (
     <section className={styles.features}>
       <div className={styles.content}>
-        <div className={styles.text}>
-          <h2>Welcome to <span className={styles.highlight}>ScholarX</span></h2>
-          <p>
-            ScholarX is dedicated to empowering students through
-            education, mentorship, and community support. We
-            believe in breaking down barriers and creating
-            opportunities for ambitious learners worldwide
-          </p>
-          <ul className={styles.list}>
-            <li>
-              <span className={styles.icon}>✓</span>
-              Development Training Program
-            </li>
-            <li>
-              <span className={styles.icon}>✓</span>
-              Community Support
-            </li>
-            <li>
-              <span className={styles.icon}>✓</span>
-              Resource Library
-            </li>
+        {/* Text Content */}
+        <div className={styles.textSection}>
+          <h2 className={styles.title}>
+            {FEATURES_CONTENT.title}{" "}
+            <span className={styles.highlight}>
+              {FEATURES_CONTENT.highlight}
+            </span>
+          </h2>
+          <p className={styles.description}>{FEATURES_CONTENT.description}</p>
+
+          <ul className={styles.featureList}>
+            {FEATURES_LIST.map((item, index) => (
+              <li
+                key={item.id}
+                className={styles.featureItem}
+                style={{ animationDelay: `${index * 100}ms` }}
+              >
+                <span className={styles.checkIcon}>{item.icon}</span>
+                <span className={styles.featureText}>{item.text}</span>
+              </li>
+            ))}
           </ul>
-          <Link to="/login" style={{ textDecoration: 'none' }} >
-          <button className={styles.btnPrimary}>
-            Take the First Step Today!
-            <span className={styles.arrow}>→</span>
-          </button>
+
+          <Link to={FEATURES_CONTENT.cta.link} className={styles.ctaLink}>
+            <button className={styles.ctaButton}>
+              {FEATURES_CONTENT.cta.text}
+              <span className={styles.ctaIcon}>
+                {FEATURES_CONTENT.cta.icon}
+              </span>
+            </button>
           </Link>
         </div>
 
-        <div className={styles.image}>
+        {/* Image Section */}
+        <div className={styles.imageSection}>
           <div className={styles.imageFrame}>
-            <img src="home-page/home-feature.jpg" alt="Bosla Scholarship" />
+            <img
+              src={FEATURES_CONTENT.image}
+              alt={FEATURES_CONTENT.imageAlt}
+              className={styles.image}
+            />
+            <div className={styles.decorCircle1}></div>
+            <div className={styles.decorCircle2}></div>
           </div>
         </div>
       </div>
     </section>
   );
-};
+});
 
 export default Features;

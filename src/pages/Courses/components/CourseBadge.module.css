@@ -1,0 +1,45 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-radius: 4px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.badge:hover {
+  transform: scale(1.05);
+}
+
+.badgeNew {
+  background-color: #ff6633;
+  color: white;
+  box-shadow: 0 2px 8px rgba(255, 102, 51, 0.3);
+}
+
+.badgeFeatured {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+.badgeScholarx {
+  background: linear-gradient(135deg, #3399cc 0%, #1a75a7 100%);
+  color: white;
+  box-shadow: 0 2px 8px rgba(51, 153, 204, 0.3);
+}
+
+.badgeCategory {
+  background-color: #f0f4f8;
+  color: #4a5568;
+  border: 1px solid #e2e8f0;
+}
+
+.badgePaid {
+  background-color: #fef3c7;
+  color: #92400e;
+  border: 1px solid #fcd34d;
+}

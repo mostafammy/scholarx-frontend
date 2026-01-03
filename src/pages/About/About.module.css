@@ -1,0 +1,74 @@
+/* About Page Main Styles */
+
+.wrapper {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.backgroundDecor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 500px;
+  background: linear-gradient(to bottom, #f1f6f7 20%, #F4FAFC 100%);
+  background-repeat: no-repeat;
+  background-size: 100% 500px;
+  background-position: top;
+  z-index: 0;
+}
+
+.whiteArc {
+  position: absolute;
+  top: 350px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 110%;
+  height: 300px;
+  background-color: white;
+  border-radius: 70%;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.page {
+  max-width: 100%;
+  margin: 0 auto;
+  position: relative;
+  padding: 5rem 3.125rem 3.125rem;
+  z-index: 2;
+}
+
+.contentSections {
+  display: flex;
+  flex-direction: column;
+  gap: 4.5rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .page {
+    padding: 3.75rem 1rem 2rem;
+  }
+
+  .whiteArc {
+    top: 250px;
+    width: 150%;
+  }
+
+  .contentSections {
+    gap: 3rem;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1201px) {
+  .page {
+    padding: 4rem 2rem 2.5rem;
+  }
+
+  .contentSections {
+    gap: 4rem;
+  }
+}

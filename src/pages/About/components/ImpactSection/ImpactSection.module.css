@@ -1,0 +1,147 @@
+/* ImpactSection Component Styles */
+
+.section {
+  padding: 5rem 1.25rem;
+  text-align: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.title {
+  color: #77BBDD;
+  font-size: 1.875rem;
+  font-weight: 600;
+  margin: 0 0 1.5rem 0;
+  font-family: 'Rubik', sans-serif;
+  text-align: center;
+  opacity: 0;
+  animation: fadeInScale 0.8s ease-out forwards;
+}
+
+.underline {
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, #77BBDD 0%, #2A80AA 100%);
+  margin: 0 auto 4rem auto;
+  border-radius: 2px;
+  opacity: 0;
+  animation: expandWidth 0.8s ease-out 0.3s forwards;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin: 0 auto 3rem auto;
+  max-width: 1100px;
+}
+
+.gridCenter {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.gridCenter > * {
+  flex: 0 1 350px;
+  max-width: 350px;
+}
+
+/* Animations */
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes expandWidth {
+  from {
+    opacity: 0;
+    width: 0;
+  }
+  to {
+    opacity: 1;
+    width: 80px;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .section {
+    padding: 3rem 1rem;
+  }
+
+  .title {
+    font-size: 1.375rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .underline {
+    width: 60px;
+    height: 3px;
+    margin-bottom: 2.5rem;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .gridCenter {
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: center;
+  }
+
+  .gridCenter > * {
+    flex: 1 1 100%;
+    max-width: 350px;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+  .section {
+    padding: 4rem 1rem;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .gridCenter {
+    gap: 2rem;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1201px) {
+  .section {
+    padding: 4.5rem 1.25rem;
+  }
+
+  .title {
+    font-size: 1.75rem;
+  }
+
+  .grid {
+    gap: 2.5rem;
+  }
+
+  .gridCenter {
+    gap: 2.5rem;
+  }
+}

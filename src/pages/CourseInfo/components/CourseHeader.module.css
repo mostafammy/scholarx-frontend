@@ -1,0 +1,213 @@
+.header {
+  position: relative;
+  width: 100%;
+  margin-bottom: 2rem;
+  height: 570px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.overlayImage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  opacity: 0.8;
+  object-fit: cover;
+}
+
+.overlayContent {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin: 0 auto 15px;
+  color: white;
+  padding-top: 140px;
+  font-family: 'Rubik', sans-serif;
+  max-width: 90%;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.tagline {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  max-width: 800px;
+  margin: 0 auto 30px;
+  color: rgb(255, 255, 255);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.rating {
+  justify-content: center;
+  margin-bottom: 25px;
+}
+
+.ratingCount {
+  color: rgb(255, 255, 255);
+  margin-left: 10px;
+}
+
+.enrollButton {
+  background-color: #007bff;
+  color: white;
+  padding: 4px 55px;
+  border: none;
+  border-radius: 2px;
+  font-size: 1.3rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.enrollButton:hover {
+  background-color: #007bffc8;
+  transform: translateY(-2px);
+}
+
+.enrollButton:active {
+  transform: translateY(0);
+}
+
+.enrollButton:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Desktop */
+@media (max-width: 1200px) {
+  .title {
+    font-size: 2.2rem;
+    padding-top: 120px;
+  }
+
+  .tagline {
+    font-size: 1.1rem;
+  }
+}
+
+/* Tablet */
+@media (max-width: 992px) {
+  .header {
+    height: 520px;
+  }
+
+  .title {
+    font-size: 2rem;
+    padding-top: 100px;
+  }
+
+  .tagline {
+    font-size: 1rem;
+    padding: 0 15px;
+  }
+
+  .enrollButton {
+    padding: 4px 40px;
+    font-size: 1.2rem;
+  }
+}
+
+/* Small Tablet */
+@media (max-width: 768px) {
+  .header {
+    height: 500px;
+  }
+
+  .title {
+    font-size: 1.8rem;
+    padding-top: 80px;
+    max-width: 95%;
+  }
+
+  .tagline {
+    font-size: 0.95rem;
+    max-width: 95%;
+    margin-bottom: 20px;
+  }
+
+  .rating {
+    margin-bottom: 15px;
+  }
+
+  .enrollButton {
+    padding: 4px 30px;
+    font-size: 1.1rem;
+  }
+}
+
+/* Mobile */
+@media (max-width: 576px) {
+  .header {
+    height: 450px;
+  }
+
+  .overlayImage {
+    opacity: 0.9;
+  }
+
+  .title {
+    font-size: 1.5rem;
+    padding-top: 60px;
+    margin-bottom: 10px;
+  }
+
+  .tagline {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: 15px;
+    padding: 0 10px;
+  }
+
+  .rating {
+    gap: 8px;
+    margin-bottom: 15px;
+  }
+
+  .enrollButton {
+    padding: 4px 20px;
+    font-size: 1rem;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 400px) {
+  .header {
+    height: 400px;
+  }
+
+  .title {
+    font-size: 1.3rem;
+    padding-top: 45px;
+  }
+
+  .tagline {
+    font-size: 0.85rem;
+    line-height: 1.4;
+    margin-bottom: 12px;
+  }
+
+  .rating {
+    gap: 5px;
+    margin-bottom: 12px;
+  }
+
+  .enrollButton {
+    padding: 3px 15px;
+    font-size: 0.9rem;
+  }
+}

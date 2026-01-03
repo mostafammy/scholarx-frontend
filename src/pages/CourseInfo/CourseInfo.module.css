@@ -1,0 +1,12 @@
+/**
+ * CourseInfo Module Styles
+ * CSS Module for the main CoursePage container
+ */
+
+.container {
+  max-width: 100%;
+  margin: 0 auto;
+  font-family: 'Segoe UI', sans-serif;
+  overflow-x: hidden;
+  min-height: 100vh;
+}

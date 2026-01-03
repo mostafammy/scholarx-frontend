@@ -1,0 +1,63 @@
+.metaBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border-radius: 20px;
+  border: 1px solid;
+  transition: all 0.2s ease;
+}
+
+.metaBadge:hover {
+  transform: translateY(-1px);
+}
+
+.icon {
+  font-size: 0.85rem;
+}
+
+.value {
+  font-weight: 600;
+}
+
+.label {
+  opacity: 0.9;
+}
+
+/* Duration variant */
+.variantDuration {
+  background-color: #ecfdf3;
+  border-color: #abefc6;
+  color: #085d3a;
+}
+
+.variantDuration:hover {
+  background-color: #d1fae5;
+  box-shadow: 0 2px 8px rgba(8, 93, 58, 0.1);
+}
+
+/* Lectures variant */
+.variantLectures {
+  background-color: #eff8ff;
+  border-color: #b2ddff;
+  color: #1849a9;
+}
+
+.variantLectures:hover {
+  background-color: #dbeafe;
+  box-shadow: 0 2px 8px rgba(24, 73, 169, 0.1);
+}
+
+/* Paid variant */
+.variantPaid {
+  background-color: #fef3c7;
+  border-color: #fcd34d;
+  color: #92400e;
+}
+
+.variantPaid:hover {
+  background-color: #fde68a;
+  box-shadow: 0 2px 8px rgba(146, 64, 14, 0.1);
+}

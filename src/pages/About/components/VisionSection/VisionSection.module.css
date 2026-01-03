@@ -1,0 +1,152 @@
+/* VisionSection Component Styles */
+
+.section {
+  padding: 5rem 1.25rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  justify-content: center;
+  opacity: 0;
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+.imageBlock {
+  flex: 0 0 auto;
+  position: relative;
+  opacity: 0;
+  animation: slideInLeft 0.8s ease-out 0.2s forwards;
+}
+
+.image {
+  width: 100%;
+  max-width: 450px;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 10px 30px rgba(42, 128, 170, 0.15));
+  transition: all 0.4s ease;
+}
+
+.image:hover {
+  transform: scale(1.05) rotate(-2deg);
+  filter: drop-shadow(0 15px 40px rgba(42, 128, 170, 0.25));
+}
+
+.text {
+  max-width: 550px;
+  line-height: 1.6;
+  color: #7F7F7F;
+  font-family: 'Rubik', sans-serif;
+  font-size: 1rem;
+  flex: 1;
+  opacity: 0;
+  animation: slideInRight 0.8s ease-out 0.4s forwards;
+}
+
+.underline {
+  width: 100px;
+  height: 4px;
+  background: linear-gradient(90deg, #2A80AA 0%, #77BBDD 100%);
+  margin: 3rem auto 0 auto;
+  border-radius: 2px;
+  opacity: 0;
+  animation: expandWidth 0.8s ease-out 0.6s forwards;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes expandWidth {
+  from {
+    opacity: 0;
+    width: 0;
+  }
+  to {
+    opacity: 1;
+    width: 100px;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .section {
+    padding: 3rem 1rem;
+  }
+
+  .wrapper {
+    flex-direction: column;
+    gap: 2rem;
+    text-align: center;
+  }
+
+  .imageBlock {
+    animation: fadeIn 0.8s ease-out 0.2s forwards;
+  }
+
+  .image {
+    max-width: 280px;
+  }
+
+  .text {
+    font-size: 0.9375rem;
+    max-width: 100%;
+    animation: fadeIn 0.8s ease-out 0.4s forwards;
+  }
+
+  .underline {
+    width: 80px;
+    margin-top: 2rem;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1201px) {
+  .section {
+    padding: 4rem 1.25rem;
+  }
+
+  .wrapper {
+    gap: 2.5rem;
+  }
+
+  .image {
+    max-width: 380px;
+  }
+
+  .text {
+    font-size: 0.9375rem;
+    max-width: 480px;
+  }
+}

@@ -1,0 +1,63 @@
+.statsContainer {
+  display: flex;
+  justify-content: center;
+  gap: 80px;
+  padding: 0 40px;
+  flex-wrap: wrap;
+  width: 100%;
+  box-sizing: border-box;
+  position: absolute;
+  bottom: -100px;
+  left: 0;
+  z-index: 10;
+}
+
+/* Large screens */
+@media (min-width: 1400px) {
+  .statsContainer {
+    gap: 100px;
+  }
+}
+
+/* Desktop */
+@media (max-width: 1200px) {
+  .statsContainer {
+    gap: 40px;
+    padding: 0 20px;
+  }
+}
+
+/* Tablet */
+@media (max-width: 992px) {
+  .statsContainer {
+    gap: 20px;
+    bottom: -80px;
+  }
+}
+
+/* Small Tablet */
+@media (max-width: 768px) {
+  .statsContainer {
+    gap: 15px;
+    bottom: -120px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 576px) {
+  .statsContainer {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 0;
+    bottom: -220px;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 400px) {
+  .statsContainer {
+    bottom: -240px;
+    gap: 15px;
+  }
+}
