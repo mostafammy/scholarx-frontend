@@ -145,19 +145,41 @@
 
 @media (max-width: 576px) {
   .page {
-    padding: 12px;
-    gap: 16px;
+    padding: 8px;
+    gap: 12px;
+    min-height: calc(100vh - 60px);
+  }
+  
+  .mainContent {
+    gap: 0;
   }
   
   .errorCard {
-    padding: 30px 20px;
+    padding: 24px 16px;
+    border-radius: 16px;
   }
   
   .errorIcon {
-    font-size: 2.5rem;
+    font-size: 2rem;
   }
   
   .errorTitle {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
+  }
+  
+  .errorMessage {
+    font-size: 0.9rem;
+  }
+  
+  .retryBtn {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .page {
+    padding: 4px;
+    gap: 8px;
   }
 }

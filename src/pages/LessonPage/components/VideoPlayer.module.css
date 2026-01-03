@@ -27,6 +27,7 @@
   position: relative;
   width: 100%;
   aspect-ratio: 16 / 9;
+  max-height: 80vh;
   background: #000;
 }
 
@@ -82,18 +83,91 @@
 }
 
 /* Responsive */
+@media (max-width: 1200px) {
+  .container {
+    width: 90%;
+    max-width: 540px; /* prevent over-expansion on medium screens */
+    margin: 0 auto;
+  }
+
+  .playerWrapper {
+    aspect-ratio: 16 / 9;
+    max-height: 40vh;
+  }
+}
+
 @media (max-width: 768px) {
   .container {
     border-radius: 12px;
   }
   
+  .playerWrapper {
+    max-height: 50vh;
+    aspect-ratio: 16 / 10;
+  }
+  
   .lessonBadge {
-    top: 10px;
-    left: 10px;
+    top: 8px;
+    left: 8px;
     padding: 6px 10px;
   }
   
   .badgeText {
     font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .container {
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 400px; /* Prevent it from getting too wide on larger mobiles */
+    margin: 0 auto;
+    overflow: hidden; /* Strictly contain children */
+  }
+  
+  .playerWrapper {
+    /* Force standard aspect ratio to prevent vertical stretching */
+    aspect-ratio: 16 / 9;
+    width: 100%;
+    height: auto;
+    max-height: 30vh; /* Hard limit */
+    background: #000;
+  }
+  
+  /* Ensure the inner player respects the wrapper */
+  .playerWrapper > :global(.secure-player-wrapper) {
+    height: 100%;
+    width: 100%;
+    aspect-ratio: inherit;
+  }
+  
+  .lessonBadge {
+    top: 8px;
+    left: 8px;
+    padding: 6px 10px;
+    gap: 6px;
+  }
+  
+  .badgeText {
+    font-size: 0.7rem;
+  }
+  
+  .playIcon {
+    font-size: 0.65rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    width: 92%;
+    border-radius: 12px;
+  }
+  
+  .playerWrapper {
+    /* Keep 16/9 even on small screens */
+    aspect-ratio: 16 / 9;
+    max-height: 28vh;
   }
 }

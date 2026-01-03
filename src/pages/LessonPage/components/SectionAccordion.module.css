@@ -140,13 +140,98 @@
 }
 
 /* Responsive */
-@media (max-width: 576px) {
+@media (max-width: 768px) {
+  .section {
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
+  
   .header {
-    padding: 14px;
+    padding: 14px 12px;
   }
   
   .sectionTitle {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
+  }
+  
+  .sectionNumber {
+    width: 26px;
+    height: 26px;
+    font-size: 0.75rem;
+  }
+  
+  .lessonCount {
+    font-size: 0.8rem;
+    padding: 3px 8px;
+  }
+  
+  .completedBadge {
+    font-size: 0.7rem;
+    padding: 3px 8px;
+  }
+}
+
+@media (max-width: 576px) {
+  .section {
+    border-radius: 8px;
+    margin-bottom: 8px;
+  }
+  
+  .header {
+    padding: 12px 10px;
+    gap: 8px;
+  }
+  
+  .headerLeft {
+    gap: 10px;
+  }
+  
+  .sectionNumber {
+    width: 24px;
+    height: 24px;
+    font-size: 0.7rem;
+    border-radius: 6px;
+  }
+  
+  .sectionTitle {
+    font-size: 0.85rem;
+  }
+  
+  .headerRight {
+    gap: 8px;
+  }
+  
+  .lessonCount {
+    font-size: 0.75rem;
+    padding: 3px 6px;
+  }
+  
+  .completedBadge {
+    font-size: 0.65rem;
+    padding: 3px 6px;
+    gap: 3px;
+  }
+  
+  .badgeIcon {
+    font-size: 0.65rem;
+  }
+  
+  .chevron {
+    font-size: 0.65rem;
+  }
+  
+  .lessonsList {
+    padding: 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    padding: 10px 8px;
+  }
+  
+  .sectionTitle {
+    font-size: 0.8rem;
   }
   
   .completedBadge {

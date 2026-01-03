@@ -198,20 +198,21 @@
 /* Responsive */
 @media (max-width: 768px) {
   .notification {
-    top: 12px;
-    right: 12px;
-    left: 12px;
+    top: 10px;
+    right: 10px;
+    left: 10px;
     max-width: none;
     padding: 14px 16px;
+    border-radius: 12px;
   }
   
   .iconWrapper {
-    width: 38px;
-    height: 38px;
+    width: 40px;
+    height: 40px;
   }
   
   .icon {
-    font-size: 1.2rem;
+    font-size: 1.25rem;
   }
   
   .title {
@@ -225,5 +226,72 @@
   .courseComplete {
     font-size: 0.8rem;
     padding: 6px 10px;
+  }
+}
+
+@media (max-width: 576px) {
+  .notification {
+    top: 8px;
+    right: 8px;
+    left: 8px;
+    padding: 12px 14px;
+    gap: 12px;
+  }
+  
+  .iconWrapper {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+  }
+  
+  .icon {
+    font-size: 1.1rem;
+  }
+  
+  .ripple {
+    border-radius: 10px;
+  }
+  
+  .title {
+    font-size: 0.9rem;
+  }
+  
+  .message {
+    font-size: 0.8rem;
+  }
+  
+  .courseComplete {
+    font-size: 0.75rem;
+    padding: 5px 8px;
+    gap: 4px;
+  }
+  
+  .checkIcon {
+    font-size: 0.7rem;
+  }
+  
+  .closeButton {
+    width: 28px;
+    height: 28px;
+    top: 8px;
+    right: 8px;
+  }
+  
+  .progressLine {
+    height: 2px;
+  }
+}
+
+@media (max-width: 480px) {
+  .notification {
+    padding: 10px 12px;
+  }
+  
+  .title {
+    font-size: 0.85rem;
+  }
+  
+  .message {
+    font-size: 0.75rem;
   }
 }
