@@ -328,6 +328,9 @@
 @media (max-width: 576px) {
   .container {
     min-height: 300px;
+    width: 26% !important;
+    max-width: 26% !important;
+    aspect-ratio: auto !important;
   }
 
   .arrowHint {

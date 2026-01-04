@@ -3,6 +3,8 @@
 .container {
   position: relative;
   width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
   background: linear-gradient(145deg, #0f0f23 0%, #1a1a2e 100%);
   border-radius: 20px;
   overflow: hidden;
@@ -27,8 +29,9 @@
   position: relative;
   width: 100%;
   aspect-ratio: 16 / 9;
-  max-height: 80vh;
+  max-height: clamp(240px, 52vh, 720px);
   background: #000;
+  overflow: hidden;
 }
 
 /* Lesson Badge */
@@ -85,14 +88,14 @@
 /* Responsive */
 @media (max-width: 1200px) {
   .container {
-    width: 90%;
-    max-width: 540px; /* prevent over-expansion on medium screens */
+    width: 100%;
+    max-width: 100%;
     margin: 0 auto;
   }
 
   .playerWrapper {
     aspect-ratio: 16 / 9;
-    max-height: 40vh;
+    max-height: clamp(220px, 50vh, 560px);
   }
 }
 
@@ -102,7 +105,7 @@
   }
   
   .playerWrapper {
-    max-height: 50vh;
+    max-height: clamp(200px, 52vh, 480px);
     aspect-ratio: 16 / 10;
   }
   
@@ -119,28 +122,51 @@
 
 @media (max-width: 576px) {
   .container {
-    border-radius: 16px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-    width: 90%;
-    max-width: 400px; /* Prevent it from getting too wide on larger mobiles */
-    margin: 0 auto;
-    overflow: hidden; /* Strictly contain children */
+    border-radius: 16px !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2) !important;
+    width: 26% !important;
+    max-width: 26% !important;
+    min-width: 26% !important;
+    min-height: 300px !important;
+    aspect-ratio: auto !important;
+    margin: 0 auto !important;
+    overflow: hidden !important;
   }
   
   .playerWrapper {
-    /* Force standard aspect ratio to prevent vertical stretching */
-    aspect-ratio: 16 / 9;
-    width: 100%;
-    height: auto;
-    max-height: 30vh; /* Hard limit */
-    background: #000;
+    /* User-requested mobile override: shrink width and remove forced aspect ratio */
+    aspect-ratio: auto !important;
+    width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    display: block !important;
+    background: #000 !important;
+  }
+
+  /* Ensure Plyr doesn't re-impose its padding-based aspect ratio on mobile */
+  .playerWrapper :global(.plyr),
+  .playerWrapper :global(.plyr__video-embed) {
+    aspect-ratio: auto !important;
+    padding-top: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    display: block !important;
   }
   
   /* Ensure the inner player respects the wrapper */
   .playerWrapper > :global(.secure-player-wrapper) {
-    height: 100%;
-    width: 100%;
-    aspect-ratio: inherit;
+    height: 100% !important;
+    width: 100% !important;
+    aspect-ratio: auto !important;
+  }
+
+  .playerWrapper :global(.plyr__video-embed iframe) {
+    position: absolute;
+    inset: 0;
+    width: 100% !important;
+    height: 100% !important;
+    aspect-ratio: auto !important;
+    object-fit: contain;
   }
   
   .lessonBadge {
@@ -161,13 +187,13 @@
 
 @media (max-width: 480px) {
   .container {
-    width: 92%;
+    width: 26% !important;
     border-radius: 12px;
   }
   
   .playerWrapper {
     /* Keep 16/9 even on small screens */
-    aspect-ratio: 16 / 9;
-    max-height: 28vh;
+    aspect-ratio: auto;
+    max-height: clamp(180px, 46vh, 360px);
   }
 }
