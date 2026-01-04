@@ -278,10 +278,22 @@
 }
 
 /* Responsive */
+@media (max-width: 1200px) {
+  .container {
+    width: 52% !important;
+    max-width: 52% !important;
+    min-height: 300px !important;
+    aspect-ratio: auto !important;
+  }
+}
+
 @media (max-width: 768px) {
   .container {
-    min-height: 350px;
+    min-height: 300px !important;
     border-radius: 16px;
+    width: 40% !important;
+    max-width: 40% !important;
+    aspect-ratio: auto !important;
   }
 
   .content {
@@ -340,5 +352,15 @@
   .features {
     flex-direction: column;
     gap: 10px;
+  }
+}
+
+@media (max-width: 412px) {
+  .container {
+    width: 25% !important;
+    max-width: 25% !important;
+    min-width: 25% !important;
+    min-height: 300px !important;
+    aspect-ratio: auto !important;
   }
 }

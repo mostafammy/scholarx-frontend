@@ -100,9 +100,32 @@
 }
 
 /* Responsive */
+@media (max-width: 1200px) {
+  .sidebar {
+    width: 52% !important;
+    max-width: 52% !important;
+  }
+
+  .card {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .sectionsList {
+    max-height: 400px;
+  }
+}
+
 @media (max-width: 1024px) {
   .sidebar {
     position: static;
+    width: 52% !important;
+    max-width: 52% !important;
+  }
+  
+  .card {
+    width: 100% !important;
+    max-width: 100% !important;
   }
   
   .sectionsList {

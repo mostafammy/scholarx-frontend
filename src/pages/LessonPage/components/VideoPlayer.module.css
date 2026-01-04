@@ -88,25 +88,49 @@
 /* Responsive */
 @media (max-width: 1200px) {
   .container {
-    width: 100%;
-    max-width: 100%;
+    width: 52% !important;
+    max-width: 52% !important;
+    min-height: 300px !important;
+    aspect-ratio: auto !important;
     margin: 0 auto;
   }
 
   .playerWrapper {
-    aspect-ratio: 16 / 9;
-    max-height: clamp(220px, 50vh, 560px);
+    aspect-ratio: auto !important;
+    max-height: none !important;
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  /* Override Plyr's fixed aspect ratio */
+  .playerWrapper :global(.plyr__video-embed),
+  .playerWrapper :global(.plyr__video-wrapper--fixed-ratio) {
+    aspect-ratio: auto !important;
+    padding-top: 0 !important;
   }
 }
 
 @media (max-width: 768px) {
   .container {
     border-radius: 12px;
+    width: 40% !important;
+    max-width: 40% !important;
+    min-height: 300px !important;
+    aspect-ratio: auto !important;
   }
   
   .playerWrapper {
-    max-height: clamp(200px, 52vh, 480px);
-    aspect-ratio: 16 / 10;
+    max-height: none !important;
+    aspect-ratio: auto !important;
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  /* Override Plyr's fixed aspect ratio */
+  .playerWrapper :global(.plyr__video-embed),
+  .playerWrapper :global(.plyr__video-wrapper--fixed-ratio) {
+    aspect-ratio: auto !important;
+    padding-top: 0 !important;
   }
   
   .lessonBadge {
@@ -195,5 +219,19 @@
     /* Keep 16/9 even on small screens */
     aspect-ratio: auto;
     max-height: clamp(180px, 46vh, 360px);
+  }
+}
+
+@media (max-width: 412px) {
+  .container {
+    width: 25% !important;
+    max-width: 25% !important;
+    min-width: 25% !important;
+    min-height: 300px !important;
+    aspect-ratio: auto !important;
+    border-radius: 12px !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2) !important;
+    margin: 0 auto !important;
+    overflow: hidden !important;
   }
 }
