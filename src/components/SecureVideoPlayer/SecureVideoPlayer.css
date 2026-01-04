@@ -1,149 +1,169 @@
+/**
+ * SecureVideoPlayer Styles
+ * 
+ * ARCHITECTURE: This player fills its parent container completely.
+ * Parent (VideoPlayer.module.css) provides dimensions, we fill them.
+ * 
+ * Key principles:
+ * - Absolute positioning to fill parent
+ * - Let Plyr handle its own aspect ratio internally
+ * - No !important overrides - work with Plyr, not against it
+ * - Browser fallbacks for older devices
+ */
+
 :root {
   --plyr-color-main: #3b82f6;
+  --plyr-control-spacing: 10px;
 }
 
+/* Main wrapper - fills parent completely */
 .secure-player-wrapper {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  max-width: 100%;
   height: 100%;
-  border-radius: 20px;
-  overflow: hidden;
   background: #000;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
-  position: relative;
+  overflow: hidden;
   box-sizing: border-box;
+}
+
+/* Plyr video wrapper */
+.secure-player-wrapper .plyr {
+  width: 100%;
+  height: 100%;
 }
 
 .secure-player-wrapper .plyr__video-wrapper {
   background: #000;
+  width: 100%;
+  height: 100%;
 }
 
+/* Video embed container */
 .secure-player-wrapper .plyr__video-embed {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   overflow: hidden;
-  position: relative;
-  border-radius: inherit;
 }
 
+/* Override Plyr's padding-based aspect ratio since we control dimensions */
+.secure-player-wrapper .plyr__video-embed,
+.secure-player-wrapper .plyr--video .plyr__video-wrapper {
+  padding-bottom: 0;
+  height: 100%;
+}
+
+/* YouTube iframe */
 .secure-player-wrapper .plyr__video-embed iframe {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   width: 100%;
   height: 100%;
+  min-width: 100%;
+  min-height: 100%;
   object-fit: cover;
   pointer-events: none;
   border: 0;
 }
 
-@media (max-width: 1200px) {
-  .secure-player-wrapper {
-    width: 100% !important;
-    height: 100% !important;
-  }
+/* ===========================================
+   PLYR CONTROL CUSTOMIZATION
+   =========================================== */
 
-  .secure-player-wrapper .plyr__video-embed,
-  .secure-player-wrapper .plyr__video-wrapper--fixed-ratio {
-    aspect-ratio: auto !important;
-    padding-top: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
-  }
-
-  .secure-player-wrapper .plyr__video-embed iframe {
-    width: 100% !important;
-    height: 100% !important;
-  }
-}
-
-@media (max-width: 1024px) {
-  .secure-player-wrapper {
-    width: 100% !important;
-    height: 100% !important;
-  }
-
-  .secure-player-wrapper .plyr__video-embed,
-  .secure-player-wrapper .plyr__video-wrapper--fixed-ratio {
-    aspect-ratio: auto !important;
-    padding-top: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
-  }
-
-  .secure-player-wrapper .plyr__video-embed iframe {
-    width: 100% !important;
-    height: 100% !important;
-  }
-}
-
-@media (max-width: 576px) {
-  .secure-player-wrapper {
-    min-height: 120px;
-    width: 100% !important;
-    height: 100% !important;
-  }
-
-  .secure-player-wrapper .plyr__video-embed {
-    padding-top: 0 !important; /* override Plyr inline padding */
-    width: 100% !important;
-    height: 100% !important;
-  }
-
-  .secure-player-wrapper .plyr__video-embed iframe {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover;
-  }
-}
-
+/* Play button overlay */
 .secure-player-wrapper .plyr__control--overlaid {
   background: rgba(59, 130, 246, 0.92);
+  transition: background 0.2s ease, transform 0.2s ease;
 }
 
+.secure-player-wrapper .plyr__control--overlaid:hover,
+.secure-player-wrapper .plyr__control--overlaid:focus {
+  background: rgba(59, 130, 246, 1);
+  transform: scale(1.05);
+}
+
+/* Bottom controls bar */
 .secure-player-wrapper .plyr__controls {
-  padding: 0.75rem 1rem;
-  backdrop-filter: blur(18px);
-  background: rgba(10, 10, 10, 0.65);
+  padding: 10px 12px;
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  background: rgba(10, 10, 10, 0.7);
 }
 
-.secure-player-wrapper .plyr__menu__container {
-  border-radius: 12px;
+/* Fallback for browsers without backdrop-filter */
+@supports not (backdrop-filter: blur(12px)) {
+  .secure-player-wrapper .plyr__controls {
+    background: rgba(10, 10, 10, 0.9);
+  }
 }
+
+/* Settings menu */
+.secure-player-wrapper .plyr__menu__container {
+  border-radius: 10px;
+  background: rgba(20, 20, 20, 0.95);
+}
+
+/* Progress bar */
+.secure-player-wrapper .plyr__progress__container {
+  flex: 1;
+}
+
+/* ===========================================
+   ERROR & LOADING STATES
+   =========================================== */
 
 .secure-player-error {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   color: #f9fafb;
   text-align: center;
-  padding: 2rem 1.5rem;
-  background: #111827;
+  padding: 24px;
+  background: linear-gradient(145deg, #0f0f23 0%, #1a1a2e 100%);
 }
 
 .secure-player-error h3 {
-  margin: 0 0 0.5rem;
-  font-size: 1.25rem;
+  margin: 0 0 8px;
+  font-size: 1.2rem;
+  font-weight: 600;
 }
 
 .secure-player-error p {
   margin: 0;
   color: #9ca3af;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  max-width: 280px;
 }
 
 .secure-player-loading {
-  color: #f9fafb;
-  text-align: center;
-  padding: 2rem 1.5rem;
-  background: #111827;
+  position: absolute;
+  inset: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
   align-items: center;
   justify-content: center;
+  gap: 12px;
+  color: #f9fafb;
+  background: linear-gradient(145deg, #0f0f23 0%, #1a1a2e 100%);
+}
+
+.secure-player-loading p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #9ca3af;
 }
 
 .secure-player-loading-spinner {
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   border: 3px solid rgba(59, 130, 246, 0.2);
   border-top-color: #3b82f6;
@@ -153,5 +173,54 @@
 @keyframes secure-player-spin {
   to {
     transform: rotate(360deg);
+  }
+}
+
+/* ===========================================
+   RESPONSIVE ADJUSTMENTS
+   Only for control sizing, not layout
+   =========================================== */
+
+@media (max-width: 768px) {
+  .secure-player-wrapper .plyr__controls {
+    padding: 8px 10px;
+  }
+  
+  .secure-player-wrapper .plyr__control--overlaid {
+    width: 52px;
+    height: 52px;
+  }
+  
+  .secure-player-error h3 {
+    font-size: 1.1rem;
+  }
+  
+  .secure-player-error p {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .secure-player-wrapper .plyr__controls {
+    padding: 6px 8px;
+  }
+  
+  .secure-player-wrapper .plyr__control--overlaid {
+    width: 44px;
+    height: 44px;
+  }
+  
+  .secure-player-loading-spinner {
+    width: 28px;
+    height: 28px;
+  }
+  
+  .secure-player-error h3 {
+    font-size: 1rem;
+  }
+  
+  .secure-player-error p {
+    font-size: 0.8rem;
+    max-width: 240px;
   }
 }
