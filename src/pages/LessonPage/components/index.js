@@ -13,3 +13,4 @@ export { default as CompletionNotification } from "./CompletionNotification";
 export { default as AccessDenied } from "./AccessDenied";
 export { default as LoadingState } from "./LoadingState";
 export { default as EmptyLessonState } from "./EmptyLessonState";
+export { default as LessonContentWrapper } from "./LessonContentWrapper";

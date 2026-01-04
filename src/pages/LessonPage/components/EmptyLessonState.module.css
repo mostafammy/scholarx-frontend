@@ -1,20 +1,21 @@
-/* EmptyLessonState Styles */
+/**
+ * EmptyLessonState Styles
+ * 
+ * SIMPLIFIED: Container sizing is handled by LessonContentWrapper.
+ * This component fills its parent and handles internal styling only.
+ */
 
+/* Container fills parent completely */
 .container {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  aspect-ratio: 16 / 9;
-  min-height: 400px;
+  height: 100%;
   background: linear-gradient(145deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
-  border-radius: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
   overflow: hidden;
-  box-shadow: 
-    0 20px 50px rgba(0, 0, 0, 0.3),
-    0 0 0 1px rgba(255, 255, 255, 0.05);
-  animation: fadeIn 0.5s ease-out;
 }
 
 /* Background Pattern */
@@ -50,22 +51,12 @@
   }
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: scale(0.98);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
 .content {
   position: relative;
   z-index: 1;
   text-align: center;
   padding: 40px;
+  max-width: 100%;
   animation: slideUp 0.6s ease-out 0.2s both;
 }
 
@@ -277,33 +268,20 @@
   font-weight: 500;
 }
 
-/* Responsive */
-@media (max-width: 1200px) {
-  .container {
-    width: 52% !important;
-    max-width: 52% !important;
-    min-height: 300px !important;
-    aspect-ratio: auto !important;
-  }
-}
+/* ===========================================
+   RESPONSIVE - Only adjust internal elements
+   Sizing is handled by LessonContentWrapper
+   =========================================== */
 
 @media (max-width: 768px) {
-  .container {
-    min-height: 300px !important;
-    border-radius: 16px;
-    width: 40% !important;
-    max-width: 40% !important;
-    aspect-ratio: auto !important;
-  }
-
   .content {
-    padding: 30px 20px;
+    padding: 24px 16px;
   }
 
   .iconWrapper {
     width: 80px;
     height: 80px;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
   }
 
   .iconBg,
@@ -323,9 +301,19 @@
   .subtitle {
     font-size: 1rem;
   }
+  
+  .description {
+    font-size: 0.9rem;
+    margin-bottom: 16px;
+  }
+  
+  .arrowHint {
+    padding: 10px 18px;
+    margin-bottom: 20px;
+  }
 
   .features {
-    gap: 12px;
+    gap: 10px;
   }
 
   .featureItem {
@@ -338,29 +326,106 @@
 }
 
 @media (max-width: 576px) {
-  .container {
-    min-height: 300px;
-    width: 26% !important;
-    max-width: 26% !important;
-    aspect-ratio: auto !important;
+  .content {
+    padding: 20px 12px;
+  }
+  
+  .iconWrapper {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 12px;
+  }
+
+  .iconBg,
+  .pulseRing {
+    width: 50px;
+    height: 50px;
+  }
+
+  .icon {
+    font-size: 2rem;
+  }
+
+  .title {
+    font-size: 1.2rem;
+  }
+
+  .subtitle {
+    font-size: 0.9rem;
+  }
+  
+  .description {
+    font-size: 0.8rem;
+    margin-bottom: 12px;
   }
 
   .arrowHint {
-    padding: 10px 18px;
+    padding: 8px 14px;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  
+  .arrowText {
+    font-size: 0.8rem;
   }
 
   .features {
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
+  }
+  
+  .featureItem {
+    padding: 6px 10px;
+    gap: 6px;
+  }
+  
+  .featureIcon {
+    font-size: 0.9rem;
+  }
+  
+  .featureText {
+    font-size: 0.75rem;
   }
 }
 
-@media (max-width: 412px) {
-  .container {
-    width: 25% !important;
-    max-width: 25% !important;
-    min-width: 25% !important;
-    min-height: 300px !important;
-    aspect-ratio: auto !important;
+@media (max-width: 400px) {
+  .content {
+    padding: 16px 10px;
+  }
+  
+  .iconWrapper {
+    width: 56px;
+    height: 56px;
+    margin-bottom: 10px;
+  }
+
+  .iconBg,
+  .pulseRing {
+    width: 44px;
+    height: 44px;
+  }
+
+  .icon {
+    font-size: 1.6rem;
+  }
+
+  .title {
+    font-size: 1rem;
+  }
+
+  .subtitle {
+    font-size: 0.8rem;
+  }
+  
+  .description {
+    font-size: 0.75rem;
+  }
+  
+  .arrowHint {
+    padding: 6px 12px;
+  }
+  
+  .arrowText {
+    font-size: 0.7rem;
   }
 }

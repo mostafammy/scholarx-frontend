@@ -1,11 +1,25 @@
-/* LessonPage Main Styles */
+/**
+ * LessonPage Main Styles
+ * 
+ * Layout Structure:
+ * - Desktop: Two-column grid (main content + sidebar)
+ * - Tablet/Mobile: Single column stack
+ * 
+ * Design tokens for consistency across breakpoints.
+ */
 
+/* Design tokens */
 .page {
+  --page-max-width: 1600px;
+  --page-gap: 24px;
+  --page-padding: 24px;
+  --sidebar-width: 380px;
+  
   display: grid;
-  grid-template-columns: 1fr 380px;
-  gap: 24px;
-  padding: 24px;
-  max-width: 1600px;
+  grid-template-columns: 1fr var(--sidebar-width);
+  gap: var(--page-gap);
+  padding: var(--page-padding);
+  max-width: var(--page-max-width);
   margin: 0 auto;
   min-height: calc(100vh - 80px);
   animation: fadeIn 0.4s ease-out;
@@ -114,69 +128,68 @@
   box-shadow: 0 8px 25px rgba(102, 126, 234, 0.35);
 }
 
-/* Responsive Breakpoints */
+/* Responsive Breakpoints - Consolidated & Optimized */
+
+/* Tablet and below - Single column layout */
 @media (max-width: 1200px) {
   .page {
-    grid-template-columns: 1fr;
-    gap: 20px;
-    padding: 20px;
-    max-width: 100%;
-    overflow-x: hidden;
+    --page-gap: 20px;
+    --page-padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--page-gap);
   }
 
   .mainContent {
-    width: 100%;
-    max-width: 100%;
-    overflow: hidden;
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
   }
 
   .sidebar {
     position: static;
-    width: 100%;
-    max-width: 100%;
     max-height: none;
     overflow-y: visible;
+    width: 52%;
+    max-width: 52%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
   }
 }
 
+/* Smaller tablets and below - Both player and sidebar grow to full width */
 @media (max-width: 1024px) {
-  .page {
-    grid-template-columns: 1fr;
-    gap: 24px;
-    max-width: 100%;
-    overflow-x: hidden;
-  }
-  
   .mainContent {
     width: 100%;
-    max-width: 100%;
   }
-  
+
   .sidebar {
-    position: static;
-    width: 100%;
-    max-width: 100%;
-    max-height: none;
-    overflow-y: visible;
+    width: 100% !important;
+    max-width: 100% !important;
   }
 }
 
+/* Small tablets */
 @media (max-width: 768px) {
   .page {
-    padding: 16px;
-    gap: 20px;
+    --page-padding: 16px;
   }
 }
 
+/* Mobile phones */
 @media (max-width: 576px) {
   .page {
-    padding: 8px;
-    gap: 12px;
+    --page-gap: 16px;
+    --page-padding: 12px;
     min-height: calc(100vh - 60px);
-  }
-  
-  .mainContent {
-    gap: 0;
   }
   
   .errorCard {
@@ -202,9 +215,10 @@
   }
 }
 
-@media (max-width: 480px) {
+/* Small mobile phones */
+@media (max-width: 400px) {
   .page {
-    padding: 4px;
-    gap: 8px;
+    --page-gap: 12px;
+    --page-padding: 8px;
   }
 }

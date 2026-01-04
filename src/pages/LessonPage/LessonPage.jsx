@@ -30,6 +30,7 @@ import {
   AccessDenied,
   LoadingState,
   EmptyLessonState,
+  LessonContentWrapper,
 } from "./components";
 import styles from "./LessonPage.module.css";
 
@@ -136,17 +137,19 @@ const LessonPage = () => {
     <div className={styles.page}>
       {/* Main Content Area */}
       <main className={styles.mainContent}>
-        {/* Video Player or Empty State */}
-        {currentLesson ? (
-          <VideoPlayer
-            videoUrl={currentLesson.videoUrl}
-            onComplete={handleVideoComplete}
-            onProgress={handlePlaybackProgress}
-            lessonTitle={currentLesson.title}
-          />
-        ) : (
-          <EmptyLessonState courseName={course?.title} />
-        )}
+        {/* Video Player or Empty State - Wrapped for consistent sizing */}
+        <LessonContentWrapper>
+          {currentLesson ? (
+            <VideoPlayer
+              videoUrl={currentLesson.videoUrl}
+              onComplete={handleVideoComplete}
+              onProgress={handlePlaybackProgress}
+              lessonTitle={currentLesson.title}
+            />
+          ) : (
+            <EmptyLessonState courseName={course?.title} />
+          )}
+        </LessonContentWrapper>
 
         {/* Lesson Header - only show when lesson selected */}
         {currentLesson && (

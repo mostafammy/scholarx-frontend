@@ -1,0 +1,170 @@
+/**
+ * LessonContentWrapper Styles
+ * 
+ * SINGLE SOURCE OF TRUTH for lesson content sizing.
+ * All responsive width/height logic lives here.
+ * Child components (VideoPlayer, EmptyLessonState) fill 100% of this container.
+ * 
+ * Design Tokens:
+ * - Uses CSS custom properties for consistency
+ * - Mobile-first responsive approach
+ * - Aspect ratio maintained via padding-top fallback + modern aspect-ratio
+ */
+
+/* Design tokens */
+.wrapper {
+  --content-border-radius: 12px;
+  --content-shadow: 0 20px 50px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  --content-bg: linear-gradient(145deg, #0f0f23 0%, #1a1a2e 100%);
+  
+  width: 100%;
+  animation: wrapperFadeIn 0.5s ease-out;
+}
+
+@keyframes wrapperFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Aspect ratio container - maintains 16:9 */
+.aspectContainer {
+  position: relative;
+  width: 100%;
+  background: var(--content-bg);
+  border-radius: var(--content-border-radius);
+  box-shadow: var(--content-shadow);
+  overflow: hidden;
+  
+  /* Modern browsers: aspect-ratio */
+  aspect-ratio: 16 / 9;
+}
+
+/* Fallback for older browsers without aspect-ratio support */
+@supports not (aspect-ratio: 16 / 9) {
+  .aspectContainer {
+    height: 0;
+    padding-top: 56.25%; /* 9/16 = 0.5625 */
+  }
+  
+  .content {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+}
+
+/* Content fills the container completely */
+.content {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+/* ===========================================
+   RESPONSIVE BREAKPOINTS - Mobile First
+   =========================================== */
+
+/* Tablet - Landscape (1024px - 1200px) */
+@media (min-width: 1024px) {
+  .wrapper {
+    --content-border-radius: 16px;
+  }
+}
+
+/* Desktop (1200px+) - Full width in grid layout */
+@media (min-width: 1201px) {
+  .wrapper {
+    --content-border-radius: 20px;
+    width: 100%;
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  
+  .aspectContainer {
+    max-height: 720px;
+  }
+}
+
+/* Large Desktop (1400px+) */
+@media (min-width: 1400px) {
+  .aspectContainer {
+    max-height: 800px;
+  }
+}
+
+/* ===========================================
+   TABLET & MOBILE - Constrained Width
+   Below 1200px layout becomes single column
+   =========================================== */
+
+/* Tablet landscape and smaller desktop */
+@media (max-width: 1200px) {
+  .wrapper {
+    --content-border-radius: 16px;
+    --content-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
+    width: 100%;
+  }
+}
+
+/* Tablet portrait */
+@media (max-width: 900px) {
+  .wrapper {
+    width: min(80vw, 100vw);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+/* Small tablets and large phones */
+@media (max-width: 768px) {
+  .wrapper {
+    --content-border-radius: 14px;
+    --content-shadow: 0 12px 32px rgba(0, 0, 0, 0.22);
+    width: min(560px, 92vw);
+  }
+}
+
+/* Mobile phones */
+@media (max-width: 576px) {
+  .wrapper {
+    --content-border-radius: 12px;
+    --content-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    width: min(513px, 95vw);
+  }
+  
+  .aspectContainer {
+    /* Minimum height for usability on small screens */
+    min-height: 180px;
+  }
+}
+
+/* Small mobile phones */
+@media (max-width: 400px) {
+  .wrapper {
+    --content-border-radius: 10px;
+    width: 96vw;
+  }
+  
+  .aspectContainer {
+    min-height: 160px;
+  }
+}
+
+/* Landscape mobile - adjust for limited height */
+@media (max-width: 896px) and (orientation: landscape) {
+  .wrapper {
+    width: min(65vh, 75vw);
+  }
+  
+  .aspectContainer {
+    max-height: 65vh;
+  }
+}
