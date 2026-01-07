@@ -1,29 +1,29 @@
-import React, { useState } from 'react';
-import './Services.css';
-import { FaUsers, FaPodcast } from 'react-icons/fa';
-import { MdWork } from 'react-icons/md';
-import AmbassadorModal from './components/AmbassadorModal/AmbassadorModal';
-import MentorshipModal from './components/MentorshipModal/MentorshipModal';
-import PodcastModal from './components/PodcastModal/PodcastModal';
+import React, { useState } from "react";
+import "./Services.css";
+import { FaUsers, FaPodcast } from "react-icons/fa";
+import { MdWork } from "react-icons/md";
+import AmbassadorModal from "./components/AmbassadorModal/AmbassadorModal";
+import MentorshipModal from "./components/MentorshipModal/MentorshipModal";
+import PodcastModal from "./components/PodcastModal/PodcastModal";
 
 function Services() {
   const [modals, setModals] = useState({
     ambassador: false,
     mentorship: false,
-    podcast: false
+    podcast: false,
   });
 
   const openModal = (modalName) => {
     setModals({
       ...modals,
-      [modalName]: true
+      [modalName]: true,
     });
   };
 
   const closeModal = (modalName) => {
     setModals({
       ...modals,
-      [modalName]: false
+      [modalName]: false,
     });
   };
 
@@ -33,7 +33,11 @@ function Services() {
       <section className="hero-section">
         <div className="hero-content">
           <div className="hero-logo">
-            <img src="/whitelogo.png" alt="ScholarX Logo" className="scholarx-logo" />
+            <img
+              src="/whitelogo.png"
+              alt="ScholarX Logo"
+              className="scholarx-logo"
+            />
           </div>
           <div className="hero-text">
             <h1>Take the Lead. Spark Inspiration. Shape the Future.</h1>
@@ -47,27 +51,43 @@ function Services() {
       <section className="programs-section">
         <div className="section-container">
           <h2 className="section-title">Our Programs</h2>
-          
+
           <div className="programs-container">
             <div className="program-card">
               <div className="program-icon ambassador">
                 <FaUsers />
               </div>
               <h3>Ambassador Program</h3>
-              <p>Lead, organize events, and mentor peers at your school/university. Develop leadership skills and make an impact.</p>
+              <p>
+                Lead, organize events, and mentor peers at your
+                school/university. Develop leadership skills and make an impact.
+              </p>
               <div className="program-buttons">
-                <button className="program-btn apply-btn" onClick={() => openModal('ambassador')}>Apply Now</button>
+                <button
+                  className="program-btn apply-btn"
+                  onClick={() => openModal("ambassador")}
+                >
+                  Apply Now
+                </button>
               </div>
             </div>
 
-            <div className="program-card">
+            <div className="program-card" style={{ display: "none" }}>
               <div className="program-icon mentorship">
                 <MdWork />
               </div>
               <h3>Mentorship & Career Guidance</h3>
-              <p>Get 1-on-1 mentorship for essays, interviews, and career development from experienced professionals.</p>
+              <p>
+                Get 1-on-1 mentorship for essays, interviews, and career
+                development from experienced professionals.
+              </p>
               <div className="program-buttons">
-                <button className="program-btn request-btn" onClick={() => openModal('mentorship')}>Request Mentor</button>
+                <button
+                  className="program-btn request-btn"
+                  onClick={() => openModal("mentorship")}
+                >
+                  Request Mentor
+                </button>
               </div>
             </div>
 
@@ -128,19 +148,19 @@ function Services() {
       </section> */}
 
       {/* Modals */}
-      <AmbassadorModal 
-        isOpen={modals.ambassador} 
-        onClose={() => closeModal('ambassador')} 
+      <AmbassadorModal
+        isOpen={modals.ambassador}
+        onClose={() => closeModal("ambassador")}
       />
-      
-      <MentorshipModal 
-        isOpen={modals.mentorship} 
-        onClose={() => closeModal('mentorship')} 
+
+      <MentorshipModal
+        isOpen={modals.mentorship}
+        onClose={() => closeModal("mentorship")}
       />
-      
-      <PodcastModal 
-        isOpen={modals.podcast} 
-        onClose={() => closeModal('podcast')} 
+
+      <PodcastModal
+        isOpen={modals.podcast}
+        onClose={() => closeModal("podcast")}
       />
     </div>
   );
