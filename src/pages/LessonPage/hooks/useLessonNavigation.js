@@ -16,7 +16,7 @@ export const useLessonNavigation = (sections, currentLesson, selectLesson) => {
   const [isTheaterMode, setIsTheaterMode] = useState(false);
   const [showAutoPlay, setShowAutoPlay] = useState(false);
   const [isSidebarVisible, setIsSidebarVisible] = useState(true);
-  
+
   // Initialize playback speed from localStorage synchronously to avoid race conditions
   const [playbackSpeed, setPlaybackSpeed] = useState(() => {
     if (typeof window === "undefined") return 1;

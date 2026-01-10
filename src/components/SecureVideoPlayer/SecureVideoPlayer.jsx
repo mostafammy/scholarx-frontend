@@ -17,7 +17,7 @@ const SecureVideoPlayer = ({
   const playerRef = useRef(null);
   const playerInstance = useRef(null);
   const currentSpeedRef = useRef(playbackSpeed); // Track current speed to avoid infinite loops
-  
+
   // Use refs for callbacks to avoid reinitializing player when callbacks change
   const onCompleteRef = useRef(onComplete);
   const onProgressRef = useRef(onProgress);
@@ -27,7 +27,7 @@ const SecureVideoPlayer = ({
   useEffect(() => {
     currentSpeedRef.current = playbackSpeed;
   }, [playbackSpeed]);
-  
+
   useEffect(() => {
     onCompleteRef.current = onComplete;
     onProgressRef.current = onProgress;
@@ -66,7 +66,10 @@ const SecureVideoPlayer = ({
       ],
       settings: ["quality", "speed"],
       autoplay: true,
-      speed: { selected: playbackSpeed, options: [0.5, 0.75, 1, 1.25, 1.5, 1.75, 2] },
+      speed: {
+        selected: playbackSpeed,
+        options: [0.5, 0.75, 1, 1.25, 1.5, 1.75, 2],
+      },
       keyboard: { focused: true, global: true },
       tooltips: { controls: true, seek: true },
       youtube: {
@@ -143,7 +146,11 @@ const SecureVideoPlayer = ({
 
   // Apply playback speed changes from React prop to Plyr
   useEffect(() => {
-    if (playerInstance.current && typeof playbackSpeed === "number" && playerInstance.current.media) {
+    if (
+      playerInstance.current &&
+      typeof playbackSpeed === "number" &&
+      playerInstance.current.media
+    ) {
       try {
         playerInstance.current.speed = playbackSpeed;
         currentSpeedRef.current = playbackSpeed;
