@@ -45,25 +45,20 @@
   aspect-ratio: 16 / 9;
 }
 
+/* Content fills the container completely */
+.content {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
 /* Fallback for older browsers without aspect-ratio support */
 @supports not (aspect-ratio: 16 / 9) {
   .aspectContainer {
     height: 0;
     padding-top: 56.25%; /* 9/16 = 0.5625 */
   }
-  
-  .content {
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-}
-
-/* Content fills the container completely */
-.content {
-  width: 100%;
-  height: 100%;
-  position: relative;
 }
 
 /* ===========================================
@@ -97,6 +92,21 @@
   .aspectContainer {
     max-height: 800px;
   }
+}
+
+/* ===========================================
+   THEATER MODE - Full Width Immersive View
+   =========================================== */
+
+.theaterMode {
+  --content-border-radius: 0;
+  width: 100%;
+  max-width: 100%;
+}
+
+.theaterMode .aspectContainer {
+  max-height: 85vh;
+  border-radius: 0;
 }
 
 /* ===========================================

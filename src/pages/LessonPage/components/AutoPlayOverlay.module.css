@@ -1,0 +1,236 @@
+/**
+ * AutoPlayOverlay Styles
+ * Full-screen overlay with glass morphism and modern animations
+ */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 40px;
+  max-width: 500px;
+  text-align: center;
+  animation: scaleIn 0.4s ease-out;
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Progress Ring */
+.progressRing {
+  position: relative;
+  width: 120px;
+  height: 120px;
+}
+
+.ringSvg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.ringBackground {
+  stroke: rgba(255, 255, 255, 0.1);
+}
+
+.ringProgress {
+  stroke: url(#gradient);
+  stroke: #667eea;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 8px rgba(102, 126, 234, 0.5));
+}
+
+.countdownNumber {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 3rem;
+  font-weight: 700;
+  color: white;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Next Lesson Info */
+.nextLessonInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.upNextLabel {
+  display: inline-block;
+  padding: 4px 12px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 20px;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.nextLessonTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+  margin: 8px 0 0 0;
+  line-height: 1.3;
+}
+
+.nextLessonDescription {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Action Buttons */
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.playNowButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+}
+
+.playNowButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 30px rgba(102, 126, 234, 0.5);
+}
+
+.playIcon {
+  width: 20px;
+  height: 20px;
+}
+
+.pauseButton,
+.cancelButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pauseButton:hover,
+.cancelButton:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.buttonIcon {
+  width: 16px;
+  height: 16px;
+}
+
+/* Keyboard Hint */
+.keyboardHint {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.4);
+  margin-top: 8px;
+}
+
+.keyboardHint kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 0.75rem;
+  margin: 0 4px;
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+  .content {
+    padding: 24px;
+    gap: 20px;
+  }
+  
+  .progressRing {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .countdownNumber {
+    font-size: 2.5rem;
+  }
+  
+  .nextLessonTitle {
+    font-size: 1.25rem;
+  }
+  
+  .actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .playNowButton,
+  .pauseButton,
+  .cancelButton {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .keyboardHint {
+    display: none;
+  }
+}

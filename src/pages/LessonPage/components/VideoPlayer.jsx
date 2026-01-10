@@ -12,7 +12,9 @@ const VideoPlayer = memo(function VideoPlayer({
   videoUrl,
   onComplete,
   onProgress,
+  onSpeedChange,
   lessonTitle,
+  playbackSpeed = 1,
 }) {
   return (
     <div className={styles.container}>
@@ -21,6 +23,8 @@ const VideoPlayer = memo(function VideoPlayer({
           videoUrl={videoUrl}
           onComplete={onComplete}
           onProgress={onProgress}
+          onSpeedChange={onSpeedChange}
+          playbackSpeed={playbackSpeed}
         />
       </div>
       {lessonTitle && (
@@ -37,7 +41,9 @@ VideoPlayer.propTypes = {
   videoUrl: PropTypes.string,
   onComplete: PropTypes.func,
   onProgress: PropTypes.func,
+  onSpeedChange: PropTypes.func,
   lessonTitle: PropTypes.string,
+  playbackSpeed: PropTypes.number,
 };
 
 export default VideoPlayer;

@@ -19,9 +19,14 @@ import styles from "./LessonContentWrapper.module.css";
 const LessonContentWrapper = memo(function LessonContentWrapper({
   children,
   className = "",
+  isTheaterMode = false,
 }) {
   return (
-    <div className={`${styles.wrapper} ${className}`.trim()}>
+    <div
+      className={`${styles.wrapper} ${
+        isTheaterMode ? styles.theaterMode : ""
+      } ${className}`.trim()}
+    >
       <div className={styles.aspectContainer}>
         <div className={styles.content}>{children}</div>
       </div>
@@ -32,6 +37,7 @@ const LessonContentWrapper = memo(function LessonContentWrapper({
 LessonContentWrapper.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
+  isTheaterMode: PropTypes.bool,
 };
 
 export default LessonContentWrapper;

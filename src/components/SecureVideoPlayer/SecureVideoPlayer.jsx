@@ -9,11 +9,30 @@ const SecureVideoPlayer = ({
   videoUrl,
   onComplete,
   onProgress,
+  onSpeedChange,
   analyticsEndpoint = "/api/clicks",
+  playbackSpeed = 1,
 }) => {
   const containerRef = useRef(null);
   const playerRef = useRef(null);
   const playerInstance = useRef(null);
+  const currentSpeedRef = useRef(playbackSpeed); // Track current speed to avoid infinite loops
+  
+  // Use refs for callbacks to avoid reinitializing player when callbacks change
+  const onCompleteRef = useRef(onComplete);
+  const onProgressRef = useRef(onProgress);
+  const onSpeedChangeRef = useRef(onSpeedChange);
+
+  // Keep refs in sync with props
+  useEffect(() => {
+    currentSpeedRef.current = playbackSpeed;
+  }, [playbackSpeed]);
+  
+  useEffect(() => {
+    onCompleteRef.current = onComplete;
+    onProgressRef.current = onProgress;
+    onSpeedChangeRef.current = onSpeedChange;
+  }, [onComplete, onProgress, onSpeedChange]);
 
   const videoId = useMemo(() => extractYouTubeId(videoUrl), [videoUrl]);
   const origin = useMemo(() => {
@@ -47,6 +66,7 @@ const SecureVideoPlayer = ({
       ],
       settings: ["quality", "speed"],
       autoplay: true,
+      speed: { selected: playbackSpeed, options: [0.5, 0.75, 1, 1.25, 1.5, 1.75, 2] },
       keyboard: { focused: true, global: true },
       tooltips: { controls: true, seek: true },
       youtube: {
@@ -58,34 +78,80 @@ const SecureVideoPlayer = ({
       },
     });
 
+    // Set initial playback speed when player is ready
+    const handleReady = () => {
+      try {
+        // Use ref to get the latest speed value
+        instance.speed = currentSpeedRef.current;
+      } catch {
+        // Ignore if setting speed fails
+      }
+    };
+
     const handleEnded = () => {
-      if (onComplete) {
-        onComplete();
+      if (onCompleteRef.current) {
+        onCompleteRef.current();
       }
     };
 
     const handleTimeUpdate = () => {
-      if (onProgress) {
-        onProgress({
-          currentTime: instance.currentTime,
-          duration: instance.duration,
-          playing: instance.playing,
-        });
+      // Guard against null media - Plyr can fire events before media is ready
+      if (onProgressRef.current && instance.media) {
+        try {
+          onProgressRef.current({
+            currentTime: instance.currentTime || 0,
+            duration: instance.duration || 0,
+            playing: instance.playing || false,
+          });
+        } catch {
+          // Silently ignore errors during player initialization/destruction
+        }
       }
     };
 
+    // Sync speed changes from Plyr's built-in controls back to React
+    const handleRateChange = () => {
+      // Guard against null media and only trigger if speed actually changed
+      if (!instance.media) return;
+      try {
+        const newSpeed = instance.speed;
+        if (onSpeedChangeRef.current && newSpeed !== currentSpeedRef.current) {
+          currentSpeedRef.current = newSpeed;
+          onSpeedChangeRef.current(newSpeed);
+        }
+      } catch {
+        // Silently ignore errors during player initialization/destruction
+      }
+    };
+
+    instance.on("ready", handleReady);
     instance.on("ended", handleEnded);
     instance.on("timeupdate", handleTimeUpdate);
+    instance.on("ratechange", handleRateChange);
 
     playerInstance.current = instance;
 
     return () => {
+      instance.off("ready", handleReady);
       instance.off("ended", handleEnded);
       instance.off("timeupdate", handleTimeUpdate);
+      instance.off("ratechange", handleRateChange);
       instance.destroy();
       playerInstance.current = null;
     };
-  }, [videoId, onComplete, onProgress]);
+  }, [videoId]); // Only reinitialize when videoId changes
+
+  // Apply playback speed changes from React prop to Plyr
+  useEffect(() => {
+    if (playerInstance.current && typeof playbackSpeed === "number" && playerInstance.current.media) {
+      try {
+        playerInstance.current.speed = playbackSpeed;
+        currentSpeedRef.current = playbackSpeed;
+      } catch {
+        // Silently ignore if player not ready
+      }
+    }
+  }, [playbackSpeed]);
 
   useEffect(() => {
     if (typeof window === "undefined") {
@@ -118,11 +184,23 @@ const SecureVideoPlayer = ({
         return;
       }
 
+      // Safely access player properties with proper null checks
+      let progressSeconds = 0;
+      let state = "paused";
+      try {
+        if (playerInstance.current?.media) {
+          progressSeconds = playerInstance.current.currentTime || 0;
+          state = playerInstance.current.playing ? "playing" : "paused";
+        }
+      } catch {
+        // Ignore errors if player not ready
+      }
+
       const payload = {
         videoId,
         timestamp: new Date().toISOString(),
-        state: playerInstance.current?.playing ? "playing" : "paused",
-        progressSeconds: playerInstance.current?.currentTime || 0,
+        state,
+        progressSeconds,
       };
 
       sendAnalytics(analyticsEndpoint, payload);
