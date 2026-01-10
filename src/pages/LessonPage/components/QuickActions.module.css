@@ -1,0 +1,199 @@
+/**
+ * QuickActions Styles
+ * Floating action bar with glass morphism
+ */
+
+.container {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 90;
+  animation: slideUp 0.4s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+.actionsBar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 16px;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.actionButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  background: transparent;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.actionButton:hover {
+  background: #f1f5f9;
+  color: #1e293b;
+}
+
+.actionButton.active {
+  background: rgba(102, 126, 234, 0.1);
+  color: #667eea;
+}
+
+.actionButton.completed {
+  background: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+}
+
+.icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.actionLabel {
+  display: block;
+}
+
+.divider {
+  width: 1px;
+  height: 24px;
+  background: #e2e8f0;
+}
+
+/* Speed Control */
+.speedControl {
+  position: relative;
+}
+
+.speedMenu {
+  position: absolute;
+  bottom: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 160px;
+  padding: 8px;
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  animation: fadeInUp 0.2s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+.speedMenuTitle {
+  padding: 8px 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.speedOption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px 12px;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.speedOption:hover {
+  background: #f1f5f9;
+}
+
+.speedOption.selected {
+  background: rgba(102, 126, 234, 0.1);
+  color: #667eea;
+  font-weight: 600;
+}
+
+.checkIcon {
+  width: 16px;
+  height: 16px;
+  color: #667eea;
+}
+
+/* Sidebar toggle - only show on smaller screens */
+.sidebarToggle {
+  display: none;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .sidebarToggle {
+    display: inline-flex;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    bottom: 16px;
+    left: 8px;
+    right: 8px;
+    transform: none;
+  }
+  
+  .actionsBar {
+    width: 100%;
+    justify-content: center;
+    padding: 8px 12px;
+  }
+  
+  .actionLabel {
+    display: none;
+  }
+  
+  .actionButton {
+    padding: 10px 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .divider {
+    display: none;
+  }
+  
+  .actionsBar {
+    gap: 4px;
+  }
+}

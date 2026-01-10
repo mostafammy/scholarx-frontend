@@ -2,8 +2,9 @@
  * LessonPage Main Styles
  * 
  * Layout Structure:
- * - Desktop: Two-column grid (main content + sidebar)
+ * - Desktop: Navigation bar + Two-column grid (main content + sidebar)
  * - Tablet/Mobile: Single column stack
+ * - Theater Mode: Full-width video with hidden sidebar
  * 
  * Design tokens for consistency across breakpoints.
  */
@@ -14,15 +15,18 @@
   --page-gap: 24px;
   --page-padding: 24px;
   --sidebar-width: 380px;
+  --nav-height: 64px;
   
-  display: grid;
-  grid-template-columns: 1fr var(--sidebar-width);
-  gap: var(--page-gap);
-  padding: var(--page-padding);
-  max-width: var(--page-max-width);
-  margin: 0 auto;
-  min-height: calc(100vh - 80px);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #f8fafc;
   animation: fadeIn 0.4s ease-out;
+}
+
+/* Theater Mode */
+.page.theaterMode {
+  background: #0f172a;
 }
 
 @keyframes fadeIn {
@@ -34,21 +38,53 @@
   }
 }
 
+/* Layout Container - Below Navigation */
+.layoutContainer {
+  display: grid;
+  grid-template-columns: 1fr var(--sidebar-width);
+  gap: var(--page-gap);
+  padding: var(--page-padding);
+  max-width: var(--page-max-width);
+  margin: 0 auto;
+  width: 100%;
+  flex: 1;
+}
+
 /* Main Content Area - Video Focused */
 .mainContent {
   display: flex;
   flex-direction: column;
-  gap: 0;
+  gap: 20px;
   min-width: 0; /* Prevent grid blowout */
+}
+
+.mainContent.fullWidth {
+  grid-column: 1 / -1;
 }
 
 /* Sidebar Area - Fixed Width */
 .sidebar {
   position: sticky;
-  top: 24px;
+  top: calc(var(--nav-height) + 24px);
   height: fit-content;
-  max-height: calc(100vh - 48px);
+  max-height: calc(100vh - var(--nav-height) - 48px);
   overflow-y: auto;
+}
+
+/* Theater Mode Adjustments */
+.theaterMode .layoutContainer {
+  grid-template-columns: 1fr;
+  max-width: 100%;
+  padding: 0;
+  gap: 0;
+}
+
+.theaterMode .mainContent {
+  gap: 0;
+}
+
+.theaterMode .sidebar {
+  display: none;
 }
 
 /* Error State */
@@ -132,7 +168,7 @@
 
 /* Tablet and below - Single column layout */
 @media (max-width: 1200px) {
-  .page {
+  .layoutContainer {
     --page-gap: 20px;
     --page-padding: 20px;
     display: flex;
@@ -142,20 +178,20 @@
   }
 
   .mainContent {
-    width: 95%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-content: center;
     justify-content: center;
-    align-items: center;
+    align-items: stretch;
   }
 
   .sidebar {
     position: static;
     max-height: none;
     overflow-y: visible;
-    width: 52%;
-    max-width: 52%;
+    width: 100%;
+    max-width: 600px;
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
@@ -179,17 +215,17 @@
 
 /* Small tablets */
 @media (max-width: 768px) {
-  .page {
+  .layoutContainer {
     --page-padding: 16px;
+    padding-bottom: 100px; /* Space for quick actions */
   }
 }
 
 /* Mobile phones */
 @media (max-width: 576px) {
-  .page {
+  .layoutContainer {
     --page-gap: 16px;
     --page-padding: 12px;
-    min-height: calc(100vh - 60px);
   }
   
   .errorCard {
@@ -217,7 +253,7 @@
 
 /* Small mobile phones */
 @media (max-width: 400px) {
-  .page {
+  .layoutContainer {
     --page-gap: 12px;
     --page-padding: 8px;
   }

@@ -1,0 +1,370 @@
+/**
+ * NavigationBar Styles
+ * Clean, modern navigation with glass morphism effects
+ */
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  transition: all 0.3s ease;
+}
+
+.navbar.theaterMode {
+  background: rgba(15, 23, 42, 0.95);
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Left Section */
+.leftSection {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+}
+
+.backButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: transparent;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  color: #475569;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.backButton:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+  color: #1e293b;
+  transform: translateX(-2px);
+}
+
+.theaterMode .backButton {
+  border-color: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.theaterMode .backButton:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #fff;
+}
+
+.backIcon {
+  width: 16px;
+  height: 16px;
+}
+
+.backText {
+  display: block;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+}
+
+.breadcrumbLink {
+  background: none;
+  border: none;
+  color: #64748b;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.breadcrumbLink:hover {
+  color: #667eea;
+  background: rgba(102, 126, 234, 0.1);
+}
+
+.theaterMode .breadcrumbLink {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.theaterMode .breadcrumbLink:hover {
+  color: #a5b4fc;
+  background: rgba(165, 180, 252, 0.1);
+}
+
+.breadcrumbSeparator {
+  color: #cbd5e1;
+}
+
+.theaterMode .breadcrumbSeparator {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.breadcrumbCurrent {
+  color: #1e293b;
+  font-weight: 600;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.theaterMode .breadcrumbCurrent {
+  color: #fff;
+}
+
+/* Center Section */
+.centerSection {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.navButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 18px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.25);
+}
+
+.navButton:hover:not(.disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(102, 126, 234, 0.35);
+}
+
+.navButton:active:not(.disabled) {
+  transform: translateY(0);
+}
+
+.navButton.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.navIcon {
+  width: 16px;
+  height: 16px;
+}
+
+.navText {
+  display: block;
+}
+
+.lessonIndicator {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: #f1f5f9;
+  border-radius: 20px;
+  font-size: 0.9rem;
+}
+
+.theaterMode .lessonIndicator {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.lessonCurrent {
+  font-weight: 700;
+  color: #667eea;
+  font-size: 1.1rem;
+}
+
+.theaterMode .lessonCurrent {
+  color: #a5b4fc;
+}
+
+.lessonSeparator {
+  color: #94a3b8;
+}
+
+.theaterMode .lessonSeparator {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.lessonTotal {
+  color: #64748b;
+  font-weight: 500;
+}
+
+.theaterMode .lessonTotal {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Right Section */
+.rightSection {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+  justify-content: flex-end;
+}
+
+.keyboardHint {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+.theaterMode .keyboardHint {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px 6px;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 0.7rem;
+  color: #64748b;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.theaterMode .kbd {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.hintText {
+  margin-left: 4px;
+}
+
+.theaterButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  color: #475569;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.theaterButton:hover {
+  background: #e2e8f0;
+}
+
+.theaterButton.active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-color: transparent;
+  color: white;
+}
+
+.theaterMode .theaterButton:not(.active) {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.theaterIcon {
+  width: 18px;
+  height: 18px;
+}
+
+.theaterText {
+  display: block;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .breadcrumb {
+    display: none;
+  }
+  
+  .keyboardHint {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 10px 12px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .leftSection {
+    order: 1;
+    flex: 0 0 auto;
+  }
+  
+  .centerSection {
+    order: 3;
+    flex: 1 0 100%;
+    justify-content: center;
+  }
+  
+  .rightSection {
+    order: 2;
+    flex: 0 0 auto;
+  }
+  
+  .backText {
+    display: none;
+  }
+  
+  .backButton {
+    padding: 8px 12px;
+  }
+  
+  .navText {
+    display: none;
+  }
+  
+  .navButton {
+    padding: 10px 14px;
+  }
+  
+  .theaterText {
+    display: none;
+  }
+  
+  .theaterButton {
+    padding: 10px 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .lessonIndicator {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+  }
+  
+  .lessonCurrent {
+    font-size: 1rem;
+  }
+}

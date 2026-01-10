@@ -1,0 +1,264 @@
+/**
+ * LessonDescription Styles
+ * Tabbed content area for lesson details
+ */
+
+.container {
+  background: white;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+/* Tabs */
+.tabs {
+  display: flex;
+  border-bottom: 1px solid #e2e8f0;
+  background: #f8fafc;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 24px;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.tab:hover {
+  color: #1e293b;
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.tab.active {
+  color: #667eea;
+  border-bottom-color: #667eea;
+  background: white;
+}
+
+.tabIcon {
+  width: 18px;
+  height: 18px;
+}
+
+/* Content */
+.content {
+  padding: 24px;
+}
+
+/* Overview */
+.overview {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.metaInfo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.metaItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: #f8fafc;
+  border-radius: 10px;
+}
+
+.metaIcon {
+  width: 20px;
+  height: 20px;
+  color: #667eea;
+}
+
+.metaLabel {
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+.metaValue {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.description {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sectionTitle {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0;
+}
+
+.descriptionText {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: #475569;
+  margin: 0;
+}
+
+/* Resources */
+.resources {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.resourcesList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.resourceItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.resourceItem:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+.resourceIcon {
+  width: 24px;
+  height: 24px;
+  color: #667eea;
+  flex-shrink: 0;
+}
+
+.resourceInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.resourceName {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #1e293b;
+}
+
+.resourceType {
+  font-size: 0.8rem;
+  color: #64748b;
+}
+
+.downloadIcon {
+  width: 20px;
+  height: 20px;
+  color: #94a3b8;
+  flex-shrink: 0;
+}
+
+/* Transcript */
+.transcript {
+  min-height: 100px;
+}
+
+.transcriptContent {
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: #475569;
+}
+
+.transcriptContent p {
+  margin: 0;
+}
+
+/* Empty State */
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+  color: #94a3b8;
+}
+
+.emptyIcon {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 12px;
+  opacity: 0.5;
+}
+
+.emptyState p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .tab {
+    padding: 12px 16px;
+    font-size: 0.85rem;
+  }
+  
+  .tabIcon {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .content {
+    padding: 16px;
+  }
+  
+  .metaInfo {
+    gap: 12px;
+  }
+  
+  .metaItem {
+    flex: 1 0 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .tabs {
+    justify-content: stretch;
+  }
+  
+  .tab {
+    flex: 1;
+    justify-content: center;
+    padding: 12px 8px;
+    gap: 4px;
+  }
+  
+  .tabIcon {
+    display: none;
+  }
+}
