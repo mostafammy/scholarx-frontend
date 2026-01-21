@@ -147,7 +147,7 @@ export const IMPACT_STATS = [
   {
     id: "students",
     icon: "GrGroup",
-    value: 8000,
+    value: 15000,
     label: "Students attended our programs",
     suffix: "",
     animationDuration: 2000,
