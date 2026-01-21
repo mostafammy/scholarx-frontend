@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import "./Services.css";
-import { FaUsers, FaPodcast } from "react-icons/fa";
+import { FaUsers, FaPodcast, FaGraduationCap } from "react-icons/fa";
 import { MdWork } from "react-icons/md";
 import AmbassadorModal from "./components/AmbassadorModal/AmbassadorModal";
 import MentorshipModal from "./components/MentorshipModal/MentorshipModal";
 import PodcastModal from "./components/PodcastModal/PodcastModal";
+import { useNavigate } from "react-router-dom";
 
 function Services() {
   const [modals, setModals] = useState({
@@ -19,6 +20,8 @@ function Services() {
       [modalName]: true,
     });
   };
+
+  const navigate = useNavigate();
 
   const closeModal = (modalName) => {
     setModals({
@@ -72,7 +75,14 @@ function Services() {
               </div>
             </div>
 
-            <div className="program-card" style={{ display: "none" }}>
+            <div
+              className="program-card"
+              style={
+                {
+                  /*display: "none" */
+                }
+              }
+            >
               <div className="program-icon mentorship">
                 <MdWork />
               </div>
@@ -87,6 +97,37 @@ function Services() {
                   onClick={() => openModal("mentorship")}
                 >
                   Request Mentor
+                </button>
+              </div>
+            </div>
+
+            <div
+              className="program-card clickable"
+              role="button"
+              tabIndex={0}
+              onClick={() => navigate("/courses")}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") navigate("/courses");
+              }}
+              aria-label="View our BootCamps"
+            >
+              <div
+                className="program-icon podcast"
+                style={{ backgroundColor: "#e8f4ff", color: "#3399CC" }}
+              >
+                <FaGraduationCap />
+              </div>
+              <h3>Our BootCamps</h3>
+              <p>
+                Intensive, project-based bootcamps designed to rapidly build
+                practical skills and portfolios.
+              </p>
+              <div className="program-buttons">
+                <button
+                  className="program-btn apply-btn"
+                  onClick={() => navigate("/courses")}
+                >
+                  View Courses
                 </button>
               </div>
             </div>
