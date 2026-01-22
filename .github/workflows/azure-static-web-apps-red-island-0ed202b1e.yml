@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Build and Deploy Job
     env:
-      VITE_API_URL: https://mynew-app-backend.azurewebsites.net/api
+      VITE_API_URL: https://scholarx-backend-production-westeu.azurewebsites.net/api
     steps:
       - uses: actions/checkout@v3
         with:
