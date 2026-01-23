@@ -54,24 +54,35 @@
 }
 
 .event-modal__close {
-  background: none;
+  background: transparent;
   border: none;
-  font-size: 32px;
-  color: white;
+  font-size: 28px;
+  color: rgba(255, 255, 255, 0.9);
   cursor: pointer;
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
-  transition: all 0.2s ease;
-  line-height: 1;
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  line-height: 0;
+  padding: 0 0 3px 0;
+  flex-shrink: 0;
+  transform-origin: center center;
 }
 
 .event-modal__close:hover {
-  background-color: rgba(255, 255, 255, 0.2);
-  transform: rotate(90deg);
+  color: #ff6b6b;
+  opacity: 1;
+  transform: rotate(90deg) scale(1.2);
+  text-shadow: 0 0 10px rgba(255, 107, 107, 0.8), 0 0 20px rgba(255, 107, 107, 0.4);
+}
+
+.event-modal__close:active {
+  color: #ff5252;
+  transform: rotate(90deg) scale(0.95);
+  text-shadow: 0 0 5px rgba(255, 82, 82, 0.8);
+  transition-duration: 0.1s;
 }
 
 .event-modal__form {

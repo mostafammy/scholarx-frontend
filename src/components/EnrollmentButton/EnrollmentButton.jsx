@@ -2,6 +2,7 @@ import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import "./EnrollmentButton.css";
 import useCourseEnrollment from "../../hooks/useCourseEnrollment";
+import CourseEnrollmentModal from "../CourseEnrollmentModal";
 
 const EnrollmentButton = ({
   course,
@@ -24,6 +25,13 @@ const EnrollmentButton = ({
     enrollButtonLabel,
     handleEnroll,
     handleOpenCourse,
+    // Enrollment form modal state and functions
+    showEnrollmentModal,
+    closeEnrollmentModal,
+    processEnrollmentWithFormData,
+    courseId: resolvedCourseId,
+    courseTitle: resolvedCourseTitle,
+    user,
   } = useCourseEnrollment(course, {
     courseIdOverride: courseId,
     courseTitleOverride: courseTitle,
@@ -82,14 +90,27 @@ const EnrollmentButton = ({
   };
 
   return (
-    <button
-      type="button"
-      className={resolvedClassName}
-      onClick={handleButtonClick}
-      disabled={isLoading}
-    >
-      {resolvedLabel}
-    </button>
+    <>
+      <button
+        type="button"
+        className={resolvedClassName}
+        onClick={handleButtonClick}
+        disabled={isLoading}
+      >
+        {resolvedLabel}
+      </button>
+
+      {/* Course Enrollment Form Modal */}
+      <CourseEnrollmentModal
+        isOpen={showEnrollmentModal}
+        onClose={closeEnrollmentModal}
+        onSubmit={processEnrollmentWithFormData}
+        courseTitle={resolvedCourseTitle}
+        courseId={resolvedCourseId}
+        userData={user}
+        isLoading={isLoading}
+      />
+    </>
   );
 };
 

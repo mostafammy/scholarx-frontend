@@ -69,7 +69,7 @@ api.interceptors.response.use(
       // window.location.href = '/login';
     }
     return Promise.reject(error);
-  }
+  },
 );
 
 export const authService = {
@@ -122,7 +122,7 @@ export const authService = {
           Cookies.set(
             USER_ROLE_KEY,
             userResponse.data.data.user.role,
-            cookieOptions
+            cookieOptions,
           );
         }
         return userResponse;
@@ -190,7 +190,7 @@ export const authService = {
           headers: {
             Authorization: `Bearer ${Cookies.get(AUTH_TOKEN_KEY)}`,
           },
-        }
+        },
       );
       return response;
     } catch (error) {
@@ -258,6 +258,48 @@ export const programService = {
   getMyApplications: async () => {
     const response = await api.get("/programs/my-applications");
     return response.data;
+  },
+};
+
+export const courseEnrollmentService = {
+  /**
+   * Submit course enrollment application form data
+   * POST /api/courses/:id/apply
+   * @param {Object} applicationData - The application form data
+   * @returns {Promise<Object>} - The API response
+   */
+  submitApplication: async (applicationData) => {
+    const { courseId, ...formData } = applicationData;
+    const response = await api.post(`/courses/${courseId}/apply`, formData);
+    return parseJSendResponse(response.data, "Failed to submit application");
+  },
+
+  /**
+   * Check the status of a user's application for a course
+   * GET /api/courses/:id/application-status
+   * @param {string} courseId - The course ID
+   * @returns {Promise<Object>} - The application status data
+   */
+  getApplicationStatus: async (courseId) => {
+    try {
+      const response = await api.get(`/courses/${courseId}/application-status`);
+      return response.data?.data || null;
+    } catch (error) {
+      // If endpoint returns 404 or error, return null (no application)
+      if (error?.response?.status === 404) {
+        return null;
+      }
+      throw error;
+    }
+  },
+
+  /**
+   * Check if a course requires an application form before enrollment
+   * @param {Object} course - The course object
+   * @returns {boolean} - Whether the course requires a form
+   */
+  courseRequiresForm: (course) => {
+    return Boolean(course?.requiresForm);
   },
 };
 

@@ -2,7 +2,11 @@ import { useCallback, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
-import api, { authService, courseService } from "../services/api";
+import api, {
+  authService,
+  courseService,
+  courseEnrollmentService,
+} from "../services/api";
 import { useUser } from "../context/UserContext";
 
 const DEFAULT_COURSE_TITLE = "Course";
@@ -20,12 +24,13 @@ export const useCourseEnrollment = (course, options = {}) => {
   const { user } = useUser();
   const [isLoading, setIsLoading] = useState(false);
   const [hasJustEnrolled, setHasJustEnrolled] = useState(false);
+  const [showEnrollmentModal, setShowEnrollmentModal] = useState(false);
 
   const courseId = course?._id || options.courseIdOverride;
   const courseTitle = resolveCourseTitle(course, options.courseTitleOverride);
   const isFreeCourse = useMemo(
     () => courseService.isFreeCourse(course),
-    [course]
+    [course],
   );
   const isSubscribed = Boolean(course?.isSubscribed);
 
@@ -54,16 +59,16 @@ export const useCourseEnrollment = (course, options = {}) => {
     const normalizedCourseId = String(courseId);
     const userCourses = Array.isArray(user.courses) ? user.courses : [];
     return userCourses.some(
-      (entry) => normalizeId(entry) === normalizedCourseId
+      (entry) => normalizeId(entry) === normalizedCourseId,
     );
   }, [user, courseId]);
 
   const externalAccessFlag = Boolean(
-    options.initialAccess ?? options.isEnrolledOverride ?? false
+    options.initialAccess ?? options.isEnrolledOverride ?? false,
   );
 
   const canAccessCourse = Boolean(
-    isSubscribed || userOwnsCourse || externalAccessFlag || hasJustEnrolled
+    isSubscribed || userOwnsCourse || externalAccessFlag || hasJustEnrolled,
   );
 
   const navigateToLessons = useCallback(() => {
@@ -172,6 +177,81 @@ export const useCourseEnrollment = (course, options = {}) => {
     }
   }, [handleContactAdmin]);
 
+  // Open the enrollment form modal
+  const openEnrollmentModal = useCallback(() => {
+    setShowEnrollmentModal(true);
+  }, []);
+
+  // Close the enrollment form modal
+  const closeEnrollmentModal = useCallback(() => {
+    setShowEnrollmentModal(false);
+  }, []);
+
+  // Process enrollment after form data is submitted
+  // Auto-approves and enrolls the user immediately after collecting their data
+  const processEnrollmentWithFormData = useCallback(
+    async (formData) => {
+      try {
+        setIsLoading(true);
+
+        // Submit the application form data (for data collection)
+        await courseEnrollmentService.submitApplication({
+          ...formData,
+          courseId,
+        });
+
+        // Immediately proceed with enrollment after data collection
+        if (isFreeCourse) {
+          // For free courses, enroll directly
+          await handleFreeEnrollment();
+        } else {
+          // For paid courses, proceed to payment flow
+          await handlePaidEnrollment();
+        }
+
+        return true;
+      } catch (error) {
+        const message = formatErrorMessage(error);
+
+        // If already applied, check if they're already enrolled
+        if (message.toLowerCase().includes("already")) {
+          // They already applied - try to proceed with enrollment anyway
+          try {
+            if (isFreeCourse) {
+              await handleFreeEnrollment();
+            } else {
+              await handlePaidEnrollment();
+            }
+            return true;
+          } catch (enrollError) {
+            const enrollMessage = formatErrorMessage(enrollError);
+            if (enrollMessage.toLowerCase().includes("already")) {
+              await showAlreadyEnrolledAlert();
+              return true;
+            }
+            throw enrollError;
+          }
+        }
+
+        await Swal.fire({
+          title: "Enrollment Error",
+          text: message,
+          icon: "error",
+        });
+        throw error;
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [
+      courseId,
+      isFreeCourse,
+      handleFreeEnrollment,
+      handlePaidEnrollment,
+      showAlreadyEnrolledAlert,
+    ],
+  );
+
   const handleEnroll = useCallback(async () => {
     if (!courseId) {
       await Swal.fire({
@@ -208,34 +288,44 @@ export const useCourseEnrollment = (course, options = {}) => {
       return;
     }
 
-    try {
-      setIsLoading(true);
-      if (isFreeCourse) {
-        await handleFreeEnrollment();
-        return;
-      }
+    // Check if course requires a form before enrollment
+    const requiresForm = Boolean(course?.requiresForm);
 
-      await handlePaidEnrollment();
-    } catch (error) {
-      const message = formatErrorMessage(error);
-      if (message.toLowerCase().includes("already")) {
-        await showAlreadyEnrolledAlert();
-        return;
+    if (requiresForm) {
+      // Show the enrollment form modal to collect user data
+      openEnrollmentModal();
+    } else {
+      // Proceed directly with enrollment (no form required)
+      try {
+        setIsLoading(true);
+        if (isFreeCourse) {
+          await handleFreeEnrollment();
+        } else {
+          await handlePaidEnrollment();
+        }
+      } catch (error) {
+        const message = formatErrorMessage(error);
+        if (message.toLowerCase().includes("already")) {
+          await showAlreadyEnrolledAlert();
+          return;
+        }
+        await Swal.fire({
+          title: "Enrollment Error",
+          text: message,
+          icon: "error",
+        });
+      } finally {
+        setIsLoading(false);
       }
-      await Swal.fire({
-        title: "Enrollment Error",
-        text: message,
-        icon: "error",
-      });
-    } finally {
-      setIsLoading(false);
     }
   }, [
+    course,
     courseId,
+    isFreeCourse,
     handleFreeEnrollment,
     handlePaidEnrollment,
-    isFreeCourse,
     navigate,
+    openEnrollmentModal,
     showAlreadyEnrolledAlert,
     user,
   ]);
@@ -258,6 +348,15 @@ export const useCourseEnrollment = (course, options = {}) => {
     enrollButtonLabel: getEnrollButtonLabel(),
     handleEnroll,
     handleOpenCourse,
+    // Enrollment form modal state and functions
+    showEnrollmentModal,
+    openEnrollmentModal,
+    closeEnrollmentModal,
+    processEnrollmentWithFormData,
+    // Additional data for the form
+    courseId,
+    courseTitle,
+    user,
   };
 };
 
