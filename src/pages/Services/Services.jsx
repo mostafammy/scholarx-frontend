@@ -1,17 +1,30 @@
 import React, { useState } from "react";
 import "./Services.css";
-import { FaUsers, FaPodcast, FaGraduationCap } from "react-icons/fa";
+import {
+  FaUsers,
+  FaPodcast,
+  FaGraduationCap,
+  FaCalendarAlt,
+} from "react-icons/fa";
 import { MdWork } from "react-icons/md";
 import AmbassadorModal from "./components/AmbassadorModal/AmbassadorModal";
 import MentorshipModal from "./components/MentorshipModal/MentorshipModal";
 import PodcastModal from "./components/PodcastModal/PodcastModal";
+import ServiceCard from "./components/ServiceCard/ServiceCard";
+import EventRegistrationModal from "./components/EventRegistrationModal/EventRegistrationModal";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import { submitEventRegistration } from "./services/eventRegistrationApi";
+import useEventInterest from "./hooks/useEventInterest";
+import { useUser } from "../../context/UserContext";
 
 function Services() {
+  const { user } = useUser();
   const [modals, setModals] = useState({
     ambassador: false,
     mentorship: false,
     podcast: false,
+    eventRegistration: false,
   });
 
   const openModal = (modalName) => {
@@ -29,6 +42,70 @@ function Services() {
       [modalName]: false,
     });
   };
+
+  const handleEventRegistration = async (data) => {
+    try {
+      // Call the API helper
+      const result = await submitEventRegistration(data);
+
+      if (!result || result.success === false) {
+        throw new Error(
+          result?.error || result?.message || "Registration failed",
+        );
+      }
+
+      await Swal.fire({
+        icon: "success",
+        title: "Registration Successful!",
+        text:
+          result?.message ||
+          "Thank you for your interest. We will contact you soon via email or WhatsApp.",
+        confirmButtonColor: "#3399CC",
+        confirmButtonText: "Great!",
+      });
+
+      // Refresh registration status so the ServiceCard reflects the change
+      try {
+        refresh();
+      } catch (e) {
+        // ignore refresh errors
+      }
+
+      return true;
+    } catch (error) {
+      console.error("Registration error:", error);
+
+      // Show error message
+      await Swal.fire({
+        icon: "error",
+        title: "Registration Failed",
+        text: error?.message || "Something went wrong. Please try again later.",
+        confirmButtonColor: "#e74c3c",
+        confirmButtonText: "OK",
+      });
+
+      throw error;
+    }
+  };
+
+  // For demo: use a placeholder eventId; replace with real event IDs from backend
+  const EVENT_ID = "000000000000000000000000";
+
+  const {
+    isCheckingStatus,
+    isRegistered,
+    error: statusError,
+    refresh,
+  } = useEventInterest(EVENT_ID);
+
+  // Refresh status when auth token changes (login/logout across tabs)
+  React.useEffect(() => {
+    const onStorage = (e) => {
+      if (e.key === "token") refresh();
+    };
+    window.addEventListener("storage", onStorage);
+    return () => window.removeEventListener("storage", onStorage);
+  }, [refresh]);
 
   return (
     <div className="services-page">
@@ -132,6 +209,20 @@ function Services() {
               </div>
             </div>
 
+            {/* Event Interest Registration Card */}
+            <ServiceCard
+              icon={FaCalendarAlt}
+              title="Upcoming Events"
+              description="Register your interest for upcoming workshops, webinars, and networking events. Be the first to know about exclusive opportunities."
+              onRegisterClick={() => openModal("eventRegistration")}
+              // Replace with real eventId from backend when available
+              eventId="000000000000000000000000"
+              isCheckingStatus={isCheckingStatus}
+              isRegistered={isRegistered}
+              iconColor="#FF6633"
+              iconBgColor="#fff2e6"
+            />
+
             {/* <div className="program-card">
               <div className="program-icon podcast">
                 <FaPodcast />
@@ -202,6 +293,16 @@ function Services() {
       <PodcastModal
         isOpen={modals.podcast}
         onClose={() => closeModal("podcast")}
+      />
+
+      <EventRegistrationModal
+        isOpen={modals.eventRegistration}
+        onClose={() => closeModal("eventRegistration")}
+        onSubmit={handleEventRegistration}
+        eventTitle="Upcoming Events"
+        // For demo: use a valid MongoDB ObjectId string. Replace with real event IDs from backend when available.
+        eventId="000000000000000000000000"
+        userData={user}
       />
     </div>
   );
