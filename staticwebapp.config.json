@@ -1,7 +1,12 @@
 {
   "navigationFallback": {
     "rewrite": "/index.html",
-    "exclude": ["/images/*.{png,jpg,gif,ico,svg}", "/css/*", "/js/*", "/*.{png,jpg,gif,ico,svg,json,txt}"]
+    "exclude": [
+      "/images/*.{png,jpg,gif,ico,svg}",
+      "/css/*",
+      "/js/*",
+      "/*.{png,jpg,gif,ico,svg,json,txt}"
+    ]
   },
   "routes": [
     {
@@ -21,7 +26,7 @@
     }
   },
   "globalHeaders": {
-    "content-security-policy": "default-src 'self' https: 'unsafe-inline' 'unsafe-eval'",
+    "content-security-policy": "default-src 'self' https: 'unsafe-inline' 'unsafe-eval'; img-src 'self' https: data: blob:",
     "X-Content-Type-Options": "nosniff",
     "X-Frame-Options": "DENY",
     "X-XSS-Protection": "1; mode=block"
