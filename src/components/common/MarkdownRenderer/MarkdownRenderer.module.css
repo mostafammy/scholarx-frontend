@@ -1,0 +1,85 @@
+/**
+ * MarkdownRenderer Styles
+ * 
+ * Typography and styling for Markdown content.
+ * Designed to be consistent with the existing ScholarX design system.
+ */
+
+/* Container wrapper */
+.markdownContainer {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #555;
+}
+
+/* Paragraph styling */
+.paragraph {
+  margin: 0 0 1rem 0;
+}
+
+.paragraph:last-child {
+  margin-bottom: 0;
+}
+
+/* Text emphasis */
+.bold {
+  font-weight: 600;
+  color: #333;
+}
+
+.italic {
+  font-style: italic;
+}
+
+/* List styling */
+.list,
+.orderedList {
+  margin: 0.75rem 0;
+  padding-left: 1.5rem;
+}
+
+.listItem {
+  margin-bottom: 0.5rem;
+}
+
+.listItem:last-child {
+  margin-bottom: 0;
+}
+
+/* Blockquote */
+.blockquote {
+  border-left: 4px solid var(--accent-color, #6366f1);
+  padding-left: 1rem;
+  margin: 1rem 0;
+  font-style: italic;
+  color: #666;
+  background-color: rgba(99, 102, 241, 0.05);
+  padding: 0.75rem 1rem;
+  border-radius: 0 4px 4px 0;
+}
+
+/* Horizontal rule / divider */
+.divider {
+  border: none;
+  border-top: 1px solid #e0e0e0;
+  margin: 1.5rem 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .markdownContainer {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .markdownContainer {
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  .list,
+  .orderedList {
+    padding-left: 1.25rem;
+  }
+}

@@ -627,7 +627,12 @@ const Courses = () => {
                     })
                   }
                   required
+                  placeholder="Supports Markdown: **bold**, *italic*, blank line for new paragraph"
                 />
+                <small className="form-hint">
+                  Formatting: **bold**, *italic*, - bullet, blank line for new
+                  paragraph
+                </small>
               </div>
               <div className="form-group">
                 <label>Image</label>
@@ -761,7 +766,12 @@ const Courses = () => {
                     })
                   }
                   required
+                  placeholder="Supports Markdown: **bold**, *italic*, blank line for new paragraph"
                 />
+                <small className="form-hint">
+                  Formatting: **bold**, *italic*, - bullet, blank line for new
+                  paragraph
+                </small>
               </div>
               <div className="form-group">
                 <label>Image</label>
