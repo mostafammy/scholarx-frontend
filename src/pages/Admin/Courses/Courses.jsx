@@ -14,6 +14,7 @@ import {
 } from "../../../store/slices/adminSlice";
 import { fetchCourseLessons } from "../../../store/slices/lessonSlice";
 import MarkdownEditor from "../../../components/common/MarkdownEditor";
+import CourseEditorModal from "../../../components/Admin/CourseEditorModal";
 import Swal from "sweetalert2";
 import "./Courses.css";
 
@@ -733,148 +734,20 @@ const Courses = () => {
         </div>
       )}
 
-      {/* Edit Course Modal */}
-      {showEditModal && selectedCourse && (
-        <div className="modal">
-          <div className="modal-content">
-            <h2>Edit Course</h2>
-            <form onSubmit={handleUpdateCourse}>
-              <div className="form-group">
-                <label>Title</label>
-                <input
-                  type="text"
-                  value={selectedCourse.title}
-                  onChange={(e) =>
-                    setSelectedCourse({
-                      ...selectedCourse,
-                      title: e.target.value,
-                    })
-                  }
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <label>Description</label>
-                <MarkdownEditor
-                  value={selectedCourse.description}
-                  onChange={(e) =>
-                    setSelectedCourse({
-                      ...selectedCourse,
-                      description: e.target.value,
-                    })
-                  }
-                  required
-                  placeholder="Write your course description here..."
-                  minHeight="180px"
-                />
-              </div>
-              <div className="form-group">
-                <label>Image</label>
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => {
-                    const file = e.target.files[0];
-                    setSelectedCourse({
-                      ...selectedCourse,
-                      image: file ? { file } : { url: "", public_id: "" },
-                    });
-                  }}
-                />
-                {selectedCourse.image?.url && !selectedCourse.image.file && (
-                  <img
-                    src={selectedCourse.image.url}
-                    alt="Course"
-                    style={{ maxWidth: 100, marginTop: 8 }}
-                  />
-                )}
-              </div>
-              <div className="form-group">
-                <label>Category</label>
-                <select
-                  value={selectedCourse.category}
-                  onChange={(e) =>
-                    setSelectedCourse({
-                      ...selectedCourse,
-                      category: e.target.value,
-                    })
-                  }
-                  required
-                >
-                  <option value="Featured">Featured</option>
-                  <option value="ScholarX">ScholarX</option>
-                </select>
-              </div>
-              <div className="form-group">
-                <label>Current Price ($)</label>
-                <input
-                  type="number"
-                  step="0.01"
-                  min="0"
-                  value={selectedCourse.currentPrice}
-                  onChange={(e) =>
-                    setSelectedCourse({
-                      ...selectedCourse,
-                      currentPrice: e.target.value,
-                    })
-                  }
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <label>Old Price ($) - Optional</label>
-                <input
-                  type="number"
-                  step="0.01"
-                  min="0"
-                  value={selectedCourse.oldPrice || ""}
-                  onChange={(e) =>
-                    setSelectedCourse({
-                      ...selectedCourse,
-                      oldPrice: e.target.value,
-                    })
-                  }
-                />
-              </div>
-              <div className="form-group checkbox-group">
-                <label className="checkbox-label">
-                  <input
-                    type="checkbox"
-                    checked={selectedCourse.requiresForm || false}
-                    onChange={(e) =>
-                      setSelectedCourse({
-                        ...selectedCourse,
-                        requiresForm: e.target.checked,
-                      })
-                    }
-                  />
-                  <span>Requires Application Form</span>
-                </label>
-                <small className="form-hint">
-                  If checked, users must fill out an application form before
-                  enrolling
-                </small>
-              </div>
-              <div className="modal-actions">
-                <button
-                  type="submit"
-                  className="save-btn"
-                  disabled={updatingCourse}
-                >
-                  {updatingCourse ? "Saving..." : "Save Changes"}
-                </button>
-                <button
-                  type="button"
-                  className="cancel-btn"
-                  onClick={() => setShowEditModal(false)}
-                >
-                  Cancel
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
+      {/* Edit Course Modal - Premium Version */}
+      <CourseEditorModal
+        isOpen={showEditModal && selectedCourse !== null}
+        onClose={() => setShowEditModal(false)}
+        course={selectedCourse || {}}
+        onChange={setSelectedCourse}
+        onSubmit={(e) => {
+          if (e) e.preventDefault();
+          handleUpdateCourse({ preventDefault: () => {} });
+        }}
+        isLoading={updatingCourse}
+        mode="edit"
+        instructors={[]}
+      />
 
       {/* Create Lesson Modal */}
       {showLessonModal && selectedCourse && (
