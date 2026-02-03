@@ -136,7 +136,7 @@
     z-index: 1000;
 }
 
-.modal-content {
+.admin-courses .modal-content {
     background: white;
     padding: 2rem;
     border-radius: 16px;
