@@ -1,46 +1,116 @@
+/**
+ * CheckList Styles - Premium Redesign
+ * Modern list with gradient checkmarks and hover effects
+ */
+
 .list {
   padding-left: 0;
   list-style-type: none;
   margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--ci-space-4, 16px);
 }
 
 .item {
   display: flex;
   align-items: flex-start;
-  gap: 12px;
-  margin-bottom: 15px;
-  font-size: 1.1rem;
-  line-height: 1.6;
-  color: #444;
+  gap: var(--ci-space-3, 12px);
+  padding: var(--ci-space-4, 16px);
+  background: var(--ci-gray-50, #f8fafc);
+  border-radius: var(--ci-radius-lg, 12px);
+  border: 1px solid transparent;
+  transition: all 0.25s ease;
+  animation: listItemFadeIn 0.4s ease-out backwards;
+}
+
+.item:nth-child(1) { animation-delay: 0.05s; }
+.item:nth-child(2) { animation-delay: 0.1s; }
+.item:nth-child(3) { animation-delay: 0.15s; }
+.item:nth-child(4) { animation-delay: 0.2s; }
+.item:nth-child(5) { animation-delay: 0.25s; }
+.item:nth-child(6) { animation-delay: 0.3s; }
+
+.item:hover {
+  background: #ffffff;
+  border-color: var(--ci-primary-200, #c5e3fa);
+  box-shadow: 0 4px 12px rgba(0, 114, 255, 0.1);
+  transform: translateX(4px);
 }
 
 .checkmark {
-  color: #3498db;
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #10b981 0%, #38ef7d 100%);
+  color: #ffffff;
   font-weight: bold;
-  font-size: 1.2rem;
+  font-size: 12px;
+  border-radius: 50%;
   flex-shrink: 0;
-  line-height: 1.6;
+  margin-top: 2px;
 }
 
 .text {
   flex: 1;
+  font-size: var(--ci-text-sm, 0.9375rem);
+  line-height: 1.6;
+  color: var(--ci-gray-700, #334155);
+  font-weight: 500;
+}
+
+@keyframes listItemFadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 /* Tablet */
 @media (max-width: 992px) {
+  .list {
+    grid-template-columns: 1fr;
+  }
+  
   .item {
-    font-size: 1rem;
+    padding: var(--ci-space-3, 12px);
+  }
+  
+  .text {
+    font-size: var(--ci-text-sm, 0.875rem);
   }
 }
 
 /* Mobile */
 @media (max-width: 576px) {
+  .list {
+    gap: var(--ci-space-3, 12px);
+  }
+  
   .item {
-    gap: 10px;
-    margin-bottom: 12px;
+    padding: var(--ci-space-3, 12px);
+    gap: var(--ci-space-2, 8px);
   }
 
   .checkmark {
-    font-size: 1.1rem;
+    width: 20px;
+    height: 20px;
+    min-width: 20px;
+    font-size: 10px;
+  }
+  
+  .text {
+    font-size: var(--ci-text-xs, 0.8125rem);
+  }
+  
+  .item:hover {
+    transform: none;
   }
 }

@@ -1,19 +1,41 @@
+/**
+ * CourseDescription Styles - Premium Redesign
+ * Clean typography with accent styling
+ */
+
 .description {
-  font-size: 1.1rem;
-  line-height: 1.8;
-  color: #555;
+  font-family: var(--ci-font-body, 'Inter', sans-serif);
+  font-size: var(--ci-text-base, 1rem);
+  line-height: 1.9;
+  color: var(--ci-gray-600, #475569);
   margin: 0;
+  letter-spacing: 0.01em;
+}
+
+/* First letter styling */
+.description::first-letter {
+  font-size: 1.5em;
+  font-weight: 600;
+  color: var(--ci-primary-600, #0866ba);
+  float: left;
+  margin-right: 0.1em;
+  line-height: 1;
 }
 
 @media (max-width: 992px) {
   .description {
-    font-size: 1rem;
+    font-size: var(--ci-text-sm, 0.9375rem);
+    line-height: 1.8;
   }
 }
 
 @media (max-width: 576px) {
   .description {
-    font-size: 0.95rem;
-    line-height: 1.7;
+    font-size: var(--ci-text-sm, 0.875rem);
+    line-height: 1.75;
+  }
+  
+  .description::first-letter {
+    font-size: 1.3em;
   }
 }

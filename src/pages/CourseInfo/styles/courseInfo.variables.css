@@ -1,0 +1,259 @@
+/**
+ * Course Info Design System
+ * Premium CSS custom properties for world-class UX
+ * 
+ * Architecture:
+ * - CSS Custom Properties for theming
+ * - Modular color palette with gradients
+ * - Animation timing functions
+ * - Responsive spacing scale
+ */
+
+:root {
+  /* ==============================
+     COLOR PALETTE
+     ============================== */
+  
+  /* Primary Brand Colors */
+  --ci-primary-50: #e8f4fd;
+  --ci-primary-100: #c5e3fa;
+  --ci-primary-200: #9dd0f6;
+  --ci-primary-300: #64b6f0;
+  --ci-primary-400: #2d9ae8;
+  --ci-primary-500: #0a7fd9;
+  --ci-primary-600: #0866ba;
+  --ci-primary-700: #074f94;
+  --ci-primary-800: #053a6e;
+  --ci-primary-900: #032549;
+  
+  /* Accent Colors */
+  --ci-accent-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --ci-accent-gradient-hover: linear-gradient(135deg, #5a6fd6 0%, #6a4394 100%);
+  --ci-cta-gradient: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
+  --ci-cta-gradient-hover: linear-gradient(135deg, #00b4e8 0%, #0065e6 100%);
+  --ci-success-gradient: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+  
+  /* Neutral Palette */
+  --ci-gray-50: #f8fafc;
+  --ci-gray-100: #f1f5f9;
+  --ci-gray-200: #e2e8f0;
+  --ci-gray-300: #cbd5e1;
+  --ci-gray-400: #94a3b8;
+  --ci-gray-500: #64748b;
+  --ci-gray-600: #475569;
+  --ci-gray-700: #334155;
+  --ci-gray-800: #1e293b;
+  --ci-gray-900: #0f172a;
+  
+  /* Semantic Colors */
+  --ci-success: #10b981;
+  --ci-warning: #f59e0b;
+  --ci-error: #ef4444;
+  --ci-info: #3b82f6;
+  
+  /* Star Rating */
+  --ci-star-filled: #fbbf24;
+  --ci-star-empty: #d1d5db;
+  
+  /* ==============================
+     GLASSMORPHISM
+     ============================== */
+  --ci-glass-bg: rgba(255, 255, 255, 0.85);
+  --ci-glass-bg-dark: rgba(15, 23, 42, 0.75);
+  --ci-glass-border: rgba(255, 255, 255, 0.2);
+  --ci-glass-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+  --ci-glass-blur: blur(12px);
+  
+  /* ==============================
+     SHADOWS & ELEVATIONS
+     ============================== */
+  --ci-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --ci-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --ci-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  --ci-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  --ci-shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  --ci-shadow-glow: 0 0 20px rgba(0, 114, 255, 0.4);
+  --ci-shadow-glow-hover: 0 0 30px rgba(0, 114, 255, 0.6);
+  
+  /* ==============================
+     TYPOGRAPHY
+     ============================== */
+  --ci-font-heading: 'Rubik', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --ci-font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  
+  --ci-text-xs: 0.75rem;
+  --ci-text-sm: 0.875rem;
+  --ci-text-base: 1rem;
+  --ci-text-lg: 1.125rem;
+  --ci-text-xl: 1.25rem;
+  --ci-text-2xl: 1.5rem;
+  --ci-text-3xl: 1.875rem;
+  --ci-text-4xl: 2.25rem;
+  --ci-text-5xl: 3rem;
+  --ci-text-6xl: 3.75rem;
+  
+  /* ==============================
+     SPACING SCALE
+     ============================== */
+  --ci-space-1: 0.25rem;
+  --ci-space-2: 0.5rem;
+  --ci-space-3: 0.75rem;
+  --ci-space-4: 1rem;
+  --ci-space-5: 1.25rem;
+  --ci-space-6: 1.5rem;
+  --ci-space-8: 2rem;
+  --ci-space-10: 2.5rem;
+  --ci-space-12: 3rem;
+  --ci-space-16: 4rem;
+  --ci-space-20: 5rem;
+  --ci-space-24: 6rem;
+  
+  /* ==============================
+     BORDER RADIUS
+     ============================== */
+  --ci-radius-sm: 0.25rem;
+  --ci-radius-md: 0.5rem;
+  --ci-radius-lg: 0.75rem;
+  --ci-radius-xl: 1rem;
+  --ci-radius-2xl: 1.5rem;
+  --ci-radius-full: 9999px;
+  
+  /* ==============================
+     ANIMATIONS & TRANSITIONS
+     ============================== */
+  --ci-duration-fast: 150ms;
+  --ci-duration-normal: 250ms;
+  --ci-duration-slow: 350ms;
+  --ci-duration-slower: 500ms;
+  
+  --ci-ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ci-ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ci-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ci-ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ci-ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  
+  /* ==============================
+     Z-INDEX SCALE
+     ============================== */
+  --ci-z-base: 1;
+  --ci-z-dropdown: 10;
+  --ci-z-sticky: 100;
+  --ci-z-overlay: 200;
+  --ci-z-modal: 300;
+  --ci-z-tooltip: 400;
+}
+
+/* ==============================
+   KEYFRAME ANIMATIONS
+   ============================== */
+
+@keyframes ci-fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes ci-fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes ci-fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes ci-scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes ci-slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes ci-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes ci-shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes ci-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes ci-glow {
+  0%, 100% { box-shadow: var(--ci-shadow-glow); }
+  50% { box-shadow: var(--ci-shadow-glow-hover); }
+}
+
+@keyframes ci-gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes ci-countUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==============================
+   UTILITY CLASSES
+   ============================== */
+
+.ci-animate-fadeIn {
+  animation: ci-fadeIn var(--ci-duration-normal) var(--ci-ease-out);
+}
+
+.ci-animate-fadeInUp {
+  animation: ci-fadeInUp var(--ci-duration-slow) var(--ci-ease-out);
+}
+
+.ci-animate-scaleIn {
+  animation: ci-scaleIn var(--ci-duration-normal) var(--ci-ease-spring);
+}
+
+.ci-glass {
+  background: var(--ci-glass-bg);
+  backdrop-filter: var(--ci-glass-blur);
+  -webkit-backdrop-filter: var(--ci-glass-blur);
+  border: 1px solid var(--ci-glass-border);
+  box-shadow: var(--ci-glass-shadow);
+}
+
+.ci-gradient-text {
+  background: var(--ci-accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}

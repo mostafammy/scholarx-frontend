@@ -1,6 +1,6 @@
 /**
  * CoursePage Component
- * Main course information page - Refactored following SOLID Principles
+ * World-Class Course Information Page - Premium Redesign
  *
  * Architecture:
  * - Single Responsibility: Each component handles one concern
@@ -17,14 +17,21 @@ import { useUser } from "../../context/UserContext";
 import BlockedUserMessage from "../../components/BlockedUserMessage/BlockedUserMessage";
 import { useCourseData, useSubscriptionStatus } from "./hooks";
 import {
-  CourseHeader,
+  CourseHero,
+  CourseOverview,
   CourseSection,
   CourseDescription,
   CheckList,
+  CourseCurriculum,
+  InstructorSpotlight,
+  ReviewsSection,
+  FAQAccordion,
+  StickyEnrollBar,
   LoadingState,
   ErrorState,
 } from "./components";
 import { SECTION_ICONS } from "./constants";
+import "./styles/courseInfo.variables.css";
 import styles from "./CourseInfo.module.css";
 
 /**
@@ -44,7 +51,7 @@ const CoursePage = () => {
   // Memoized course with access status
   const courseWithAccess = useMemo(
     () => (isSubscribed ? { ...rawCourse, isSubscribed: true } : rawCourse),
-    [rawCourse, isSubscribed]
+    [rawCourse, isSubscribed],
   );
 
   // Handle blocked user state
@@ -67,50 +74,102 @@ const CoursePage = () => {
     return <ErrorState message={error} onRetry={refetch} />;
   }
 
+  // Calculate total lessons from chapters
+  const totalLessons =
+    course.chapters?.reduce(
+      (acc, chapter) => acc + (chapter.lessons?.length || 0),
+      0,
+    ) || course.videosCount;
+
   return (
-    <main className={styles.container}>
-      {/* Hero Header Section */}
-      <CourseHeader
+    <main className={styles.pageWrapper}>
+      {/* Immersive Hero Section */}
+      <CourseHero
         headerImage={course.headerImage}
         title={course.title}
-        tagline={course.tagline}
         rating={course.rating}
         totalRatings={course.totalRatings}
-        stats={courseStats}
         courseId={courseId}
         course={courseWithAccess}
         isSubscribed={isSubscribed}
+        category={course.category}
+        duration={course.duration}
+        lessonsCount={totalLessons}
+      />
+
+      {/* Course Overview with Animated Stats */}
+      <CourseOverview
+        videosCount={course.videosCount}
+        quizzesCount={course.quizzesCount}
+        pdfCount={course.pdfCount}
+        duration={course.duration}
+        skillLevel={course.skillLevel}
+        hasCertificate={course.hasCertificate}
+        highlights={course.highlights}
       />
 
       {/* Course Description Section */}
       <CourseSection
         iconSrc={SECTION_ICONS.description.src}
         iconAlt={SECTION_ICONS.description.alt}
-        title="Course Description"
+        title="About This Course"
         variant="description"
       >
         <CourseDescription description={course.description} />
       </CourseSection>
 
       {/* What You'll Learn Section */}
-      <CourseSection
-        iconSrc={SECTION_ICONS.learning.src}
-        iconAlt={SECTION_ICONS.learning.alt}
-        title="What You'll Learn"
-        variant="learning"
-      >
-        <CheckList items={course.whatYouWillLearn} />
-      </CourseSection>
+      {course.whatYouWillLearn?.length > 0 && (
+        <CourseSection
+          iconSrc={SECTION_ICONS.learning.src}
+          iconAlt={SECTION_ICONS.learning.alt}
+          title="What You'll Learn"
+          variant="learning"
+        >
+          <CheckList items={course.whatYouWillLearn} />
+        </CourseSection>
+      )}
+
+      {/* Curriculum Accordion (conditional) */}
+      <CourseCurriculum
+        chapters={course.chapters}
+        totalLessons={totalLessons}
+        totalDuration={course.duration}
+      />
 
       {/* Target Audience Section */}
-      <CourseSection
-        iconSrc={SECTION_ICONS.audience.src}
-        iconAlt={SECTION_ICONS.audience.alt}
-        title="Target Audience"
-        variant="audience"
-      >
-        <CheckList items={course.targetAudience} />
-      </CourseSection>
+      {course.targetAudience?.length > 0 && (
+        <CourseSection
+          iconSrc={SECTION_ICONS.audience.src}
+          iconAlt={SECTION_ICONS.audience.alt}
+          title="Who Is This Course For?"
+          variant="audience"
+        >
+          <CheckList items={course.targetAudience} />
+        </CourseSection>
+      )}
+
+      {/* Instructor Spotlight */}
+      <InstructorSpotlight instructor={course.instructor} />
+
+      {/* Student Reviews (conditional) */}
+      <ReviewsSection
+        reviews={course.reviews}
+        averageRating={course.rating}
+        totalReviews={course.totalRatings}
+        ratingDistribution={course.ratingDistribution}
+      />
+
+      {/* FAQ Accordion (conditional) */}
+      <FAQAccordion faqs={course.faq} />
+
+      {/* Sticky Enrollment Bar */}
+      <StickyEnrollBar
+        title={course.title}
+        courseId={courseId}
+        course={courseWithAccess}
+        isSubscribed={isSubscribed}
+      />
     </main>
   );
 };

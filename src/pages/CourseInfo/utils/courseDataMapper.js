@@ -44,7 +44,7 @@ const ensureArray = (value, defaultValue = []) => {
  */
 export const mapCourseData = (
   rawCourse,
-  fallbackData = DEFAULT_COURSE_DATA
+  fallbackData = DEFAULT_COURSE_DATA,
 ) => {
   if (!rawCourse) return fallbackData;
 
@@ -53,21 +53,21 @@ export const mapCourseData = (
     headerImage: resolveProperty(
       rawCourse,
       ["headerImage", "bannerImage", "coverImage", "thumbnail"],
-      fallbackData.headerImage
+      fallbackData.headerImage,
     ),
 
     // Title
     title: resolveProperty(
       rawCourse,
       ["title", "name", "courseName"],
-      fallbackData.title
+      fallbackData.title,
     ),
 
     // Tagline/Subtitle
     tagline: resolveProperty(
       rawCourse,
       ["tagline", "subtitle", "shortDescription"],
-      fallbackData.tagline
+      fallbackData.tagline,
     ),
 
     // Rating (normalized to number)
@@ -76,41 +76,41 @@ export const mapCourseData = (
         resolveProperty(
           rawCourse,
           ["rating", "averageRating"],
-          fallbackData.rating
-        )
+          fallbackData.rating,
+        ),
       ) || 0,
 
     // Total ratings count
     totalRatings: resolveProperty(
       rawCourse,
       ["totalRatings", "reviewsCount", "reviewCount", "ratingsCount"],
-      fallbackData.totalRatings
+      fallbackData.totalRatings,
     ),
 
     // Content counts
     videosCount: resolveProperty(
       rawCourse,
       ["totalLessons", "videosCount", "lessonsCount", "videoCount"],
-      fallbackData.videosCount
+      fallbackData.videosCount,
     ),
 
     quizzesCount: resolveProperty(
       rawCourse,
       ["quizzesCount", "assessmentsCount", "quizCount"],
-      fallbackData.quizzesCount
+      fallbackData.quizzesCount,
     ),
 
     pdfCount: resolveProperty(
       rawCourse,
       ["pdfCount", "resourcesCount", "documentsCount"],
-      fallbackData.pdfCount
+      fallbackData.pdfCount,
     ),
 
     // Description
     description: resolveProperty(
       rawCourse,
       ["description", "longDescription", "fullDescription", "about"],
-      fallbackData.description
+      fallbackData.description,
     ),
 
     // Learning objectives (ensure array)
@@ -123,9 +123,9 @@ export const mapCourseData = (
           "learningObjectives",
           "objectives",
         ],
-        null
+        null,
       ),
-      fallbackData.whatYouWillLearn
+      fallbackData.whatYouWillLearn,
     ),
 
     // Target audience (ensure array)
@@ -133,9 +133,9 @@ export const mapCourseData = (
       resolveProperty(
         rawCourse,
         ["targetAudience", "whoIsThisFor", "audience", "forWhom"],
-        null
+        null,
       ),
-      fallbackData.targetAudience
+      fallbackData.targetAudience,
     ),
 
     // Preserve original subscription status
@@ -143,6 +143,84 @@ export const mapCourseData = (
 
     // Preserve original ID
     _id: rawCourse._id || rawCourse.id,
+
+    // Extended fields for new design (with graceful fallbacks)
+
+    // Duration
+    duration: resolveProperty(
+      rawCourse,
+      ["duration", "totalDuration", "courseDuration"],
+      "",
+    ),
+
+    // Skill Level
+    skillLevel: resolveProperty(
+      rawCourse,
+      ["skillLevel", "level", "difficulty"],
+      "",
+    ),
+
+    // Certificate
+    hasCertificate: Boolean(
+      resolveProperty(
+        rawCourse,
+        ["hasCertificate", "certificateIncluded"],
+        false,
+      ),
+    ),
+
+    // Category
+    category: resolveProperty(rawCourse, ["category", "courseCategory"], ""),
+
+    // Instructor (extended)
+    instructor: rawCourse.instructor
+      ? {
+          name: rawCourse.instructor.name || "",
+          title: rawCourse.instructor.title || "Instructor",
+          bio: rawCourse.instructor.bio || "",
+          image: rawCourse.instructor.image || "/default-avatar.png",
+          achievements: ensureArray(rawCourse.instructor.achievements, []),
+          socialLinks: rawCourse.instructor.socialLinks || {},
+          studentsCount: rawCourse.instructor.studentsCount,
+          coursesCount: rawCourse.instructor.coursesCount,
+          rating: rawCourse.instructor.rating,
+        }
+      : null,
+
+    // Curriculum chapters
+    chapters: ensureArray(
+      resolveProperty(rawCourse, ["chapters", "curriculum", "modules"], null),
+      [],
+    ),
+
+    // Reviews
+    reviews: ensureArray(
+      resolveProperty(rawCourse, ["reviews", "ratings"], null),
+      [],
+    ),
+
+    // Rating Distribution
+    ratingDistribution: resolveProperty(
+      rawCourse,
+      ["ratingDistribution", "ratingsBreakdown"],
+      {},
+    ),
+
+    // FAQ
+    faq: ensureArray(
+      resolveProperty(
+        rawCourse,
+        ["faq", "faqs", "frequentlyAskedQuestions"],
+        null,
+      ),
+      [],
+    ),
+
+    // Highlights (custom course highlights)
+    highlights: ensureArray(
+      resolveProperty(rawCourse, ["highlights", "features"], null),
+      [],
+    ),
   };
 };
 

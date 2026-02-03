@@ -1,6 +1,6 @@
 /**
  * CourseSection Component
- * Reusable section container with icon and title
+ * Premium section container with card design and gradient icon wrapper
  * Following Open/Closed Principle - extensible through props
  */
 
@@ -16,19 +16,25 @@ const CourseSection = ({
   className,
   variant,
 }) => (
-  <section className={`${styles.section} ${styles[variant]} ${className}`}>
-    <header className={styles.header}>
-      {iconSrc && (
-        <img
-          src={iconSrc}
-          alt={iconAlt}
-          className={styles.icon}
-          loading="lazy"
-        />
-      )}
-      <h2 className={styles.title}>{title}</h2>
-    </header>
-    <div className={styles.content}>{children}</div>
+  <section
+    className={`${styles.section} ${styles[variant] || ""} ${className}`}
+  >
+    <div className={styles.card}>
+      <header className={styles.header}>
+        {iconSrc && (
+          <div className={styles.iconWrapper}>
+            <img
+              src={iconSrc}
+              alt={iconAlt}
+              className={styles.icon}
+              loading="lazy"
+            />
+          </div>
+        )}
+        <h2 className={styles.title}>{title}</h2>
+      </header>
+      <div className={styles.content}>{children}</div>
+    </div>
   </section>
 );
 

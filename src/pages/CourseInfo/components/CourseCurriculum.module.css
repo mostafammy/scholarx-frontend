@@ -1,0 +1,296 @@
+/**
+ * CourseCurriculum Styles
+ * Accordion-based curriculum with smooth animations
+ */
+
+.curriculum {
+  padding: var(--ci-space-16) 0;
+  background: var(--ci-gray-50);
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 var(--ci-space-6);
+}
+
+/* ==============================
+   SECTION HEADER
+   ============================== */
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--ci-space-6);
+  margin-bottom: var(--ci-space-8);
+  flex-wrap: wrap;
+}
+
+.titleWrapper {
+  flex: 1;
+}
+
+.sectionTitle {
+  font-family: var(--ci-font-heading);
+  font-size: var(--ci-text-3xl);
+  font-weight: 700;
+  color: var(--ci-gray-900);
+  margin: 0 0 var(--ci-space-2) 0;
+}
+
+.sectionSubtitle {
+  font-size: var(--ci-text-base);
+  color: var(--ci-gray-500);
+  margin: 0;
+}
+
+.summaryBadges {
+  display: flex;
+  gap: var(--ci-space-3);
+  flex-wrap: wrap;
+}
+
+.summaryBadge {
+  padding: var(--ci-space-2) var(--ci-space-3);
+  background: #ffffff;
+  border: 1px solid var(--ci-gray-200);
+  border-radius: var(--ci-radius-full);
+  font-size: var(--ci-text-sm);
+  font-weight: 500;
+  color: var(--ci-gray-600);
+}
+
+/* ==============================
+   CHAPTERS WRAPPER
+   ============================== */
+
+.chaptersWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ci-space-3);
+}
+
+/* ==============================
+   CHAPTER ACCORDION
+   ============================== */
+
+.chapter {
+  background: #ffffff;
+  border-radius: var(--ci-radius-xl);
+  box-shadow: var(--ci-shadow-md);
+  overflow: hidden;
+  animation: ci-fadeInUp var(--ci-duration-normal) var(--ci-ease-out) backwards;
+  transition: box-shadow var(--ci-duration-fast) ease;
+}
+
+.chapter:hover {
+  box-shadow: var(--ci-shadow-lg);
+}
+
+.chapter.open {
+  box-shadow: var(--ci-shadow-lg);
+}
+
+.chapterHeader {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--ci-space-5) var(--ci-space-6);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background var(--ci-duration-fast) ease;
+}
+
+.chapterHeader:hover {
+  background: var(--ci-gray-50);
+}
+
+.chapterInfo {
+  display: flex;
+  align-items: center;
+  gap: var(--ci-space-4);
+}
+
+.chapterNumber {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--ci-accent-gradient);
+  color: #ffffff;
+  font-size: var(--ci-text-sm);
+  font-weight: 700;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.chapterTitleWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.chapterTitle {
+  font-family: var(--ci-font-heading);
+  font-size: var(--ci-text-base);
+  font-weight: 600;
+  color: var(--ci-gray-900);
+  margin: 0;
+}
+
+.chapterMeta {
+  font-size: var(--ci-text-sm);
+  color: var(--ci-gray-500);
+}
+
+.chevron {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ci-gray-400);
+  transition: transform var(--ci-duration-normal) var(--ci-ease-out);
+}
+
+.chapter.open .chevron {
+  transform: rotate(180deg);
+}
+
+/* ==============================
+   CHAPTER CONTENT
+   ============================== */
+
+.chapterContent {
+  overflow: hidden;
+  transition: height var(--ci-duration-slow) var(--ci-ease-in-out);
+}
+
+.lessonsWrapper {
+  padding: 0 var(--ci-space-6) var(--ci-space-5);
+  border-top: 1px solid var(--ci-gray-100);
+  margin-top: -1px;
+  padding-top: var(--ci-space-4);
+}
+
+/* ==============================
+   LESSON ITEM
+   ============================== */
+
+.lesson {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--ci-space-3) var(--ci-space-4);
+  background: var(--ci-gray-50);
+  border-radius: var(--ci-radius-md);
+  margin-bottom: var(--ci-space-2);
+  animation: ci-slideInRight var(--ci-duration-fast) var(--ci-ease-out) backwards;
+}
+
+.lesson:last-child {
+  margin-bottom: 0;
+}
+
+.lessonInfo {
+  display: flex;
+  align-items: center;
+  gap: var(--ci-space-3);
+}
+
+.lessonIcon {
+  font-size: 18px;
+}
+
+.lessonTitle {
+  font-size: var(--ci-text-sm);
+  color: var(--ci-gray-700);
+  font-weight: 500;
+}
+
+.lessonMeta {
+  display: flex;
+  align-items: center;
+  gap: var(--ci-space-3);
+}
+
+.lessonDuration {
+  font-size: var(--ci-text-xs);
+  color: var(--ci-gray-500);
+}
+
+.previewBadge {
+  padding: 2px var(--ci-space-2);
+  background: var(--ci-primary-100);
+  color: var(--ci-primary-700);
+  font-size: 10px;
+  font-weight: 600;
+  border-radius: var(--ci-radius-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+/* ==============================
+   RESPONSIVE
+   ============================== */
+
+@media (max-width: 768px) {
+  .curriculum {
+    padding: var(--ci-space-12) 0;
+  }
+  
+  .sectionHeader {
+    flex-direction: column;
+    gap: var(--ci-space-4);
+  }
+  
+  .sectionTitle {
+    font-size: var(--ci-text-2xl);
+  }
+  
+  .chapterHeader {
+    padding: var(--ci-space-4);
+  }
+  
+  .chapterNumber {
+    width: 28px;
+    height: 28px;
+    font-size: var(--ci-text-xs);
+  }
+  
+  .chapterInfo {
+    gap: var(--ci-space-3);
+  }
+  
+  .lessonsWrapper {
+    padding: 0 var(--ci-space-4) var(--ci-space-4);
+  }
+  
+  .lesson {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--ci-space-2);
+  }
+  
+  .lessonMeta {
+    margin-left: calc(18px + var(--ci-space-3));
+  }
+}
+
+@media (max-width: 576px) {
+  .container {
+    padding: 0 var(--ci-space-4);
+  }
+  
+  .summaryBadges {
+    width: 100%;
+  }
+  
+  .summaryBadge {
+    flex: 1;
+    text-align: center;
+  }
+}

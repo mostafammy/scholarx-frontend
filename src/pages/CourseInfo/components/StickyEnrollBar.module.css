@@ -1,0 +1,127 @@
+/**
+ * StickyEnrollBar Styles
+ * Persistent CTA bar with slide animation
+ */
+
+.stickyBar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--ci-z-sticky);
+  background: var(--ci-glass-bg);
+  backdrop-filter: var(--ci-glass-blur);
+  -webkit-backdrop-filter: var(--ci-glass-blur);
+  border-bottom: 1px solid var(--ci-glass-border);
+  box-shadow: var(--ci-shadow-lg);
+  transform: translateY(-100%);
+  transition: transform var(--ci-duration-slow) var(--ci-ease-out);
+  will-change: transform;
+}
+
+.stickyBar.visible {
+  transform: translateY(0);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--ci-space-3) var(--ci-space-6);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ci-space-4);
+}
+
+/* ==============================
+   TITLE SECTION
+   ============================== */
+
+.titleSection {
+  flex: 1;
+  min-width: 0;
+}
+
+.title {
+  font-family: var(--ci-font-heading);
+  font-size: var(--ci-text-base);
+  font-weight: 600;
+  color: var(--ci-gray-800);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
+
+/* ==============================
+   CTA SECTION
+   ============================== */
+
+.ctaSection {
+  flex-shrink: 0;
+}
+
+.ctaButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--ci-space-2) var(--ci-space-6);
+  background: var(--ci-cta-gradient);
+  color: #ffffff;
+  font-family: var(--ci-font-body);
+  font-size: var(--ci-text-sm);
+  font-weight: 600;
+  text-decoration: none;
+  border: none;
+  border-radius: var(--ci-radius-lg);
+  cursor: pointer;
+  transition: all var(--ci-duration-fast) var(--ci-ease-out);
+  box-shadow: var(--ci-shadow-md);
+}
+
+.ctaButton:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--ci-shadow-lg);
+}
+
+.ctaButton:active {
+  transform: translateY(0);
+}
+
+/* ==============================
+   RESPONSIVE - Mobile Bottom Bar
+   ============================== */
+
+@media (max-width: 768px) {
+  .stickyBar {
+    top: auto;
+    bottom: 0;
+    border-bottom: none;
+    border-top: 1px solid var(--ci-glass-border);
+    transform: translateY(100%);
+  }
+  
+  .stickyBar.visible {
+    transform: translateY(0);
+  }
+  
+  .container {
+    padding: var(--ci-space-4) var(--ci-space-4);
+  }
+  
+  .titleSection {
+    display: none;
+  }
+  
+  .ctaButton {
+    width: 100%;
+    padding: var(--ci-space-3) var(--ci-space-6);
+    font-size: var(--ci-text-base);
+  }
+}
+
+@media (max-width: 576px) {
+  .container {
+    padding: var(--ci-space-3);
+  }
+}

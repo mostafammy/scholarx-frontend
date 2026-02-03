@@ -1,0 +1,221 @@
+/**
+ * CourseOverview Styles
+ * Glassmorphism cards with animations
+ */
+
+.overview {
+  position: relative;
+  padding: var(--ci-space-16) 0;
+  background: linear-gradient(180deg, var(--ci-gray-50) 0%, #ffffff 100%);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--ci-space-6);
+}
+
+/* ==============================
+   SECTION HEADER
+   ============================== */
+
+.sectionHeader {
+  text-align: center;
+  margin-bottom: var(--ci-space-12);
+}
+
+.sectionTitle {
+  font-family: var(--ci-font-heading);
+  font-size: var(--ci-text-3xl);
+  font-weight: 700;
+  color: var(--ci-gray-900);
+  margin: 0 0 var(--ci-space-3) 0;
+}
+
+.sectionSubtitle {
+  font-size: var(--ci-text-lg);
+  color: var(--ci-gray-500);
+  margin: 0;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ==============================
+   STATS GRID
+   ============================== */
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--ci-space-6);
+  margin-bottom: var(--ci-space-10);
+}
+
+/* ==============================
+   STAT CARD
+   ============================== */
+
+.statCard {
+  display: flex;
+  align-items: center;
+  gap: var(--ci-space-4);
+  padding: var(--ci-space-6);
+  background: var(--ci-glass-bg);
+  backdrop-filter: var(--ci-glass-blur);
+  -webkit-backdrop-filter: var(--ci-glass-blur);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--ci-radius-xl);
+  box-shadow: var(--ci-shadow-lg);
+  transition: all var(--ci-duration-normal) var(--ci-ease-out);
+  animation: ci-fadeInUp var(--ci-duration-slow) var(--ci-ease-out) backwards;
+}
+
+.statCard:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--ci-shadow-xl);
+  border-color: var(--ci-primary-200);
+}
+
+.statIcon {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  background: var(--ci-accent-gradient);
+  border-radius: var(--ci-radius-lg);
+  flex-shrink: 0;
+}
+
+.statContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ci-space-1);
+}
+
+.counterValue {
+  font-family: var(--ci-font-heading);
+  font-size: var(--ci-text-3xl);
+  font-weight: 700;
+  color: var(--ci-gray-900);
+  line-height: 1;
+}
+
+.statLabel {
+  font-size: var(--ci-text-sm);
+  font-weight: 500;
+  color: var(--ci-gray-500);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ==============================
+   HIGHLIGHTS
+   ============================== */
+
+.highlightsWrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.highlights {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--ci-space-3);
+}
+
+.highlightBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ci-space-2);
+  padding: var(--ci-space-2) var(--ci-space-4);
+  background: #ffffff;
+  border: 1px solid var(--ci-gray-200);
+  border-radius: var(--ci-radius-full);
+  font-size: var(--ci-text-sm);
+  font-weight: 500;
+  color: var(--ci-gray-700);
+  transition: all var(--ci-duration-fast) var(--ci-ease-out);
+  animation: ci-scaleIn var(--ci-duration-normal) var(--ci-ease-spring) backwards;
+}
+
+.highlightBadge:hover {
+  border-color: var(--ci-primary-300);
+  background: var(--ci-primary-50);
+  color: var(--ci-primary-700);
+}
+
+.highlightIcon {
+  font-size: var(--ci-text-base);
+}
+
+.highlightText {
+  white-space: nowrap;
+}
+
+/* ==============================
+   RESPONSIVE
+   ============================== */
+
+@media (max-width: 992px) {
+  .overview {
+    padding: var(--ci-space-12) 0;
+  }
+  
+  .statsGrid {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: var(--ci-space-4);
+  }
+}
+
+@media (max-width: 768px) {
+  .sectionTitle {
+    font-size: var(--ci-text-2xl);
+  }
+  
+  .sectionSubtitle {
+    font-size: var(--ci-text-base);
+  }
+  
+  .statCard {
+    padding: var(--ci-space-4);
+  }
+  
+  .statIcon {
+    width: 48px;
+    height: 48px;
+    font-size: 24px;
+  }
+  
+  .counterValue {
+    font-size: var(--ci-text-2xl);
+  }
+}
+
+@media (max-width: 576px) {
+  .overview {
+    padding: var(--ci-space-10) 0;
+  }
+  
+  .container {
+    padding: 0 var(--ci-space-4);
+  }
+  
+  .statsGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .highlights {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .highlightBadge {
+    width: 100%;
+    max-width: 280px;
+    justify-content: center;
+  }
+}

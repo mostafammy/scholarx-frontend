@@ -1,0 +1,326 @@
+/**
+ * InstructorSpotlight Styles
+ * Premium instructor card with avatar and achievements
+ */
+
+.spotlight {
+  padding: var(--ci-space-16) 0;
+  background: linear-gradient(180deg, #ffffff 0%, var(--ci-gray-50) 100%);
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 var(--ci-space-6);
+}
+
+/* ==============================
+   SECTION HEADER
+   ============================== */
+
+.sectionHeader {
+  text-align: center;
+  margin-bottom: var(--ci-space-10);
+}
+
+.sectionTitle {
+  font-family: var(--ci-font-heading);
+  font-size: var(--ci-text-3xl);
+  font-weight: 700;
+  color: var(--ci-gray-900);
+  margin: 0;
+}
+
+/* ==============================
+   CARD
+   ============================== */
+
+.card {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: var(--ci-space-10);
+  padding: var(--ci-space-8);
+  background: #ffffff;
+  border-radius: var(--ci-radius-2xl);
+  box-shadow: var(--ci-shadow-xl);
+  animation: ci-fadeInUp var(--ci-duration-slow) var(--ci-ease-out);
+}
+
+/* ==============================
+   AVATAR SECTION
+   ============================== */
+
+.avatarSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--ci-space-6);
+}
+
+.avatarWrapper {
+  position: relative;
+  width: 180px;
+  height: 180px;
+}
+
+.avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid var(--ci-primary-100);
+  box-shadow: var(--ci-shadow-lg);
+}
+
+.verifiedBadge {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--ci-success-gradient);
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 50%;
+  border: 3px solid white;
+  box-shadow: var(--ci-shadow-md);
+}
+
+/* Quick Stats */
+.quickStats {
+  display: flex;
+  gap: var(--ci-space-4);
+  text-align: center;
+}
+
+.quickStat {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ci-space-1);
+  padding: var(--ci-space-2) var(--ci-space-3);
+}
+
+.quickStatValue {
+  font-family: var(--ci-font-heading);
+  font-size: var(--ci-text-lg);
+  font-weight: 700;
+  color: var(--ci-gray-900);
+}
+
+.quickStatLabel {
+  font-size: var(--ci-text-xs);
+  color: var(--ci-gray-500);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Social Links */
+.socialLinks {
+  display: flex;
+  gap: var(--ci-space-2);
+}
+
+.socialLink {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--ci-gray-100);
+  border-radius: 50%;
+  font-size: 18px;
+  text-decoration: none;
+  transition: all var(--ci-duration-fast) var(--ci-ease-out);
+}
+
+.socialLink:hover {
+  background: var(--ci-primary-100);
+  transform: translateY(-3px);
+  box-shadow: var(--ci-shadow-md);
+}
+
+/* ==============================
+   INFO SECTION
+   ============================== */
+
+.infoSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ci-space-5);
+}
+
+.nameTitle {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ci-space-1);
+}
+
+.name {
+  font-family: var(--ci-font-heading);
+  font-size: var(--ci-text-2xl);
+  font-weight: 700;
+  color: var(--ci-gray-900);
+  margin: 0;
+}
+
+.title {
+  font-size: var(--ci-text-base);
+  color: var(--ci-primary-600);
+  font-weight: 500;
+  margin: 0;
+}
+
+/* Bio */
+.bioWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ci-space-2);
+}
+
+.bio {
+  font-size: var(--ci-text-base);
+  line-height: 1.7;
+  color: var(--ci-gray-600);
+  margin: 0;
+}
+
+.readMoreBtn {
+  align-self: flex-start;
+  padding: 0;
+  background: none;
+  border: none;
+  color: var(--ci-primary-600);
+  font-size: var(--ci-text-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: color var(--ci-duration-fast) ease;
+}
+
+.readMoreBtn:hover {
+  color: var(--ci-primary-700);
+  text-decoration: underline;
+}
+
+/* ==============================
+   ACHIEVEMENTS
+   ============================== */
+
+.achievementsSection {
+  margin-top: var(--ci-space-4);
+}
+
+.achievementsTitle {
+  font-size: var(--ci-text-sm);
+  font-weight: 600;
+  color: var(--ci-gray-500);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0 0 var(--ci-space-3) 0;
+}
+
+.achievementsList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--ci-space-2);
+}
+
+.achievement {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ci-space-3);
+  padding: var(--ci-space-2) var(--ci-space-3);
+  background: var(--ci-gray-50);
+  border-radius: var(--ci-radius-md);
+  animation: ci-slideInRight var(--ci-duration-normal) var(--ci-ease-out) backwards;
+}
+
+.achievementIcon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--ci-success);
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 50%;
+}
+
+.achievementText {
+  font-size: var(--ci-text-sm);
+  color: var(--ci-gray-700);
+  line-height: 1.5;
+}
+
+/* ==============================
+   RESPONSIVE
+   ============================== */
+
+@media (max-width: 768px) {
+  .spotlight {
+    padding: var(--ci-space-12) 0;
+  }
+  
+  .card {
+    grid-template-columns: 1fr;
+    gap: var(--ci-space-6);
+    padding: var(--ci-space-6);
+  }
+  
+  .avatarSection {
+    align-items: center;
+  }
+  
+  .avatarWrapper {
+    width: 140px;
+    height: 140px;
+  }
+  
+  .verifiedBadge {
+    width: 30px;
+    height: 30px;
+    font-size: 14px;
+    bottom: 5px;
+    right: 5px;
+  }
+  
+  .infoSection {
+    text-align: center;
+  }
+  
+  .bioWrapper {
+    text-align: left;
+  }
+  
+  .readMoreBtn {
+    align-self: center;
+  }
+}
+
+@media (max-width: 576px) {
+  .container {
+    padding: 0 var(--ci-space-4);
+  }
+  
+  .sectionTitle {
+    font-size: var(--ci-text-2xl);
+  }
+  
+  .quickStats {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .name {
+    font-size: var(--ci-text-xl);
+  }
+}

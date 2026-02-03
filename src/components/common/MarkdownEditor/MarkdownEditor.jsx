@@ -5,8 +5,8 @@
  *
  * Features:
  * - Formatting toolbar with intuitive icons
- * - Live preview panel
- * - Insert formatting at cursor position
+ * - Always-visible live preview panel
+ * - Insert formatting at cursor position (with scroll preservation)
  * - Premium glassmorphism styling
  *
  * SOLID Principles:
@@ -16,7 +16,7 @@
  * @module MarkdownEditor
  */
 
-import React, { useState, useRef, useCallback, memo } from "react";
+import React, { useRef, useCallback, memo } from "react";
 import PropTypes from "prop-types";
 import {
   FaBold,
@@ -24,8 +24,6 @@ import {
   FaListUl,
   FaListOl,
   FaParagraph,
-  FaEye,
-  FaEyeSlash,
 } from "react-icons/fa";
 import MarkdownRenderer from "../MarkdownRenderer";
 import styles from "./MarkdownEditor.module.css";
@@ -87,18 +85,41 @@ const MarkdownEditor = ({
   minHeight,
   required,
 }) => {
-  const [showPreview, setShowPreview] = useState(false);
   const textareaRef = useRef(null);
+  // Track selection state persistently
+  const selectionStateRef = useRef({ start: 0, end: 0, scrollTop: 0 });
+
+  /**
+   * Save selection and scroll state before blur
+   */
+  const saveSelectionState = useCallback(() => {
+    const textarea = textareaRef.current;
+    if (textarea) {
+      selectionStateRef.current = {
+        start: textarea.selectionStart,
+        end: textarea.selectionEnd,
+        scrollTop: textarea.scrollTop,
+      };
+    }
+  }, []);
 
   /**
    * Insert formatting at cursor position or wrap selected text
+   * FIXED: Preserves scroll position
    */
   const insertFormatting = useCallback(
     (button) => {
       const textarea = textareaRef.current;
       if (!textarea) return;
 
-      const { selectionStart, selectionEnd } = textarea;
+      // Use saved selection state (from onBlur or current)
+      const { start, end, scrollTop } = selectionStateRef.current;
+      const selectionStart =
+        textarea.selectionStart !== undefined ? textarea.selectionStart : start;
+      const selectionEnd =
+        textarea.selectionEnd !== undefined ? textarea.selectionEnd : end;
+      const savedScrollTop = textarea.scrollTop || scrollTop;
+
       const selectedText = value.substring(selectionStart, selectionEnd);
       const textToInsert = selectedText || button.placeholder;
 
@@ -109,17 +130,22 @@ const MarkdownEditor = ({
         button.suffix +
         value.substring(selectionEnd);
 
+      // Calculate new cursor position
+      const newCursorPos =
+        selectionStart +
+        button.prefix.length +
+        textToInsert.length +
+        button.suffix.length;
+
+      // Update value
       onChange({ target: { value: newValue } });
 
-      // Restore focus and set cursor position
-      setTimeout(() => {
+      // Restore focus, cursor, and scroll position
+      requestAnimationFrame(() => {
         textarea.focus();
-        const newCursorPos =
-          selectionStart +
-          button.prefix.length +
-          (selectedText ? selectedText.length : button.placeholder.length);
         textarea.setSelectionRange(newCursorPos, newCursorPos);
-      }, 0);
+        textarea.scrollTop = savedScrollTop;
+      });
     },
     [value, onChange],
   );
@@ -142,16 +168,28 @@ const MarkdownEditor = ({
     [insertFormatting],
   );
 
+  /**
+   * Prevent default on toolbar button mousedown to keep textarea focused
+   */
+  const handleToolbarMouseDown = useCallback((e) => {
+    e.preventDefault();
+  }, []);
+
   return (
     <div className={styles.editorContainer}>
-      {/* Toolbar */}
-      <div className={styles.toolbar}>
-        <div className={styles.toolbarButtons}>
+      {/* Header with title and toolbar */}
+      <div className={styles.header}>
+        <div className={styles.headerTitle}>
+          <span className={styles.editorLabel}>✍️ Editor</span>
+          <span className={styles.previewLabel}>👁️ Live Preview</span>
+        </div>
+        <div className={styles.toolbar}>
           {TOOLBAR_BUTTONS.map((button) => (
             <button
               key={button.id}
               type="button"
               className={styles.toolbarBtn}
+              onMouseDown={handleToolbarMouseDown}
               onClick={() => insertFormatting(button)}
               title={button.tooltip}
               aria-label={button.tooltip}
@@ -160,28 +198,19 @@ const MarkdownEditor = ({
             </button>
           ))}
         </div>
-
-        <button
-          type="button"
-          className={`${styles.previewToggle} ${showPreview ? styles.active : ""}`}
-          onClick={() => setShowPreview(!showPreview)}
-          title={showPreview ? "Hide Preview" : "Show Preview"}
-        >
-          {showPreview ? <FaEyeSlash /> : <FaEye />}
-          <span>{showPreview ? "Hide Preview" : "Preview"}</span>
-        </button>
       </div>
 
-      {/* Editor Area */}
-      <div
-        className={`${styles.editorArea} ${showPreview ? styles.splitView : ""}`}
-      >
-        <div className={styles.textareaWrapper}>
+      {/* Split Editor Area - Always shows both editor and preview */}
+      <div className={styles.splitEditorArea}>
+        {/* Left: Editor */}
+        <div className={styles.editorPane}>
           <textarea
             ref={textareaRef}
             value={value}
             onChange={onChange}
             onKeyDown={handleKeyDown}
+            onBlur={saveSelectionState}
+            onSelect={saveSelectionState}
             placeholder={placeholder}
             required={required}
             className={styles.textarea}
@@ -189,28 +218,34 @@ const MarkdownEditor = ({
           />
         </div>
 
-        {/* Live Preview */}
-        {showPreview && (
-          <div className={styles.previewPanel}>
-            <div className={styles.previewHeader}>
-              <span>Live Preview</span>
-            </div>
-            <div className={styles.previewContent}>
-              {value ? (
-                <MarkdownRenderer content={value} />
-              ) : (
-                <p className={styles.previewPlaceholder}>
-                  Start typing to see preview...
-                </p>
-              )}
-            </div>
+        {/* Divider */}
+        <div className={styles.divider} />
+
+        {/* Right: Live Preview */}
+        <div className={styles.previewPane}>
+          <div className={styles.previewContent}>
+            {value ? (
+              <MarkdownRenderer content={value} />
+            ) : (
+              <p className={styles.previewPlaceholder}>
+                Start typing to see your formatted description...
+              </p>
+            )}
           </div>
-        )}
+        </div>
       </div>
 
-      {/* Help text */}
-      <div className={styles.helpText}>
-        <span>💡 Tip: Select text and click a button to format it</span>
+      {/* Footer with tips */}
+      <div className={styles.footer}>
+        <span className={styles.tip}>
+          💡 <strong>Tip:</strong> Select text, then click{" "}
+          <FaBold className={styles.inlineIcon} /> or{" "}
+          <FaItalic className={styles.inlineIcon} /> to format
+        </span>
+        <span className={styles.shortcuts}>
+          <kbd>Ctrl</kbd>+<kbd>B</kbd> Bold &nbsp;|&nbsp; <kbd>Ctrl</kbd>+
+          <kbd>I</kbd> Italic
+        </span>
       </div>
     </div>
   );
@@ -231,7 +266,7 @@ MarkdownEditor.propTypes = {
 
 MarkdownEditor.defaultProps = {
   placeholder: "Write your description here...",
-  minHeight: "150px",
+  minHeight: "200px",
   required: false,
 };
 

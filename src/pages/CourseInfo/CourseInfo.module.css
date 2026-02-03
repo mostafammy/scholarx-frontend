@@ -1,12 +1,32 @@
 /**
- * CourseInfo Module Styles
- * CSS Module for the main CoursePage container
+ * CourseInfo Page Module Styles
+ * Main page layout wrapper
  */
 
-.container {
-  max-width: 100%;
-  margin: 0 auto;
-  font-family: 'Segoe UI', sans-serif;
-  overflow-x: hidden;
+.pageWrapper {
+  width: 100%;
   min-height: 100vh;
+  background-color: #ffffff;
+  overflow-x: hidden;
+}
+
+/* Smooth scrolling for the page */
+.pageWrapper {
+  scroll-behavior: smooth;
+}
+
+/* Ensure sections have proper spacing */
+.pageWrapper > section {
+  position: relative;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.pageWrapper::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.pageWrapper {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
