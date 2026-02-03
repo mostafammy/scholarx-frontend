@@ -13,6 +13,7 @@ import {
   revokeUserFromCourse,
 } from "../../../store/slices/adminSlice";
 import { fetchCourseLessons } from "../../../store/slices/lessonSlice";
+import MarkdownEditor from "../../../components/common/MarkdownEditor";
 import Swal from "sweetalert2";
 import "./Courses.css";
 
@@ -618,7 +619,7 @@ const Courses = () => {
               </div>
               <div className="form-group">
                 <label>Description</label>
-                <textarea
+                <MarkdownEditor
                   value={newCourse.description}
                   onChange={(e) =>
                     setNewCourse({
@@ -627,12 +628,9 @@ const Courses = () => {
                     })
                   }
                   required
-                  placeholder="Supports Markdown: **bold**, *italic*, blank line for new paragraph"
+                  placeholder="Write your course description here..."
+                  minHeight="180px"
                 />
-                <small className="form-hint">
-                  Formatting: **bold**, *italic*, - bullet, blank line for new
-                  paragraph
-                </small>
               </div>
               <div className="form-group">
                 <label>Image</label>
@@ -757,7 +755,7 @@ const Courses = () => {
               </div>
               <div className="form-group">
                 <label>Description</label>
-                <textarea
+                <MarkdownEditor
                   value={selectedCourse.description}
                   onChange={(e) =>
                     setSelectedCourse({
@@ -766,12 +764,9 @@ const Courses = () => {
                     })
                   }
                   required
-                  placeholder="Supports Markdown: **bold**, *italic*, blank line for new paragraph"
+                  placeholder="Write your course description here..."
+                  minHeight="180px"
                 />
-                <small className="form-hint">
-                  Formatting: **bold**, *italic*, - bullet, blank line for new
-                  paragraph
-                </small>
               </div>
               <div className="form-group">
                 <label>Image</label>
