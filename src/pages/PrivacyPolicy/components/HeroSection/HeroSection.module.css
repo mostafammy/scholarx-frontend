@@ -1,0 +1,206 @@
+/* HeroSection Styles - Privacy Policy Page */
+
+.hero {
+  position: relative;
+  padding: 6rem 2rem 4rem;
+  background: radial-gradient(
+      circle at 0% 0%,
+      rgba(51, 153, 204, 0.08) 0%,
+      transparent 50%
+    ),
+    radial-gradient(circle at 100% 100%, rgba(255, 102, 51, 0.08) 0%, transparent 50%),
+    linear-gradient(180deg, #ffffff 0%, #f4f9fc 100%);
+  border-radius: 0 0 3rem 3rem;
+  overflow: hidden;
+  text-align: center;
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.label {
+  display: inline-block;
+  padding: 0.6rem 1.4rem;
+  background: rgba(51, 153, 204, 0.1);
+  color: #3399cc;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  border-radius: 100px;
+  margin-bottom: 2rem;
+  border: 1px solid rgba(51, 153, 204, 0.2);
+  backdrop-filter: blur(5px);
+  transition: all 0.3s ease;
+}
+
+.label:hover {
+  transform: translateY(-2px);
+  background: rgba(51, 153, 204, 0.15);
+  box-shadow: 0 5px 15px rgba(51, 153, 204, 0.15);
+}
+
+.title {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 800;
+  color: #0a1f29;
+  margin: 0 0 1rem;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  background: linear-gradient(135deg, #0a1f29 0%, #3399cc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text; /* Standard property specifically for Firefox compatibility */
+}
+
+.subtitle {
+  font-size: clamp(1.2rem, 3vw, 1.5rem);
+  color: #3399cc;
+  font-weight: 500;
+  margin: 0 0 1.5rem;
+  letter-spacing: -0.01em;
+}
+
+.description {
+  font-size: 1.125rem;
+  color: #556066;
+  line-height: 1.8;
+  margin: 0 auto 2.5rem;
+  max-width: 650px;
+}
+
+.meta {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.lastUpdated {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.75rem 1.5rem;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 100px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #4a5568;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  transition: all 0.3s ease;
+}
+
+.lastUpdated:hover {
+  background: rgba(255, 255, 255, 0.9);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+}
+
+.icon {
+  width: 1.1rem;
+  height: 1.1rem;
+  color: #3399cc;
+}
+
+/* Decorative Elements */
+.decoration {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.circle1,
+.circle2,
+.circle3 {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.6;
+  filter: blur(60px);
+}
+
+.circle1 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(
+    circle,
+    rgba(51, 153, 204, 0.12) 0%,
+    transparent 70%
+  );
+  top: -200px;
+  right: -100px;
+  animation: float 15s ease-in-out infinite;
+}
+
+.circle2 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(
+    circle,
+    rgba(255, 102, 51, 0.08) 0%,
+    transparent 70%
+  );
+  bottom: -150px;
+  left: -100px;
+  animation: float 12s ease-in-out infinite reverse;
+}
+
+.circle3 {
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(
+    circle,
+    rgba(51, 153, 204, 0.08) 0%,
+    transparent 70%
+  );
+  top: 10%;
+  left: 10%;
+  animation: float 10s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(30px, -50px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.95);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .hero {
+    padding: 4rem 1.5rem 3rem;
+     border-radius: 0 0 2rem 2rem;
+  }
+
+  .label {
+    margin-bottom: 1.5rem;
+    font-size: 0.7rem;
+  }
+
+  .lastUpdated {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.85rem;
+  }
+
+  .circle1 {
+    width: 300px;
+    height: 300px;
+    filter: blur(40px);
+  }
+}
