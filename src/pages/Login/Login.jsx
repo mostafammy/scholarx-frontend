@@ -73,10 +73,15 @@ const Login = () => {
       }
       dispatch(setSuccess("Login successful!"));
     } catch (err) {
+      // Ensure error message is a string for display
+      const errorMessage =
+        typeof err === "string"
+          ? err
+          : err?.message || "An error occurred during login. Please try again.";
       Swal.fire({
         icon: "error",
         title: "Error",
-        text: err,
+        text: errorMessage,
         confirmButtonColor: "#0d6efd",
       });
     } finally {
