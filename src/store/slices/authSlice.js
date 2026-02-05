@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { authService } from "../../services/api";
+import { extractErrorMessage } from "../../utils/errorUtils";
 import Cookies from "js-cookie";
 
 // Cookie names with obscure names
@@ -12,31 +13,6 @@ const cookieOptions = {
   sameSite: "strict", // Protect against CSRF
   path: "/", // Cookie is available for all paths
   expires: 7, // 7 days
-};
-
-/**
- * Extracts a human-readable error message from various error formats
- * @param {unknown} error - The error to extract message from
- * @returns {string} A user-friendly error message
- */
-const extractErrorMessage = (error) => {
-  // Already a string
-  if (typeof error === "string") return error;
-
-  // Axios error with response data
-  if (error?.response?.data) {
-    const data = error.response.data;
-    // JSend error format: { status: 'error', message: '...' }
-    if (data.message) return data.message;
-    // Nested data format: { status: 'fail', data: { message: '...' } }
-    if (data.data?.message) return data.data.message;
-  }
-
-  // Standard Error object
-  if (error?.message) return error.message;
-
-  // Fallback
-  return "An unexpected error occurred. Please try again.";
 };
 
 // Async thunks
@@ -64,7 +40,7 @@ export const googleLogin = createAsyncThunk(
       }
       return { token };
     } catch (error) {
-      return rejectWithValue(error.message || "Google login failed");
+      return rejectWithValue(extractErrorMessage(error, "Google login failed"));
     }
   },
 );
@@ -77,7 +53,9 @@ export const getCurrentUser = createAsyncThunk(
       Cookies.set(USER_ROLE_KEY, response.data.user.role, cookieOptions);
       return response.data;
     } catch (error) {
-      return rejectWithValue(error.message || "Failed to get user data");
+      return rejectWithValue(
+        extractErrorMessage(error, "Failed to get user data"),
+      );
     }
   },
 );
@@ -90,7 +68,7 @@ export const updateProfile = createAsyncThunk(
       return response.data.user;
     } catch (error) {
       return rejectWithValue(
-        error.response?.data?.message || "Failed to update profile",
+        extractErrorMessage(error, "Failed to update profile"),
       );
     }
   },

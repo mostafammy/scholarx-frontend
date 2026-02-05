@@ -81,6 +81,16 @@ export const PRIVACY_SECTIONS = [
         type: "paragraph",
         text: "Like any other website, ScholarX uses \"cookies\". The information is used to optimize the users' experience by customizing our web page content based on visitors' browser type and/or other information.",
       },
+      {
+        type: "list",
+        title: "D. Google User Data",
+        items: [
+          "To provide seamless integration with Google services, ScholarX accesses specific Google user data via Google OAuth APIs.",
+          "Data Accessed: We request access to Basic Profile Information (Name, email address, and profile picture).",
+          "Data Usage: We use this data for Authentication (verifying identity) and Communication (sending updates).",
+          "Limited Use Disclosure: ScholarX's use and transfer to any other app of information received from Google APIs will adhere to the Google API Services User Data Policy, including the Limited Use requirements. We do not use Google user data for serving advertisements, nor do we sell this data to third parties.",
+        ],
+      },
     ],
   },
   {

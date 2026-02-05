@@ -14,6 +14,7 @@ import {
   setError,
   clearMessages,
 } from "../../store/slices/uiSlice";
+import { extractErrorMessage } from "../../utils/errorUtils";
 import Swal from "sweetalert2";
 import "./Login.css";
 import { useUser } from "../../context/UserContext";
@@ -73,14 +74,14 @@ const Login = () => {
       }
       dispatch(setSuccess("Login successful!"));
     } catch (err) {
-      // Ensure error message is a string for display
-      const errorMessage =
-        typeof err === "string"
-          ? err
-          : err?.message || "An error occurred during login. Please try again.";
+      // Use centralized error message extraction
+      const errorMessage = extractErrorMessage(
+        err,
+        "Login failed. Please try again.",
+      );
       Swal.fire({
         icon: "error",
-        title: "Error",
+        title: "Login Failed",
         text: errorMessage,
         confirmButtonColor: "#0d6efd",
       });
