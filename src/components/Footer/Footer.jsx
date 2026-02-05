@@ -8,17 +8,20 @@ import {
   FaEnvelope,
   FaPhone,
 } from "react-icons/fa";
+import {
+  CONTACT_INFO,
+  COMPANY_INFO,
+  SOCIAL_LINKS,
+  LEGAL_PAGES,
+} from "../../utils/constants";
 
 const Footer = () => {
   return (
     <footer className="footer">
       <div className="footer-content">
         <div className="footer-section">
-          <h3 className="footer-title">ScholarX</h3>
-          <p className="footer-description">
-            Empowering academic success through personalized support and
-            mentorship
-          </p>
+          <h3 className="footer-title">{COMPANY_INFO.name}</h3>
+          <p className="footer-description">{COMPANY_INFO.tagline}</p>
         </div>
 
         <div className="footer-section">
@@ -34,7 +37,10 @@ const Footer = () => {
               <a href="/courses">Courses</a>
             </li>
             <li>
-              <a href="/privacy-policy">Privacy Policy</a>
+              <a href={LEGAL_PAGES.privacyPolicy}>Privacy Policy</a>
+            </li>
+            <li>
+              <a href={LEGAL_PAGES.termsOfService}>Terms of Service</a>
             </li>
           </ul>
         </div>
@@ -44,11 +50,11 @@ const Footer = () => {
           <div className="contact-info">
             <div className="contact-item">
               <FaEnvelope className="contact-icon" />
-              <a href="mailto:scholarx.eg@gmail.com">scholarx.eg@gmail.com</a>
+              <a href={`mailto:${CONTACT_INFO.email}`}>{CONTACT_INFO.email}</a>
             </div>
             <div className="contact-item">
               <FaPhone className="contact-icon" />
-              <p>+(20) 1012072516</p>
+              <p>{CONTACT_INFO.phone}</p>
             </div>
           </div>
         </div>
@@ -56,16 +62,16 @@ const Footer = () => {
         <div className="footer-section">
           <h4 className="footer-subtitle">Follow Us</h4>
           <div className="social-links">
-            <a href="#" aria-label="Twitter">
+            <a href={SOCIAL_LINKS.twitter} aria-label="Twitter">
               <FaTwitter />
             </a>
-            <a href="#" aria-label="LinkedIn">
+            <a href={SOCIAL_LINKS.linkedin} aria-label="LinkedIn">
               <FaLinkedin />
             </a>
-            <a href="#" aria-label="Facebook">
+            <a href={SOCIAL_LINKS.facebook} aria-label="Facebook">
               <FaFacebook />
             </a>
-            <a href="#" aria-label="Instagram">
+            <a href={SOCIAL_LINKS.instagram} aria-label="Instagram">
               <FaInstagram />
             </a>
           </div>
@@ -73,7 +79,9 @@ const Footer = () => {
       </div>
 
       <div className="footer-bottom">
-        <p>© 2025 ScholarX. All rights reserved.</p>
+        <p>
+          © {COMPANY_INFO.foundedYear} {COMPANY_INFO.name}. All rights reserved.
+        </p>
       </div>
     </footer>
   );

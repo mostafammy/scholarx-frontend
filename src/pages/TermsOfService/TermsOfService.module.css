@@ -1,0 +1,156 @@
+/* Terms of Service Page Main Styles */
+
+.page {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background: #f8fafc;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr);
+  gap: 4rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 4rem 2rem 6rem;
+  position: relative;
+  z-index: 2;
+}
+
+.sidebar {
+  position: relative;
+  z-index: 10;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  min-width: 0;
+  position: relative;
+  z-index: 1;
+}
+
+/* Background Decorations */
+.backgroundDecor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+  background: 
+    radial-gradient(circle at 0% 0%, rgba(51, 153, 204, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 100% 0%, rgba(255, 102, 51, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 100% 100%, rgba(51, 153, 204, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 0% 100%, rgba(255, 102, 51, 0.03) 0%, transparent 50%);
+}
+
+.gradientOrb1,
+.gradientOrb2 {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.4;
+  mix-blend-mode: multiply;
+}
+
+.gradientOrb1 {
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(51, 153, 204, 0.1) 0%, transparent 70%);
+  top: 10%;
+  right: -200px;
+  animation: floatOrb 20s ease-in-out infinite;
+}
+
+.gradientOrb2 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(255, 102, 51, 0.08) 0%, transparent 70%);
+  bottom: 5%;
+  left: -150px;
+  animation: floatOrb 18s ease-in-out infinite reverse;
+}
+
+@keyframes floatOrb {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(30px, -50px) scale(1.1);
+  }
+  66% {
+    transform: translate(-30px, 20px) scale(0.9);
+  }
+}
+
+/* Print Styles */
+@media print {
+  .backgroundDecor,
+  .sidebar {
+    display: none;
+  }
+
+  .container {
+    display: block;
+    padding: 0;
+    max-width: 100%;
+  }
+
+  .content {
+    gap: 1.5rem;
+  }
+  
+  .page {
+    background: white;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .container {
+    grid-template-columns: 1fr;
+    padding: 3rem 1.5rem 4rem;
+    gap: 0;
+  }
+
+  .sidebar {
+    margin-bottom: 2rem;
+  }
+
+  .content {
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 2rem 1rem 3rem;
+  }
+
+  .gradientOrb1 {
+    width: 300px;
+    height: 300px;
+    right: -100px;
+    top: 20%;
+  }
+
+  .gradientOrb2 {
+    width: 250px;
+    height: 250px;
+    left: -80px;
+    bottom: 10%;
+  }
+}
+
+@media (min-width: 1025px) and (max-width: 1280px) {
+  .container {
+    grid-template-columns: 260px 1fr;
+    gap: 3rem;
+    padding: 3rem 2rem 5rem;
+  }
+}

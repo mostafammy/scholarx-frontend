@@ -41,6 +41,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import MyCourses from "./pages/myCourses/MyCourses";
 import Certificates from "./pages/Certificates/Certificates";
 import PrivacyPolicy from "./pages/PrivacyPolicy/PrivacyPolicy";
+import TermsOfService from "./pages/TermsOfService/TermsOfService";
 
 // Layout component to ensure navbar consistency
 const Layout = ({ children, path }) => {
@@ -211,6 +212,14 @@ function App() {
                 element={
                   <LayoutWithPath>
                     <PrivacyPolicy />
+                  </LayoutWithPath>
+                }
+              />
+              <Route
+                path="/terms-of-service"
+                element={
+                  <LayoutWithPath>
+                    <TermsOfService />
                   </LayoutWithPath>
                 }
               />

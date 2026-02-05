@@ -4,6 +4,8 @@
  * Following Single Responsibility Principle - content separated from presentation
  */
 
+import { CONTACT_INFO, COMPANY_INFO } from "../../../utils/constants";
+
 // Hero Section Content
 export const PRIVACY_HERO = {
   label: "Legal",
@@ -204,14 +206,14 @@ export const PRIVACY_SECTIONS = [
       {
         type: "contact",
         details: {
-          email: "support@scholarx.com",
-          subject: "Privacy Policy Inquiry",
-          address: "ScholarX Support Team",
+          email: CONTACT_INFO.email,
+          subject: CONTACT_INFO.emailSubjects.privacyInquiry,
+          address: COMPANY_INFO.name + " Support Team",
         },
       },
       {
         type: "paragraph",
-        text: "If you have additional questions or require more information about our Privacy Policy, we are here to help.",
+        text: `By visiting this page on our website: ${CONTACT_INFO.website}${CONTACT_INFO.contactPageUrl}`,
       },
     ],
   },
