@@ -40,6 +40,7 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import MyCourses from "./pages/myCourses/MyCourses";
 import Certificates from "./pages/Certificates/Certificates";
+import CertificateVerify from "./pages/CertificateVerify/CertificateVerify";
 import PrivacyPolicy from "./pages/PrivacyPolicy/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService/TermsOfService";
 
@@ -204,6 +205,15 @@ function App() {
                 element={
                   <LayoutWithPath>
                     <Certificates />
+                  </LayoutWithPath>
+                }
+              />
+              {/* Public certificate verification - no auth required */}
+              <Route
+                path="/certificates/verify/:certificateId"
+                element={
+                  <LayoutWithPath>
+                    <CertificateVerify />
                   </LayoutWithPath>
                 }
               />

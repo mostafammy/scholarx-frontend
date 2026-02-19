@@ -23,6 +23,24 @@
     background: white;
 }
 
+.pdfContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.certificatePdfPage {
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+.certificatePdfPage canvas {
+    max-width: 100%;
+    height: auto !important;
+}
+
 .loadingMessage {
     display: flex;
     align-items: center;
@@ -39,6 +57,8 @@
 .downloadSection {
     display: flex;
     justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
     width: 100%;
 }
 
@@ -65,6 +85,32 @@
 
 .downloadBtn:active {
     transform: translateY(0);
+}
+
+.downloadBtn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.downloadBtnSecondary {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 2px solid white;
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.downloadBtnSecondary:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
 }
 
 /* Responsive adjustments */

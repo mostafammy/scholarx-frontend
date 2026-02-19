@@ -1,9 +1,13 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import PropTypes from "prop-types";
 import { createPortal } from "react-dom";
+import api from "../../services/api";
+import { formatDate } from "../../utils/dateUtils";
 
 const CertificateModal = ({ isOpen, onClose, certificateData }) => {
   const overlayRef = useRef(null);
   const canvasRef = useRef(null);
+  const [pdfLoading, setPdfLoading] = useState(false);
 
   useEffect(() => {
     if (!isOpen || !certificateData) {
@@ -31,7 +35,7 @@ const CertificateModal = ({ isOpen, onClose, certificateData }) => {
       ctx.fillText(
         certificateData?.studentName || "ScholarX Student",
         canvas.width / 2,
-        canvas.height / 2 + 20
+        canvas.height / 2 + 20,
       );
     };
 
@@ -39,41 +43,50 @@ const CertificateModal = ({ isOpen, onClose, certificateData }) => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
+      // --- Dynamic text overlays ---
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
-      ctx.fillStyle = "#1a365d";
-      ctx.font = 'bold 48px "Times New Roman", serif';
+
+      // Student Name — prominent, centered
+      ctx.fillStyle = "#5a5c6b";
+      ctx.font = 'bold 36px "Helvetica", "Arial", sans-serif';
       ctx.fillText(
         certificateData.studentName,
         canvas.width / 2,
-        canvas.height * 0.55
+        canvas.height * 0.46,
       );
 
-      ctx.font = '20px "Times New Roman", serif';
+      // Completion Date — near the signature line
+      ctx.fillStyle = "#737373";
+      ctx.font = '14px "Helvetica", "Arial", sans-serif';
       ctx.fillText(
-        certificateData.courseName,
-        canvas.width / 2 + 50,
-        canvas.height * 0.65
+        formatDate(certificateData.completedAt),
+        canvas.width / 2,
+        canvas.height * 0.78,
       );
 
-      ctx.textAlign = "left";
-      ctx.font = '20px "Times New Roman", serif';
+      // Certificate ID — small text near bottom
+      ctx.fillStyle = "#a0a0a0";
+      ctx.font = '11px "Helvetica", "Arial", sans-serif';
       ctx.fillText(
-        new Date(certificateData.completedAt || Date.now()).toLocaleDateString(
-          "en-US",
-          {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          }
-        ),
-        canvas.width * 0.3,
-        canvas.height * 0.88
+        `Certificate ID: ${certificateData.certificateId}`,
+        canvas.width / 2,
+        canvas.height * 0.9,
+      );
+
+      // Verification URL — below Certificate ID
+      ctx.fillStyle = "#6b7280";
+      ctx.font = '11px "Helvetica", "Arial", sans-serif';
+      const verifyUrl = `${window.location.origin}/verify/${certificateData.certificateId}`;
+      ctx.fillText(
+        `Verify at: ${verifyUrl}`,
+        canvas.width / 2,
+        canvas.height * 0.93,
       );
     };
 
     img.onerror = renderFallback;
-    img.src = "/certificate-template.png";
+    img.src = "/certificate-template.svg";
   }, [isOpen, certificateData]);
 
   useEffect(() => {
@@ -102,15 +115,48 @@ const CertificateModal = ({ isOpen, onClose, certificateData }) => {
     const link = document.createElement("a");
     const sanitizedStudent = (certificateData.studentName || "student").replace(
       /\s+/g,
-      "_"
+      "_",
     );
     const sanitizedCourse = (certificateData.courseName || "course").replace(
       /\s+/g,
-      "_"
+      "_",
     );
     link.download = `Certificate_${sanitizedStudent}_${sanitizedCourse}.png`;
     link.href = canvasRef.current.toDataURL("image/png");
     link.click();
+  };
+
+  const handleDownloadPdf = async () => {
+    if (!certificateData?.courseId) {
+      console.error("Course ID not available for PDF download");
+      return;
+    }
+
+    setPdfLoading(true);
+    try {
+      const response = await api.get(
+        `/certificates/${certificateData.courseId}/download`,
+        { responseType: "blob" },
+      );
+
+      const url = window.URL.createObjectURL(response.data);
+      const link = document.createElement("a");
+      const sanitizedStudent = (
+        certificateData.studentName || "student"
+      ).replace(/\s+/g, "_");
+      link.href = url;
+      link.download = `ScholarX_Certificate_${sanitizedStudent}.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Failed to download PDF:", error);
+      // Fallback to PNG if PDF fails
+      handleDownload();
+    } finally {
+      setPdfLoading(false);
+    }
   };
 
   const handleOverlayClick = (event) => {
@@ -145,8 +191,19 @@ const CertificateModal = ({ isOpen, onClose, certificateData }) => {
           <canvas ref={canvasRef} width={1200} height={900} />
         </div>
         <div className="certificate-modal-actions">
-          <button className="certificate-modal-action" onClick={handleDownload}>
-            📥 Download Certificate
+          <button
+            className="certificate-modal-action"
+            onClick={handleDownloadPdf}
+            disabled={pdfLoading}
+          >
+            {pdfLoading ? "⏳ Generating..." : "📄 Download PDF"}
+          </button>
+          <button
+            className="certificate-modal-secondary"
+            onClick={handleDownload}
+            title="Download as image"
+          >
+            🖼️ Download PNG
           </button>
           <button className="certificate-modal-secondary" onClick={onClose}>
             Close
@@ -154,8 +211,28 @@ const CertificateModal = ({ isOpen, onClose, certificateData }) => {
         </div>
       </div>
     </div>,
-    document.body
+    document.body,
   );
+};
+
+CertificateModal.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  certificateData: PropTypes.shape({
+    studentName: PropTypes.string,
+    courseName: PropTypes.string,
+    courseId: PropTypes.string, // Required for PDF download
+    completedAt: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.instanceOf(Date),
+    ]),
+    certificateId: PropTypes.string,
+    completionPercentage: PropTypes.number,
+  }),
+};
+
+CertificateModal.defaultProps = {
+  certificateData: null,
 };
 
 export default CertificateModal;

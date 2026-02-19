@@ -26,6 +26,7 @@ export const useCertificateModal = (courseCompletion, course, user) => {
     setCertificateData({
       studentName: `${user.firstName || ""} ${user.lastName || ""}`.trim(),
       courseName: course.title,
+      courseId: course._id, // Required for PDF download
       completedAt: courseCompletion.completedAt,
       certificateId: courseCompletion.certificateId,
       completionPercentage: courseCompletion.completionPercentage,
