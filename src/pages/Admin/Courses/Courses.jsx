@@ -57,6 +57,7 @@ const Courses = () => {
     oldPrice: "",
     instructor: null,
     requiresForm: false,
+    salesInquiry: false,
   });
   const [newLesson, setNewLesson] = useState({
     title: "",
@@ -120,6 +121,7 @@ const Courses = () => {
         oldPrice: "",
         instructor: null,
         requiresForm: false,
+        salesInquiry: false,
       });
       Swal.fire({
         icon: "success",
@@ -711,6 +713,26 @@ const Courses = () => {
                 <small className="form-hint">
                   If checked, users must fill out an application form before
                   enrolling
+                </small>
+              </div>
+              <div className="form-group checkbox-group">
+                <label className="checkbox-label">
+                  <input
+                    type="checkbox"
+                    checked={newCourse.salesInquiry || false}
+                    onChange={(e) =>
+                      setNewCourse({
+                        ...newCourse,
+                        salesInquiry: e.target.checked,
+                      })
+                    }
+                  />
+                  <span>Enable Sales Inquiry Flow</span>
+                </label>
+                <small className="form-hint">
+                  Replaces &ldquo;Buy Now&rdquo; with &ldquo;I&rsquo;m
+                  Interested&rdquo; — the Sales Team contacts the user instead
+                  of PayMob.
                 </small>
               </div>
               <div className="modal-actions">

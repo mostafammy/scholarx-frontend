@@ -10,11 +10,14 @@
  * - Dependency Inversion: Business logic abstracted to custom hooks
  */
 
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import { useUser } from "../../context/UserContext";
+import { courseService, authService } from "../../services/api";
 import BlockedUserMessage from "../../components/BlockedUserMessage/BlockedUserMessage";
+import useSalesInquiry from "../../hooks/useSalesInquiry";
+import SalesInquiryModal from "../../components/SalesInquiryModal";
 import { useCourseData, useSubscriptionStatus } from "./hooks";
 import {
   CourseHero,
@@ -47,6 +50,36 @@ const CoursePage = () => {
     useCourseData();
 
   const { isSubscribed } = useSubscriptionStatus(courseId);
+
+  // ── Sales inquiry — driven by the salesInquiry flag on the course object ──
+  // When salesInquiry === true the "I'm Interested" CTA replaces the normal CTA.
+  // Free courses (price 0) always go through direct enrolment regardless of flag.
+  const isPaidCourse = rawCourse?.salesInquiry === true;
+  const isAuth = authService.isAuthenticated();
+  const [showSalesModal, setShowSalesModal] = useState(false);
+  const { hasInquiry, inquiry, refetchStatus } = useSalesInquiry(courseId, {
+    enabled: isPaidCourse && isAuth,
+  });
+
+  // Check if user already owns this course (direct enrollment, not subscription)
+  const userOwnsCourse = useMemo(() => {
+    if (!user || !courseId) return false;
+    const userCourses = Array.isArray(user.courses) ? user.courses : [];
+    return userCourses.some((entry) => {
+      if (typeof entry === "string") return entry === courseId;
+      if (typeof entry === "object")
+        return (
+          entry._id === courseId ||
+          entry.id === courseId ||
+          entry.courseId === courseId ||
+          String(entry) === courseId
+        );
+      return false;
+    });
+  }, [user, courseId]);
+
+  // User can access the course if they have a subscription or direct enrollment
+  const canUserAccess = isSubscribed || userOwnsCourse;
 
   // Memoized course with access status
   const courseWithAccess = useMemo(
@@ -95,6 +128,11 @@ const CoursePage = () => {
         category={course.category}
         duration={course.duration}
         lessonsCount={totalLessons}
+        isPaidCourse={isPaidCourse}
+        canUserAccess={canUserAccess}
+        hasInquiry={hasInquiry}
+        inquiry={inquiry}
+        onOpenInquiry={() => setShowSalesModal(true)}
       />
 
       {/* Course Overview with Animated Stats */}
@@ -169,6 +207,21 @@ const CoursePage = () => {
         courseId={courseId}
         course={courseWithAccess}
         isSubscribed={isSubscribed}
+        isPaidCourse={isPaidCourse}
+        canUserAccess={canUserAccess}
+        hasInquiry={hasInquiry}
+        inquiry={inquiry}
+        onOpenInquiry={() => setShowSalesModal(true)}
+      />
+
+      {/* Sales Inquiry Modal — paid courses, unauthenticated or no existing inquiry */}
+      <SalesInquiryModal
+        isOpen={showSalesModal}
+        onClose={() => setShowSalesModal(false)}
+        courseId={courseId}
+        courseTitle={course.title}
+        userData={user}
+        onSuccess={refetchStatus}
       />
     </main>
   );

@@ -11,6 +11,7 @@
 import React, { memo, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import EnrollmentButton from "../../../components/EnrollmentButton/EnrollmentButton";
+import SalesInquiryCTA from "../../../components/SalesInquiryCTA";
 import styles from "./StickyEnrollBar.module.css";
 
 /**
@@ -22,6 +23,11 @@ const StickyEnrollBar = ({
   course,
   isSubscribed,
   scrollThreshold = 500,
+  isPaidCourse,
+  canUserAccess,
+  hasInquiry,
+  inquiry,
+  onOpenInquiry,
 }) => {
   const [isVisible, setIsVisible] = useState(false);
 
@@ -50,18 +56,28 @@ const StickyEnrollBar = ({
         </div>
 
         <div className={styles.ctaSection}>
-          <EnrollmentButton
-            course={courseWithAccess}
-            courseId={courseId}
-            courseTitle={title}
-            openLabel={isSubscribed ? "Continue" : "Enroll Now"}
-            openClassName={styles.ctaButton}
-            enrollClassName={styles.ctaButton}
-            useDefaultStyles={false}
-            hookOptions={{
-              isEnrolledOverride: isSubscribed,
-            }}
-          />
+          {isPaidCourse && !canUserAccess ? (
+            <SalesInquiryCTA
+              hasInquiry={hasInquiry}
+              inquiry={inquiry}
+              onOpen={onOpenInquiry}
+              compact
+              onLight
+            />
+          ) : (
+            <EnrollmentButton
+              course={courseWithAccess}
+              courseId={courseId}
+              courseTitle={title}
+              openLabel={isSubscribed ? "Continue" : "Enroll Now"}
+              openClassName={styles.ctaButton}
+              enrollClassName={styles.ctaButton}
+              useDefaultStyles={false}
+              hookOptions={{
+                isEnrolledOverride: isSubscribed,
+              }}
+            />
+          )}
         </div>
       </div>
     </div>
@@ -74,6 +90,11 @@ StickyEnrollBar.propTypes = {
   course: PropTypes.object,
   isSubscribed: PropTypes.bool,
   scrollThreshold: PropTypes.number,
+  isPaidCourse: PropTypes.bool,
+  canUserAccess: PropTypes.bool,
+  hasInquiry: PropTypes.bool,
+  inquiry: PropTypes.object,
+  onOpenInquiry: PropTypes.func,
 };
 
 StickyEnrollBar.defaultProps = {
@@ -81,6 +102,11 @@ StickyEnrollBar.defaultProps = {
   course: null,
   isSubscribed: false,
   scrollThreshold: 500,
+  isPaidCourse: false,
+  canUserAccess: false,
+  hasInquiry: false,
+  inquiry: null,
+  onOpenInquiry: () => {},
 };
 
 export default memo(StickyEnrollBar);

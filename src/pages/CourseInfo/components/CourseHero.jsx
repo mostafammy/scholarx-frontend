@@ -12,6 +12,7 @@ import React, { memo, useCallback, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import StarRating from "./StarRating";
 import EnrollmentButton from "../../../components/EnrollmentButton/EnrollmentButton";
+import SalesInquiryCTA from "../../../components/SalesInquiryCTA";
 import styles from "./CourseHero.module.css";
 import "../styles/courseInfo.variables.css";
 
@@ -29,6 +30,11 @@ const CourseHero = ({
   category,
   duration,
   lessonsCount,
+  isPaidCourse,
+  canUserAccess,
+  hasInquiry,
+  inquiry,
+  onOpenInquiry,
 }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [scrollY, setScrollY] = useState(0);
@@ -113,18 +119,26 @@ const CourseHero = ({
 
         {/* CTA Button */}
         <div className={styles.ctaWrapper}>
-          <EnrollmentButton
-            course={courseWithAccess}
-            courseId={courseId}
-            courseTitle={title}
-            openLabel="Start Learning"
-            openClassName={styles.ctaButton}
-            enrollClassName={styles.ctaButton}
-            useDefaultStyles={false}
-            hookOptions={{
-              isEnrolledOverride: isSubscribed,
-            }}
-          />
+          {isPaidCourse && !canUserAccess ? (
+            <SalesInquiryCTA
+              hasInquiry={hasInquiry}
+              inquiry={inquiry}
+              onOpen={onOpenInquiry}
+            />
+          ) : (
+            <EnrollmentButton
+              course={courseWithAccess}
+              courseId={courseId}
+              courseTitle={title}
+              openLabel="Start Learning"
+              openClassName={styles.ctaButton}
+              enrollClassName={styles.ctaButton}
+              useDefaultStyles={false}
+              hookOptions={{
+                isEnrolledOverride: isSubscribed,
+              }}
+            />
+          )}
         </div>
 
         {/* Scroll Indicator */}
@@ -160,6 +174,11 @@ CourseHero.propTypes = {
   category: PropTypes.string,
   duration: PropTypes.string,
   lessonsCount: PropTypes.number,
+  isPaidCourse: PropTypes.bool,
+  canUserAccess: PropTypes.bool,
+  hasInquiry: PropTypes.bool,
+  inquiry: PropTypes.object,
+  onOpenInquiry: PropTypes.func,
 };
 
 CourseHero.defaultProps = {
@@ -171,6 +190,11 @@ CourseHero.defaultProps = {
   category: "",
   duration: "",
   lessonsCount: 0,
+  isPaidCourse: false,
+  canUserAccess: false,
+  hasInquiry: false,
+  inquiry: null,
+  onOpenInquiry: () => {},
 };
 
 export default memo(CourseHero);

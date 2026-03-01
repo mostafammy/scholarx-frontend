@@ -1,0 +1,349 @@
+/* ─────────────────────────────────────────────
+   SalesInquiryModal — CSS Module
+   Follows the same portal modal pattern as
+   CourseEnrollmentModal but uses its own styles.
+───────────────────────────────────────────── */
+
+/* Backdrop overlay */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 1050;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  animation: fadeIn 0.18s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Dialog box */
+.modal {
+  background: #ffffff;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 540px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
+  display: flex;
+  flex-direction: column;
+  animation: slideUp 0.22s ease;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Header */
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.5rem 1.75rem 1rem;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.headerLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #2563eb;
+}
+
+.title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #111827;
+  line-height: 1.3;
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 0.83rem;
+  color: #6b7280;
+  margin: 0;
+  margin-top: 0.15rem;
+}
+
+.closeBtn {
+  flex-shrink: 0;
+  background: #f3f4f6;
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  color: #6b7280;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, color 0.15s;
+  line-height: 1;
+}
+
+.closeBtn:hover {
+  background: #e5e7eb;
+  color: #111827;
+}
+
+/* Form body */
+.body {
+  padding: 1.5rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+/* Field group */
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.label2 {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.required {
+  color: #dc2626;
+  margin-left: 2px;
+}
+
+.optional {
+  font-size: 0.74rem;
+  font-weight: 400;
+  color: #9ca3af;
+  margin-left: 4px;
+}
+
+.input {
+  width: 100%;
+  padding: 0.6rem 0.85rem;
+  border: 1.5px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: #111827;
+  background: #fff;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  outline: none;
+}
+
+.input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.input.error {
+  border-color: #dc2626;
+}
+
+.input.error:focus {
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.12);
+}
+
+.input.prefilled {
+  background: #f0f9ff;
+  border-color: #bae6fd;
+  cursor: text;
+}
+
+/* Textarea — inherits .input styles inline (CSS Modules composes not typed yet) */
+.textarea {
+  width: 100%;
+  padding: 0.6rem 0.85rem;
+  border: 1.5px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: #111827;
+  background: #fff;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  outline: none;
+  resize: vertical;
+  min-height: 96px;
+  font-family: inherit;
+}
+
+.textareaFooter {
+  display: flex;
+  justify-content: flex-end;
+  font-size: 0.74rem;
+  color: #9ca3af;
+}
+
+.textareaFooter.overLimit {
+  color: #dc2626;
+}
+
+/* Error message */
+.errorMsg {
+  font-size: 0.76rem;
+  color: #dc2626;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Phone input overrides */
+.phoneWrapper {
+  width: 100%;
+}
+
+.phoneWrapper :global(.react-tel-input .form-control) {
+  width: 100% !important;
+  height: 40px !important;
+  border: 1.5px solid #d1d5db !important;
+  border-radius: 8px !important;
+  font-size: 0.9rem !important;
+  color: #111827 !important;
+  padding-left: 54px !important;
+  transition: border-color 0.15s, box-shadow 0.15s !important;
+}
+
+.phoneWrapper :global(.react-tel-input .form-control:focus) {
+  border-color: #2563eb !important;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12) !important;
+  outline: none !important;
+}
+
+.phoneWrapper.phoneError :global(.react-tel-input .form-control) {
+  border-color: #dc2626 !important;
+}
+
+.phoneWrapper :global(.react-tel-input .flag-dropdown) {
+  border: 1.5px solid #d1d5db !important;
+  border-right: none !important;
+  border-radius: 8px 0 0 8px !important;
+  background: #f9fafb !important;
+}
+
+/* Two-column row */
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+/* Footer */
+.footer {
+  padding: 1.1rem 1.75rem 1.5rem;
+  display: flex;
+  gap: 0.75rem;
+  border-top: 1px solid #f0f0f0;
+}
+
+.btnCancel {
+  flex: 1;
+  padding: 0.65rem 1rem;
+  border: 1.5px solid #d1d5db;
+  border-radius: 8px;
+  background: #fff;
+  color: #374151;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.btnCancel:hover {
+  background: #f3f4f6;
+  border-color: #9ca3af;
+}
+
+.btnSubmit {
+  flex: 2;
+  padding: 0.65rem 1rem;
+  border: none;
+  border-radius: 8px;
+  background: #2563eb;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, opacity 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.btnSubmit:hover:not(:disabled) {
+  background: #1d4ed8;
+}
+
+.btnSubmit:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+/* Loading spinner inside button */
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2.5px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.65s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .modal {
+    border-radius: 12px;
+    max-height: 95vh;
+  }
+
+  .header,
+  .body,
+  .footer {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+
+  .row {
+    grid-template-columns: 1fr;
+  }
+
+  .footer {
+    flex-direction: column-reverse;
+  }
+}
+
+/* Phone number hint */
+.phoneHint {
+  font-size: 0.73rem;
+  color: #9ca3af;
+  margin-bottom: 0.35rem;
+}
+
+.phoneExample {
+  font-family: monospace;
+  font-size: 0.73rem;
+  color: #6b7280;
+  font-weight: 600;
+}

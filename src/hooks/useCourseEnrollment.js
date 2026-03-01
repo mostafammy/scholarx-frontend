@@ -8,6 +8,22 @@ import api, {
   courseEnrollmentService,
 } from "../services/api";
 import { useUser } from "../context/UserContext";
+import useSalesInquiry from "./useSalesInquiry";
+
+/** Status-aware button labels for existing inquiry */
+const INQUIRY_BTN_LABELS = {
+  new: "✅ Inquiry Received",
+  contacted: "💬 Being Contacted",
+  lost: "📋 Inquiry Closed",
+};
+
+/** Status-aware dialog body shown when user clicks an already-submitted button */
+const INQUIRY_STATUS_MESSAGES = {
+  new: "Your inquiry is received. Our sales team will contact you soon on WhatsApp.",
+  contacted:
+    "Our team has been in touch! We\u2019ll finalise the details shortly.",
+  lost: "Your inquiry was closed. Please contact support if you need assistance.",
+};
 
 const DEFAULT_COURSE_TITLE = "Course";
 
@@ -25,6 +41,7 @@ export const useCourseEnrollment = (course, options = {}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [hasJustEnrolled, setHasJustEnrolled] = useState(false);
   const [showEnrollmentModal, setShowEnrollmentModal] = useState(false);
+  const [showSalesModal, setShowSalesModal] = useState(false);
 
   const courseId = course?._id || options.courseIdOverride;
   const courseTitle = resolveCourseTitle(course, options.courseTitleOverride);
@@ -32,7 +49,16 @@ export const useCourseEnrollment = (course, options = {}) => {
     () => courseService.isFreeCourse(course),
     [course],
   );
+  const isSalesInquiryCourse = Boolean(course?.salesInquiry);
   const isSubscribed = Boolean(course?.isSubscribed);
+
+  // Check if user has already submitted an inquiry for this course.
+  // Query is disabled for non-sales courses and unauthenticated users.
+  const {
+    hasInquiry,
+    inquiry: existingInquiry,
+    isStatusLoading: isInquiryStatusLoading,
+  } = useSalesInquiry(courseId, { enabled: isSalesInquiryCourse });
 
   const userOwnsCourse = useMemo(() => {
     if (!user || !courseId) {
@@ -187,6 +213,15 @@ export const useCourseEnrollment = (course, options = {}) => {
     setShowEnrollmentModal(false);
   }, []);
 
+  // Open / close the sales inquiry modal
+  const openSalesModal = useCallback(() => {
+    setShowSalesModal(true);
+  }, []);
+
+  const closeSalesModal = useCallback(() => {
+    setShowSalesModal(false);
+  }, []);
+
   // Process enrollment after form data is submitted
   // Auto-approves and enrolls the user immediately after collecting their data
   const processEnrollmentWithFormData = useCallback(
@@ -288,6 +323,26 @@ export const useCourseEnrollment = (course, options = {}) => {
       return;
     }
 
+    // Sales inquiry flow — bypass PayMob entirely
+    if (isSalesInquiryCourse) {
+      // If already submitted, show current status instead of reopening the form
+      if (hasInquiry && existingInquiry) {
+        const status = existingInquiry.status || "new";
+        await Swal.fire({
+          icon: "info",
+          title: "Inquiry Already Submitted",
+          text:
+            INQUIRY_STATUS_MESSAGES[status] ||
+            "Our sales team will contact you on the WhatsApp number you provided.",
+          confirmButtonText: "Got it",
+          confirmButtonColor: "#2563eb",
+        });
+        return;
+      }
+      openSalesModal();
+      return;
+    }
+
     // Check if course requires a form before enrollment
     const requiresForm = Boolean(course?.requiresForm);
 
@@ -322,10 +377,14 @@ export const useCourseEnrollment = (course, options = {}) => {
     course,
     courseId,
     isFreeCourse,
+    isSalesInquiryCourse,
+    hasInquiry,
+    existingInquiry,
     handleFreeEnrollment,
     handlePaidEnrollment,
     navigate,
     openEnrollmentModal,
+    openSalesModal,
     showAlreadyEnrolledAlert,
     user,
   ]);
@@ -338,12 +397,23 @@ export const useCourseEnrollment = (course, options = {}) => {
     if (isLoading) {
       return isFreeCourse ? "Processing..." : "Sending...";
     }
+    if (isSalesInquiryCourse && !canAccessCourse) {
+      if (isInquiryStatusLoading) return "Checking\u2026";
+      if (hasInquiry && existingInquiry?.status) {
+        return (
+          INQUIRY_BTN_LABELS[existingInquiry.status] ||
+          "\u2705 Inquiry Submitted"
+        );
+      }
+      return "I\u2019m Interested";
+    }
     return isFreeCourse ? "Enroll Now (Free)" : "Enroll Now";
   };
 
   return {
     isLoading,
     isFreeCourse,
+    isSalesInquiryCourse,
     canAccessCourse,
     enrollButtonLabel: getEnrollButtonLabel(),
     handleEnroll,
@@ -353,6 +423,10 @@ export const useCourseEnrollment = (course, options = {}) => {
     openEnrollmentModal,
     closeEnrollmentModal,
     processEnrollmentWithFormData,
+    // Sales inquiry modal state
+    showSalesModal,
+    openSalesModal,
+    closeSalesModal,
     // Additional data for the form
     courseId,
     courseTitle,

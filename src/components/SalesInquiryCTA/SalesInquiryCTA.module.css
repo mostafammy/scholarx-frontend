@@ -1,0 +1,143 @@
+/* ─────────────────────────────────────────────
+   SalesInquiryCTA — CSS Module
+   Two states: "Contact Sales" button  OR  submitted confirmation banner
+───────────────────────────────────────────── */
+
+/* ── Contact Sales button ─────────────────── */
+.contactBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.6rem;
+  background: linear-gradient(135deg, #2563eb and 0%, #1d4ed8 100%);
+  background: #2563eb;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+  white-space: nowrap;
+}
+
+.contactBtn:hover {
+  background: #1d4ed8;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5);
+}
+
+.contactBtn:active {
+  transform: translateY(0);
+}
+
+.contactBtn.compact {
+  padding: 0.55rem 1.2rem;
+  font-size: 0.9rem;
+}
+
+/* Icon inside button */
+.btnIcon {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+/* Loading state */
+.contactBtn.loading {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* ── Confirmation banner ──────────────────── */
+.banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  padding: 1rem 1.25rem;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  border-radius: 12px;
+  max-width: 420px;
+  color: #fff;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.banner.onLight {
+  background: #eff6ff;
+  border-color: #bfdbfe;
+  color: #1e3a5f;
+}
+
+.bannerIcon {
+  font-size: 1.4rem;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.bannerBody {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.bannerTitle {
+  font-size: 0.92rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: inherit;
+}
+
+.bannerText {
+  font-size: 0.8rem;
+  opacity: 0.85;
+  line-height: 1.45;
+  margin: 0;
+}
+
+.bannerFooter {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.3rem;
+}
+
+.statusDot {
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 2px 9px;
+  border-radius: 20px;
+}
+
+.statusNew      { background: rgba(37, 99, 235, 0.18);  color: #2563eb; }
+.statusContacted{ background: rgba(217, 119, 6, 0.18);  color: #d97706; }
+.statusConverted{ background: rgba(22, 163, 74, 0.18);  color: #16a34a; }
+.statusLost     { background: rgba(107, 114, 128, 0.12); color: #6b7280; }
+
+/* On dark hero backgrounds the status badge colors are overridden */
+.banner:not(.onLight) .statusNew,
+.banner:not(.onLight) .statusContacted,
+.banner:not(.onLight) .statusConverted,
+.banner:not(.onLight) .statusLost {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+@media (max-width: 480px) {
+  .contactBtn {
+    width: 100%;
+    justify-content: center;
+  }
+  .banner {
+    max-width: 100%;
+  }
+}

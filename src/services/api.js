@@ -303,4 +303,89 @@ export const courseEnrollmentService = {
   },
 };
 
+/**
+ * Sales Inquiry Service
+ * Covers all sales inquiry endpoints for both user-facing and dashboard use.
+ */
+export const salesInquiryService = {
+  /**
+   * Check if the authenticated user has already submitted an inquiry for a course.
+   * GET /api/courses/:id/sales-inquiry/status
+   */
+  checkInquiryStatus: async (courseId) => {
+    const response = await api.get(`/courses/${courseId}/sales-inquiry/status`);
+    return parseJSendResponse(response.data, "Failed to fetch inquiry status");
+  },
+
+  /**
+   * Submit a new sales inquiry for a paid course.
+   * POST /api/courses/:id/sales-inquiry
+   */
+  submitInquiry: async (courseId, payload) => {
+    const response = await api.post(
+      `/courses/${courseId}/sales-inquiry`,
+      payload,
+    );
+    return parseJSendResponse(response.data, "Failed to submit inquiry");
+  },
+
+  /**
+   * Get sales dashboard stats (requires sales/admin role).
+   * GET /api/sales/dashboard/stats
+   */
+  getDashboardStats: async () => {
+    const response = await api.get("/sales/dashboard/stats");
+    return parseJSendResponse(response.data, "Failed to fetch dashboard stats");
+  },
+
+  /**
+   * List all inquiries with optional filters (requires sales/admin role).
+   * GET /api/sales/inquiries
+   */
+  listInquiries: async (params = {}) => {
+    const response = await api.get("/sales/inquiries", { params });
+    return parseJSendResponse(response.data, "Failed to fetch inquiries");
+  },
+
+  /**
+   * Get full details of a single inquiry including message and salesNotes.
+   * GET /api/sales/inquiries/:id
+   */
+  getInquiry: async (id) => {
+    const response = await api.get(`/sales/inquiries/${id}`);
+    return parseJSendResponse(response.data, "Failed to fetch inquiry");
+  },
+
+  /**
+   * Update inquiry status and optionally add sales notes.
+   * PATCH /api/sales/inquiries/:id/status
+   */
+  updateInquiryStatus: async (id, payload) => {
+    const response = await api.patch(`/sales/inquiries/${id}/status`, payload);
+    return parseJSendResponse(response.data, "Failed to update inquiry status");
+  },
+
+  /**
+   * Enroll the user who submitted an inquiry — grants immediate course access
+   * and auto-converts the inquiry to "converted".
+   * POST /api/sales/inquiries/:id/enroll
+   */
+  enrollUser: async (id, payload = {}) => {
+    const response = await api.post(`/sales/inquiries/${id}/enroll`, payload);
+    return parseJSendResponse(response.data, "Failed to enroll user");
+  },
+
+  /**
+   * Revoke course access for a converted inquiry (admin only).
+   * Reverts inquiry status back to "contacted".
+   * DELETE /api/sales/inquiries/:id/enroll
+   */
+  unenrollUser: async (id, payload) => {
+    const response = await api.delete(`/sales/inquiries/${id}/enroll`, {
+      data: payload,
+    });
+    return parseJSendResponse(response.data, "Failed to unenroll user");
+  },
+};
+
 export default api;

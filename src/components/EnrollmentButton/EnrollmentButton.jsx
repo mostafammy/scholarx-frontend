@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import "./EnrollmentButton.css";
 import useCourseEnrollment from "../../hooks/useCourseEnrollment";
 import CourseEnrollmentModal from "../CourseEnrollmentModal";
+import SalesInquiryModal from "../SalesInquiryModal/SalesInquiryModal";
 
 const EnrollmentButton = ({
   course,
@@ -29,6 +30,9 @@ const EnrollmentButton = ({
     showEnrollmentModal,
     closeEnrollmentModal,
     processEnrollmentWithFormData,
+    // Sales inquiry modal
+    showSalesModal,
+    closeSalesModal,
     courseId: resolvedCourseId,
     courseTitle: resolvedCourseTitle,
     user,
@@ -109,6 +113,16 @@ const EnrollmentButton = ({
         courseId={resolvedCourseId}
         userData={user}
         isLoading={isLoading}
+      />
+
+      {/* Sales Inquiry Modal — for salesInquiry courses */}
+      <SalesInquiryModal
+        isOpen={showSalesModal}
+        onClose={closeSalesModal}
+        courseId={resolvedCourseId}
+        courseTitle={resolvedCourseTitle}
+        userData={user}
+        onSuccess={closeSalesModal}
       />
     </>
   );

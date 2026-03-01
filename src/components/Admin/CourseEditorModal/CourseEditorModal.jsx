@@ -403,6 +403,39 @@ const CourseEditorModal = ({
                       </div>
                     </label>
                   </div>
+
+                  <div className={styles.formGroup}>
+                    <label className={styles.toggleLabel}>
+                      <input
+                        type="checkbox"
+                        checked={course.salesInquiry || false}
+                        onChange={(e) =>
+                          handleChange("salesInquiry", e.target.checked)
+                        }
+                        className={styles.checkbox}
+                      />
+                      <span className={styles.toggleSlider} />
+                      <div className={styles.toggleText}>
+                        <strong>Enable Sales Inquiry Flow</strong>
+                        <span>
+                          Replaces &ldquo;Buy Now&rdquo; with &ldquo;I&rsquo;m
+                          Interested&rdquo; — the Sales Team contacts the user
+                          directly instead of going through PayMob.
+                          {course.currentPrice === 0 && (
+                            <em
+                              style={{
+                                display: "block",
+                                marginTop: "0.25rem",
+                                color: "#d97706",
+                              }}
+                            >
+                              ⚠️ No effect on free courses (price = 0).
+                            </em>
+                          )}
+                        </span>
+                      </div>
+                    </label>
+                  </div>
                 </div>
               </div>
             )}

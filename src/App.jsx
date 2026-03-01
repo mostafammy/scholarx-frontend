@@ -25,8 +25,9 @@ import "./styles/sweetalert.css";
 import SearchResults from "./pages/Search/SearchResults";
 import GoogleCallback from "./pages/GoogleCallback/GoogleCallback";
 import VerifyEmail from "./pages/VerifyEmail/VerifyEmail";
-import { UserProvider } from "./context/UserContext";
+import { UserProvider, useUser } from "./context/UserContext";
 import { QueryProvider } from "./providers/QueryProvider";
+import SalesDashboard from "./pages/Sales";
 import LessonPage from "./pages/LessonPage/LessonPage";
 import { useSelector } from "react-redux";
 import Profile from "./pages/Profile/Profile";
@@ -59,6 +60,16 @@ const Layout = ({ children, path }) => {
 const LayoutWithPath = ({ children }) => {
   const location = useLocation();
   return <Layout path={location.pathname} children={children} />;
+};
+
+// Route guard for sales team members and admins
+const SalesRoute = ({ children }) => {
+  const { isAuthenticated } = useSelector((state) => state.auth);
+  const { user } = useUser();
+  if (!isAuthenticated) return <Navigate to="/login" />;
+  if (user && user.role !== "sales" && user.role !== "admin")
+    return <Navigate to="/" />;
+  return children;
 };
 
 // Private Route component for admin routes
@@ -282,6 +293,18 @@ function App() {
                       <AdminReports />
                     </LayoutWithPath>
                   </AdminRoute>
+                }
+              />
+
+              {/* Sales Dashboard — accessible to sales + admin roles */}
+              <Route
+                path="/sales/dashboard"
+                element={
+                  <SalesRoute>
+                    <LayoutWithPath>
+                      <SalesDashboard />
+                    </LayoutWithPath>
+                  </SalesRoute>
                 }
               />
 
