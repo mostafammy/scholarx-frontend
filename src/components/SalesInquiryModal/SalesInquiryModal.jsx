@@ -1,11 +1,17 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Swal from "sweetalert2";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 import { salesInquirySchema } from "./salesInquirySchema";
 import { salesInquiryService } from "../../services/api";
+import {
+  normalisePhoneNumber,
+  PREFERRED_COUNTRIES,
+} from "../../utils/phoneValidation";
 import styles from "./SalesInquiryModal.module.css";
 
 /**
@@ -43,6 +49,12 @@ const SalesInquiryModal = ({
   const fullName = deriveFullName(userData);
   const email = userData?.email || "";
 
+  // Separate controlled state for the PhoneInput component.
+  // react-hook-form does not natively integrate with non-standard inputs,
+  // so we manage the phone value via useState and sync it into the form
+  // via setValue on each change.
+  const [phoneValue, setPhoneValue] = useState("");
+
   const {
     register,
     handleSubmit,
@@ -72,9 +84,12 @@ const SalesInquiryModal = ({
     }
   }, [isOpen, fullName, email, setValue]);
 
-  /* Reset form when modal closes */
+  /* Reset form + phone state when modal closes */
   useEffect(() => {
-    if (!isOpen) reset();
+    if (!isOpen) {
+      reset();
+      setPhoneValue("");
+    }
   }, [isOpen, reset]);
 
   /* ESC key + body scroll lock */
@@ -251,27 +266,48 @@ const SalesInquiryModal = ({
               </div>
             </div>
 
-            {/* WhatsApp Number */}
+            {/* WhatsApp / Phone Number */}
             <div className={styles.fieldGroup}>
               <label htmlFor="si-whatsapp" className={styles.label2}>
-                WhatsApp Number <span className={styles.required}>*</span>
+                WhatsApp / Phone Number{" "}
+                <span className={styles.required}>*</span>
               </label>
               <div className={styles.phoneHint}>
-                Enter digits only, e.g.{" "}
-                <span className={styles.phoneExample}>201012345678</span>
+                Select your country flag, then enter your number.
+                <br />
+                <span className={styles.phoneExample}>
+                  e.g. +1 202 555 0100 (USA) &nbsp;·&nbsp; +44 7911 123456 (UK)
+                </span>
               </div>
-              <input
-                id="si-whatsapp"
-                type="tel"
-                inputMode="numeric"
-                className={[
+              {/*
+               * react-phone-input-2 is uncontrolled from react-hook-form's
+               * perspective; we mirror its value into the form via setValue
+               * so Zod validation works correctly on submit.
+               */}
+              <PhoneInput
+                inputProps={{ id: "si-whatsapp", name: "whatsAppNumber" }}
+                country="eg"
+                preferredCountries={PREFERRED_COUNTRIES}
+                enableSearch
+                searchPlaceholder="Search country…"
+                countryCodeEditable={false}
+                value={phoneValue}
+                onChange={(phone) => {
+                  const normalised = normalisePhoneNumber(phone);
+                  setPhoneValue(phone); // raw (no +) for component display
+                  setValue("whatsAppNumber", normalised, {
+                    shouldValidate: true,
+                  });
+                }}
+                inputClass={[
                   styles.input,
                   errors.whatsAppNumber ? styles.error : "",
                 ]
                   .filter(Boolean)
                   .join(" ")}
-                placeholder="201012345678"
-                {...register("whatsAppNumber")}
+                containerClass={styles.phoneContainer}
+                buttonClass={styles.phoneButton}
+                dropdownClass={styles.phoneDropdown}
               />
               {errors.whatsAppNumber && (
                 <p className={styles.errorMsg}>

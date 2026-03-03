@@ -7,6 +7,11 @@ import {
   extractErrorMessage,
   isEmailRelatedError,
 } from "../../utils/errorUtils";
+import {
+  isValidE164YupTest,
+  normalisePhoneNumber,
+  PREFERRED_COUNTRIES,
+} from "../../utils/phoneValidation";
 import Swal from "sweetalert2";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
@@ -37,13 +42,11 @@ const signupSchema = Yup.object().shape({
     .required("Confirm password is required"),
   phoneNumber: Yup.string()
     .required("Phone number is required")
-    .test("is-egypt-number", "invalid Phone number ", (value) => {
-      if (!value) return false;
-      // Remove any non-digit characters
-      const digitsOnly = value.replace(/\D/g, "");
-      // Check if it's exactly 11 digits
-      return digitsOnly.length === 11;
-    }),
+    .test(
+      "e164",
+      "Please enter a valid international phone number including your country code (e.g. +1 202 555 0100)",
+      isValidE164YupTest,
+    ),
 });
 
 const PasswordRequirement = ({ met, text }) => (
@@ -189,13 +192,16 @@ const Signup = () => {
                 <div className="form-group">
                   <label htmlFor="phoneNumber">Phone Number</label>
                   <PhoneInput
+                    // No onlyCountries restriction — open to all international numbers.
+                    // PREFERRED_COUNTRIES float Egypt + Gulf states to top of list
+                    // as a soft UX hint without blocking any other country.
+                    preferredCountries={PREFERRED_COUNTRIES}
                     country={"eg"}
                     value={values.phoneNumber}
                     onChange={(phone) => {
-                      // Only allow exactly 11 digits for Egypt
-                      if (phone.length <= 11) {
-                        setFieldValue("phoneNumber", phone);
-                      }
+                      // Normalise to E.164 before storing (prepend + if missing).
+                      // No digit-count cap — length is validated by the E.164 rule.
+                      setFieldValue("phoneNumber", normalisePhoneNumber(phone));
                     }}
                     inputClass="form-input"
                     containerClass="phone-input-container"
@@ -208,17 +214,8 @@ const Signup = () => {
                       name: "phoneNumber",
                       id: "phoneNumber",
                       required: true,
-                      maxLength: 16,
-                    }}
-                    isValid={(value, country) => {
-                      if (country.countryCode === "eg") {
-                        return value.length === 11;
-                      }
-                      return true;
                     }}
                     countryCodeEditable={false}
-                    preferredCountries={["eg"]}
-                    onlyCountries={["eg"]}
                   />
                   <ErrorMessage
                     name="phoneNumber"
