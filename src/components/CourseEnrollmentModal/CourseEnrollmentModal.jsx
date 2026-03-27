@@ -1,9 +1,15 @@
 import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { courseEnrollmentSchema } from "./courseEnrollmentSchema";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
+import {
+  normalisePhoneNumber,
+  PREFERRED_COUNTRIES,
+} from "../../utils/phoneValidation";
 // Reuse the same styling as EventRegistrationModal
 import "../../pages/Services/components/EventRegistrationModal/EventRegistrationModal.css";
 
@@ -28,6 +34,7 @@ const CourseEnrollmentModal = ({
     watch,
     reset,
     setValue,
+    control,
     formState: { errors, isSubmitting },
   } = useForm({
     resolver: zodResolver(courseEnrollmentSchema),
@@ -174,11 +181,15 @@ const CourseEnrollmentModal = ({
               <input
                 id="fullName"
                 type="text"
-                className={`form-input ${errors.fullName ? "form-input--error" : ""} ${getUserFullName(userData) ? "form-input--disabled" : ""}`}
+                className={`form-input ${errors.fullName ? "form-input--error" : ""}`}
                 placeholder="Enter your full name"
                 {...register("fullName")}
-                disabled={!!getUserFullName(userData)}
               />
+              {getUserFullName(userData) && !errors.fullName && (
+                <small className="form-hint">
+                  Pre-filled from your profile — you can edit this if needed.
+                </small>
+              )}
               {errors.fullName && (
                 <span className="form-error">{errors.fullName.message}</span>
               )}
@@ -302,21 +313,38 @@ const CourseEnrollmentModal = ({
               <label htmlFor="whatsAppNumber" className="form-label">
                 WhatsApp Number <span className="required">*</span>
               </label>
-              <input
-                id="whatsAppNumber"
-                type="tel"
-                className={`form-input ${errors.whatsAppNumber ? "form-input--error" : ""}`}
-                placeholder="+1234567890 (include country code)"
-                {...register("whatsAppNumber")}
+              <Controller
+                name="whatsAppNumber"
+                control={control}
+                render={({ field }) => (
+                  <PhoneInput
+                    preferredCountries={PREFERRED_COUNTRIES}
+                    country={"eg"}
+                    value={field.value ? field.value.replace(/^\+/, "") : ""}
+                    onChange={(phone) => {
+                      field.onChange(normalisePhoneNumber(phone));
+                    }}
+                    inputProps={{
+                      id: "whatsAppNumber",
+                      name: "whatsAppNumber",
+                      required: true,
+                    }}
+                    inputClass={`form-input${errors.whatsAppNumber ? " form-input--error" : ""}`}
+                    containerClass="phone-input-container"
+                    buttonClass="phone-input-button"
+                    dropdownClass="phone-input-dropdown"
+                    searchClass="phone-input-search"
+                    enableSearch={true}
+                    searchPlaceholder="Search country..."
+                    countryCodeEditable={false}
+                  />
+                )}
               />
               {errors.whatsAppNumber && (
                 <span className="form-error">
                   {errors.whatsAppNumber.message}
                 </span>
               )}
-              <small className="form-hint">
-                Include country code (e.g., +1, +44, +20)
-              </small>
             </div>
           </div>
 

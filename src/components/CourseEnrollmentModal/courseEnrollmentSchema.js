@@ -10,9 +10,12 @@ export const courseEnrollmentSchema = z
       .string()
       .min(2, "Full name must be at least 2 characters")
       .max(100, "Full name must not exceed 100 characters")
+      // Accept any printable character (letters, numbers, underscores, dots, etc.)
+      // Only block invisible Unicode control characters (\p{C} — category "Other").
+      // This supports real-world names like "Enactus _123", "María José", "O'Brien-Smith".
       .regex(
-        /^[a-zA-Z\s'-]+$/,
-        "Full name can only contain letters, spaces, hyphens, and apostrophes",
+        /^[^\p{C}]+$/u,
+        "Full name must not contain invisible or control characters",
       ),
 
     email: z
@@ -46,8 +49,8 @@ export const courseEnrollmentSchema = z
       .string()
       .min(1, "WhatsApp number is required")
       .regex(
-        /^\+?[1-9]\d{1,14}$/,
-        "Please enter a valid phone number in E.164 format (e.g., +201234567890)",
+        /^\+[1-9]\d{6,14}$/,
+        "Please enter a valid international WhatsApp number including your country code (e.g. +1 202 555 0100, +44 7911 123456, +20 1012 345678)",
       ),
 
     courseId: z.string().min(1, "Course ID is required"),
