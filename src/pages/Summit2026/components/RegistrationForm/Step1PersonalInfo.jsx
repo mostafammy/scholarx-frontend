@@ -146,6 +146,30 @@ const Step1PersonalInfo = ({ form }) => {
       </div>
 
       <div className="summit-form-group">
+        <label htmlFor="status" className="summit-form-label summit-form-label-required">
+          What best describes you?
+        </label>
+        <select
+          id="status"
+          className={`summit-form-select${errors.status ? ' is-error' : ''}`}
+          aria-required="true"
+          aria-describedby={errors.status ? 'status-error' : undefined}
+          {...register('status')}
+        >
+          <option value="">Select an option...</option>
+          <option value="undergraduate">Undergraduate</option>
+          <option value="recent-graduate">Graduate</option>
+          <option value="professional">Professional</option>
+          <option value="other">Other</option>
+        </select>
+        {errors.status && (
+          <p id="status-error" className="summit-form-error" role="alert">
+            ⚠ {errors.status.message}
+          </p>
+        )}
+      </div>
+
+      <div className="summit-form-group">
         <label htmlFor="fieldOfStudy" className="summit-form-label summit-form-label-required">
           Academic Major / Field
         </label>

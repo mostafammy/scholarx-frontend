@@ -34,6 +34,10 @@ export const step1Schema = Yup.object({
     .min(2, 'Please select your governorate')
     .required('Governorate is required'),
 
+  status: Yup.string()
+    .oneOf(['undergraduate', 'recent-graduate', 'professional', 'other'])
+    .required('Please select your current status'),
+
   fieldOfStudy: Yup.string()
     .trim()
     .min(2, 'Academic major must be at least 2 characters')

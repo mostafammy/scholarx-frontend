@@ -82,7 +82,7 @@ export const useRegistration = () => {
           ...merged,
           graduationYear:
             Number(merged.graduationYear) || new Date().getFullYear(),
-          status: merged.status || "undergraduate",
+          status: merged.status,
           englishLevel: merged.englishLevel || "intermediate",
           governorate: merged.governorate || "cairo",
           referralSources: merged.referralSources?.length
