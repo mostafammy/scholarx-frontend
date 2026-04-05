@@ -19,18 +19,25 @@ const SPONSOR_ITEMS = [
     logoClass: "summit-sponsor-logo summit-sponsor-logo--scholarx",
   },
   {
-    id: "eujc-eumb",
-    logoSrc: "/_Colored, Transparent bkgd- EUJC EUMB logos.png",
-    logoAlt: "EU Jeel Connect and EU MedBridge logos",
+    id: "eu-jeel-connect",
+    logoSrc: "/EU Jeel Connect.png",
+    logoAlt: "EU Jeel Connect logo",
     name: "",
-    logoClass: "summit-sponsor-logo summit-sponsor-logo--eujc",
+    logoClass: "summit-sponsor-logo summit-sponsor-logo--jeel-connect",
   },
   {
     id: "eu-funded",
-    logoSrc: "/_Colored, Transparent bkgd- EUJC EUMB logos.png",
-    logoAlt: "European Union partner logos",
+    logoSrc: "/EN_fundedbyEU_VERTICAL_RGB_POS.png",
+    logoAlt: "Funded by the European Union logo",
     name: "",
-    logoClass: "summit-sponsor-logo summit-sponsor-logo--eu",
+    logoClass: "summit-sponsor-logo summit-sponsor-logo--eu-funded",
+  },
+  {
+    id: "eu-medbridge",
+    logoSrc: "/EU MedBridge.png",
+    logoAlt: "EU MedBridge logo",
+    name: "",
+    logoClass: "summit-sponsor-logo summit-sponsor-logo--medbridge",
   },
 ];
 
