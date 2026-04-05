@@ -1,0 +1,1389 @@
+/* ==========================================================================
+   NEXT SCHOLAR SUMMIT 2026 — DESIGN SYSTEM
+   Apple-caliber, Production-grade CSS
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. DESIGN TOKENS (CSS Custom Properties)
+   -------------------------------------------------------------------------- */
+:root {
+  /* Color Palette */
+  --s-bg-900:   #050911;
+  --s-bg-800:   #0a0e1a;
+  --s-bg-700:   #0d1529;
+  --s-bg-600:   #111c38;
+  --s-bg-500:   #162246;
+
+  --s-gold-500: #f5c518;
+  --s-gold-400: #ffd94a;
+  --s-gold-300: #ffe880;
+  --s-gold-glow: rgba(245, 197, 24, 0.35);
+
+  --s-blue-700: #002884;
+  --s-blue-600: #003da5;
+  --s-blue-500: #0057f8;
+  --s-blue-400: #3d7bff;
+  --s-blue-glow: rgba(0, 87, 248, 0.35);
+
+  --s-text-100: #ffffff;
+  --s-text-200: rgba(255, 255, 255, 0.85);
+  --s-text-300: rgba(255, 255, 255, 0.65);
+  --s-text-400: rgba(255, 255, 255, 0.45);
+
+  --s-glass-bg:     rgba(255, 255, 255, 0.04);
+  --s-glass-border: rgba(255, 255, 255, 0.10);
+  --s-glass-hover:  rgba(255, 255, 255, 0.08);
+
+  /* Typography */
+  --s-font-display: 'Space Grotesk', system-ui, sans-serif;
+  --s-font-body:    'Inter', system-ui, sans-serif;
+
+  /* Spacing Scale */
+  --s-space-1:   4px;
+  --s-space-2:   8px;
+  --s-space-3:  12px;
+  --s-space-4:  16px;
+  --s-space-5:  20px;
+  --s-space-6:  24px;
+  --s-space-8:  32px;
+  --s-space-10: 40px;
+  --s-space-12: 48px;
+  --s-space-16: 64px;
+  --s-space-20: 80px;
+  --s-space-24: 96px;
+  --s-space-32: 128px;
+
+  /* Border Radius */
+  --s-radius-sm:  8px;
+  --s-radius-md:  12px;
+  --s-radius-lg:  20px;
+  --s-radius-xl:  28px;
+  --s-radius-2xl: 40px;
+  --s-radius-full: 9999px;
+
+  /* Shadows */
+  --s-shadow-gold: 0 0 40px rgba(245, 197, 24, 0.15), 0 0 80px rgba(245, 197, 24, 0.08);
+  --s-shadow-blue: 0 0 40px rgba(0, 87, 248, 0.15), 0 0 80px rgba(0, 87, 248, 0.08);
+  --s-shadow-card: 0 4px 24px rgba(0, 0, 0, 0.4), 0 1px 0 rgba(255,255,255,0.06) inset;
+  --s-shadow-lg:   0 20px 60px rgba(0, 0, 0, 0.5);
+
+  /* Transitions */
+  --s-transition-fast:   150ms cubic-bezier(0.16, 1, 0.3, 1);
+  --s-transition-base:   300ms cubic-bezier(0.16, 1, 0.3, 1);
+  --s-transition-slow:   500ms cubic-bezier(0.16, 1, 0.3, 1);
+  --s-transition-spring: 600ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* --------------------------------------------------------------------------
+   2. GOOGLE FONTS IMPORT
+   -------------------------------------------------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* --------------------------------------------------------------------------
+   3. PAGE BASE AND RESET
+   -------------------------------------------------------------------------- */
+.summit-page {
+  font-family: var(--s-font-body);
+  background-color: var(--s-bg-800);
+  color: var(--s-text-100);
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* --------------------------------------------------------------------------
+   4. LAYOUT UTILITIES
+   -------------------------------------------------------------------------- */
+.summit-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--s-space-6);
+}
+
+.summit-section {
+  padding: var(--s-space-24) 0;
+}
+
+.summit-section-header {
+  text-align: center;
+  margin-bottom: var(--s-space-16);
+}
+
+.summit-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-space-2);
+  background: rgba(245, 197, 24, 0.12);
+  border: 1px solid rgba(245, 197, 24, 0.3);
+  color: var(--s-gold-400);
+  font-family: var(--s-font-display);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: var(--s-space-2) var(--s-space-4);
+  border-radius: var(--s-radius-full);
+  margin-bottom: var(--s-space-4);
+}
+
+.summit-section-title {
+  font-family: var(--s-font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  color: var(--s-text-100);
+  line-height: 1.15;
+  margin: 0 0 var(--s-space-4);
+}
+
+.summit-section-subtitle {
+  font-size: 1.1rem;
+  color: var(--s-text-300);
+  line-height: 1.7;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+/* --------------------------------------------------------------------------
+   5. GLASSMORPHISM CARD UTILITY
+   -------------------------------------------------------------------------- */
+.summit-glass-card {
+  background: var(--s-glass-bg);
+  border: 1px solid var(--s-glass-border);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: var(--s-radius-xl);
+  box-shadow: var(--s-shadow-card);
+  transition: transform var(--s-transition-base), box-shadow var(--s-transition-base), border-color var(--s-transition-base);
+}
+
+.summit-glass-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--s-shadow-lg);
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+/* --------------------------------------------------------------------------
+   6. STAR FIELD ANIMATION
+   -------------------------------------------------------------------------- */
+.summit-stars-container {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.summit-star {
+  position: absolute;
+  background: #ffffff;
+  border-radius: 50%;
+  animation: summitTwinkle ease-in-out infinite alternate;
+}
+
+@keyframes summitTwinkle {
+  from { opacity: 0.2; transform: scale(1); }
+  to   { opacity: 1;   transform: scale(1.3); }
+}
+
+/* --------------------------------------------------------------------------
+   7. HERO SECTION
+   -------------------------------------------------------------------------- */
+.summit-hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(ellipse 80% 60% at 50% 20%, rgba(0,61,165,0.25) 0%, transparent 60%),
+              radial-gradient(ellipse 60% 40% at 20% 80%, rgba(245,197,24,0.08) 0%, transparent 50%),
+              var(--s-bg-900);
+  overflow: hidden;
+}
+
+.summit-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(circle at 50% 50%, rgba(0,87,248,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.summit-hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: var(--s-space-32) var(--s-space-6) var(--s-space-20);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.summit-hero-organizers {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-space-3);
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: var(--s-radius-full);
+  padding: var(--s-space-2) var(--s-space-5);
+  font-size: 0.8rem;
+  color: var(--s-text-300);
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--s-space-8);
+  text-transform: uppercase;
+}
+
+.summit-hero-organizers-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--s-gold-500);
+}
+
+.summit-hero-title {
+  font-family: var(--s-font-display);
+  font-size: clamp(2.8rem, 7vw, 5.5rem);
+  font-weight: 700;
+  line-height: 1.05;
+  margin: 0 0 var(--s-space-4);
+  background: linear-gradient(135deg, #ffffff 0%, var(--s-gold-400) 50%, #ffffff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  background-size: 200% auto;
+  animation: summitGradientShift 6s ease infinite;
+}
+
+@keyframes summitGradientShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.summit-hero-tagline {
+  font-family: var(--s-font-display);
+  font-size: clamp(1rem, 2.5vw, 1.35rem);
+  color: var(--s-blue-400);
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin: 0 0 var(--s-space-8);
+}
+
+.summit-hero-meta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-space-6);
+  flex-wrap: wrap;
+  margin-bottom: var(--s-space-12);
+}
+
+.summit-hero-meta-item {
+  display: flex;
+  align-items: center;
+  gap: var(--s-space-2);
+  color: var(--s-text-300);
+  font-size: 0.9rem;
+}
+
+.summit-hero-meta-icon {
+  font-size: 1rem;
+}
+
+.summit-hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-space-3);
+  background: linear-gradient(135deg, var(--s-gold-500), #ff9f1c);
+  color: #0a0e1a;
+  font-family: var(--s-font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  padding: var(--s-space-4) var(--s-space-8);
+  border-radius: var(--s-radius-full);
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 0 4px 24px rgba(245, 197, 24, 0.4);
+  transition: transform var(--s-transition-spring), box-shadow var(--s-transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+.summit-hero-cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.25), transparent 50%);
+  opacity: 0;
+  transition: opacity var(--s-transition-fast);
+}
+
+.summit-hero-cta:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 40px rgba(245, 197, 24, 0.55);
+}
+
+.summit-hero-cta:hover::before {
+  opacity: 1;
+}
+
+.summit-hero-cta:active {
+  transform: translateY(0) scale(0.99);
+}
+
+.summit-hero-cta-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-space-2);
+  background: transparent;
+  color: var(--s-text-200);
+  font-family: var(--s-font-display);
+  font-weight: 500;
+  font-size: 0.95rem;
+  padding: var(--s-space-4) var(--s-space-6);
+  border-radius: var(--s-radius-full);
+  border: 1px solid var(--s-glass-border);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all var(--s-transition-base);
+  margin-left: var(--s-space-3);
+}
+
+.summit-hero-cta-secondary:hover {
+  border-color: rgba(255,255,255,0.25);
+  background: var(--s-glass-hover);
+  color: var(--s-text-100);
+}
+
+.summit-hero-ctas {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-space-4);
+  flex-wrap: wrap;
+  margin-bottom: var(--s-space-16);
+}
+
+/* --------------------------------------------------------------------------
+   8. COUNTDOWN TIMER
+   -------------------------------------------------------------------------- */
+.summit-countdown {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-space-3);
+  flex-wrap: wrap;
+  margin-bottom: var(--s-space-8);
+}
+
+.summit-countdown-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--s-text-400);
+  font-weight: 600;
+  width: 100%;
+  text-align: center;
+  margin-bottom: var(--s-space-2);
+}
+
+.summit-countdown-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--s-glass-bg);
+  border: 1px solid var(--s-glass-border);
+  border-radius: var(--s-radius-lg);
+  padding: var(--s-space-4) var(--s-space-5);
+  min-width: 80px;
+  backdrop-filter: blur(10px);
+}
+
+.summit-countdown-value {
+  font-family: var(--s-font-display);
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  font-weight: 700;
+  color: var(--s-gold-400);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  min-width: 2ch;
+  text-align: center;
+}
+
+.summit-countdown-unit-label {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--s-text-400);
+  font-weight: 500;
+  margin-top: var(--s-space-1);
+}
+
+.summit-countdown-separator {
+  font-family: var(--s-font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--s-text-400);
+  padding-bottom: var(--s-space-4);
+  animation: summitBlink 1s step-end infinite;
+}
+
+@keyframes summitBlink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.2; }
+}
+
+/* --------------------------------------------------------------------------
+   9. JOURNEY SECTION
+   -------------------------------------------------------------------------- */
+.summit-journey {
+  position: relative;
+  background: linear-gradient(180deg, var(--s-bg-800) 0%, var(--s-bg-700) 100%);
+}
+
+.summit-journey-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--s-space-4);
+  margin-top: var(--s-space-12);
+}
+
+.summit-journey-card {
+  background: var(--s-glass-bg);
+  border: 1px solid var(--s-glass-border);
+  border-radius: var(--s-radius-lg);
+  padding: var(--s-space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-space-2);
+  position: relative;
+  overflow: hidden;
+  transition: all var(--s-transition-base);
+}
+
+.summit-journey-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--s-gold-500), var(--s-blue-500));
+  transform: scaleX(0);
+  transition: transform var(--s-transition-base);
+  transform-origin: left;
+}
+
+.summit-journey-card:hover::before {
+  transform: scaleX(1);
+}
+
+.summit-journey-card:hover {
+  background: var(--s-glass-hover);
+  transform: translateY(-4px);
+  box-shadow: var(--s-shadow-card);
+}
+
+.summit-journey-number {
+  font-family: var(--s-font-display);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--s-glass-border);
+  line-height: 1;
+  position: absolute;
+  top: var(--s-space-4);
+  right: var(--s-space-4);
+}
+
+.summit-journey-city {
+  font-family: var(--s-font-display);
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--s-text-100);
+}
+
+.summit-journey-region {
+  font-size: 0.8rem;
+  color: var(--s-text-400);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.summit-journey-students {
+  font-size: 0.875rem;
+  color: var(--s-gold-400);
+  font-weight: 500;
+}
+
+.summit-journey-intro {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-space-12);
+  align-items: center;
+  margin-bottom: var(--s-space-12);
+}
+
+.summit-journey-text {
+  font-size: 1rem;
+  color: var(--s-text-300);
+  line-height: 1.8;
+}
+
+.summit-journey-highlight-box {
+  background: linear-gradient(135deg, rgba(245,197,24,0.08), rgba(0,61,165,0.08));
+  border: 1px solid rgba(245,197,24,0.2);
+  border-radius: var(--s-radius-xl);
+  padding: var(--s-space-8);
+}
+
+.summit-journey-highlight-stat {
+  font-family: var(--s-font-display);
+  font-size: 3.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--s-gold-400), var(--s-blue-400));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.summit-journey-highlight-desc {
+  color: var(--s-text-300);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* --------------------------------------------------------------------------
+   10. ROUNDTABLE SECTION
+   -------------------------------------------------------------------------- */
+.summit-roundtable {
+  position: relative;
+  background: var(--s-bg-700);
+  overflow: hidden;
+}
+
+.summit-roundtable::before {
+  content: '';
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,61,165,0.15) 0%, transparent 70%);
+  top: -100px;
+  right: -100px;
+  pointer-events: none;
+}
+
+.summit-roundtable-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-space-12);
+  align-items: center;
+}
+
+.summit-roundtable-text {}
+
+.summit-roundtable-title {
+  font-family: var(--s-font-display);
+  font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+  font-weight: 700;
+  color: var(--s-text-100);
+  line-height: 1.2;
+  margin: var(--s-space-4) 0;
+}
+
+.summit-roundtable-subtitle {
+  font-size: 1.05rem;
+  color: var(--s-blue-400);
+  font-weight: 500;
+  font-style: italic;
+  margin-bottom: var(--s-space-5);
+  line-height: 1.5;
+}
+
+.summit-roundtable-desc {
+  color: var(--s-text-300);
+  font-size: 0.95rem;
+  line-height: 1.8;
+  margin-bottom: var(--s-space-6);
+}
+
+.summit-roundtable-card {
+  background: linear-gradient(135deg, rgba(0,61,165,0.12), rgba(0,87,248,0.05));
+  border: 1px solid rgba(0,87,248,0.25);
+  border-radius: var(--s-radius-xl);
+  padding: var(--s-space-8);
+  backdrop-filter: blur(20px);
+}
+
+.summit-roundtable-highlights-title {
+  font-family: var(--s-font-display);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--s-blue-400);
+  margin-bottom: var(--s-space-4);
+}
+
+.summit-roundtable-highlights-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--s-space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-space-3);
+}
+
+.summit-roundtable-highlight-item {
+  display: flex;
+  align-items: center;
+  gap: var(--s-space-3);
+  color: var(--s-text-200);
+  font-size: 0.95rem;
+}
+
+.summit-roundtable-highlight-icon {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.summit-roundtable-key-highlight {
+  background: rgba(245,197,24,0.06);
+  border: 1px solid rgba(245,197,24,0.2);
+  border-radius: var(--s-radius-md);
+  padding: var(--s-space-4);
+  font-size: 0.875rem;
+  color: var(--s-text-200);
+  line-height: 1.7;
+}
+
+.summit-roundtable-key-highlight strong {
+  color: var(--s-gold-400);
+}
+
+/* --------------------------------------------------------------------------
+   11. STATS BAR
+   -------------------------------------------------------------------------- */
+.summit-stats {
+  background: var(--s-bg-900);
+  padding: var(--s-space-20) 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.summit-stats::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, 
+    rgba(245,197,24,0.03) 0%, 
+    rgba(0,87,248,0.06) 50%, 
+    rgba(245,197,24,0.03) 100%);
+  pointer-events: none;
+}
+
+.summit-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--s-space-4);
+}
+
+.summit-stat-card {
+  text-align: center;
+  padding: var(--s-space-8) var(--s-space-4);
+  background: var(--s-glass-bg);
+  border: 1px solid var(--s-glass-border);
+  border-radius: var(--s-radius-xl);
+  transition: all var(--s-transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+.summit-stat-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--s-gold-500), var(--s-blue-500));
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform var(--s-transition-slow);
+}
+
+.summit-stat-card:hover::after {
+  transform: scaleX(1);
+}
+
+.summit-stat-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--s-shadow-gold);
+  border-color: rgba(245,197,24,0.2);
+}
+
+.summit-stat-icon {
+  font-size: 2rem;
+  margin-bottom: var(--s-space-3);
+  display: block;
+}
+
+.summit-stat-number {
+  font-family: var(--s-font-display);
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 700;
+  color: var(--s-gold-400);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.summit-stat-label {
+  font-family: var(--s-font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--s-text-100);
+  margin: var(--s-space-2) 0 var(--s-space-1);
+}
+
+.summit-stat-desc {
+  font-size: 0.8rem;
+  color: var(--s-text-400);
+  line-height: 1.5;
+}
+
+/* --------------------------------------------------------------------------
+   12. TRACKS SECTION
+   -------------------------------------------------------------------------- */
+.summit-tracks {
+  background: linear-gradient(180deg, var(--s-bg-800) 0%, var(--s-bg-700) 100%);
+}
+
+.summit-tracks-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--s-space-5);
+}
+
+.summit-track-card {
+  padding: var(--s-space-8);
+  border-radius: var(--s-radius-xl);
+  border: 1px solid var(--s-glass-border);
+  transition: all var(--s-transition-base);
+  cursor: default;
+  position: relative;
+  overflow: hidden;
+}
+
+.summit-track-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity var(--s-transition-base);
+  background: inherit;
+}
+
+.summit-track-card:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: var(--s-shadow-lg);
+}
+
+.summit-track-card:hover::before {
+  opacity: 0.5;
+}
+
+.summit-track-icon-wrap {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--s-radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.75rem;
+  margin-bottom: var(--s-space-5);
+  background: var(--s-glass-bg);
+  border: 1px solid var(--s-glass-border);
+}
+
+.summit-track-title {
+  font-family: var(--s-font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 0 0 var(--s-space-3);
+}
+
+.summit-track-desc {
+  font-size: 0.9rem;
+  color: var(--s-text-300);
+  line-height: 1.7;
+}
+
+/* --------------------------------------------------------------------------
+   13. PARTNERS SECTION
+   -------------------------------------------------------------------------- */
+.summit-partners {
+  background: var(--s-bg-700);
+}
+
+.summit-partners-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-space-8);
+}
+
+.summit-partner-card {
+  padding: var(--s-space-10);
+  border-radius: var(--s-radius-xl);
+  position: relative;
+  overflow: hidden;
+}
+
+.summit-partner-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  border-radius: var(--s-radius-full) var(--s-radius-full) 0 0;
+}
+
+.summit-partner-card--scholarx::before {
+  background: linear-gradient(90deg, var(--s-gold-500), #ff9f1c);
+}
+
+.summit-partner-card--eu::before {
+  background: linear-gradient(90deg, var(--s-blue-600), var(--s-blue-400));
+}
+
+.summit-partner-logo-area {
+  display: flex;
+  align-items: center;
+  gap: var(--s-space-4);
+  margin-bottom: var(--s-space-6);
+}
+
+.summit-partner-logo-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--s-radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  flex-shrink: 0;
+}
+
+.summit-partner-name {
+  font-family: var(--s-font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--s-text-100);
+}
+
+.summit-partner-tagline {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+}
+
+.summit-partner-desc {
+  color: var(--s-text-300);
+  font-size: 0.9rem;
+  line-height: 1.8;
+}
+
+/* --------------------------------------------------------------------------
+   14. REGISTRATION FORM
+   -------------------------------------------------------------------------- */
+.summit-registration {
+  background: var(--s-bg-900);
+  position: relative;
+}
+
+.summit-registration::before {
+  content: '';
+  position: absolute;
+  width: 800px;
+  height: 800px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(245,197,24,0.05) 0%, transparent 65%);
+  top: -200px;
+  left: -200px;
+  pointer-events: none;
+}
+
+.summit-form-container {
+  max-width: 760px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* Step Indicator */
+.summit-step-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--s-space-10);
+  gap: 0;
+}
+
+.summit-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-space-2);
+  flex: 1;
+  position: relative;
+}
+
+.summit-step:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 20px;
+  left: calc(50% + 20px);
+  right: calc(-50% + 20px);
+  height: 2px;
+  background: var(--s-glass-border);
+  transition: background var(--s-transition-slow);
+  z-index: 0;
+}
+
+.summit-step.is-completed:not(:last-child)::after {
+  background: linear-gradient(90deg, var(--s-gold-500), var(--s-blue-500));
+}
+
+.summit-step-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--s-font-display);
+  font-weight: 700;
+  font-size: 0.9rem;
+  border: 2px solid var(--s-glass-border);
+  background: var(--s-bg-800);
+  color: var(--s-text-400);
+  position: relative;
+  z-index: 1;
+  transition: all var(--s-transition-base);
+}
+
+.summit-step.is-active .summit-step-circle {
+  border-color: var(--s-gold-500);
+  color: var(--s-gold-500);
+  box-shadow: 0 0 0 4px var(--s-gold-glow);
+}
+
+.summit-step.is-completed .summit-step-circle {
+  background: linear-gradient(135deg, var(--s-gold-500), #ff9f1c);
+  border-color: transparent;
+  color: #0a0e1a;
+}
+
+.summit-step-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--s-text-400);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  text-align: center;
+  transition: color var(--s-transition-base);
+}
+
+.summit-step.is-active .summit-step-title {
+  color: var(--s-gold-400);
+}
+
+.summit-step.is-completed .summit-step-title {
+  color: var(--s-text-200);
+}
+
+/* Form Card */
+.summit-form-card {
+  background: rgba(13,21,41,0.8);
+  border: 1px solid var(--s-glass-border);
+  border-radius: var(--s-radius-2xl);
+  padding: var(--s-space-10);
+  backdrop-filter: blur(30px);
+  box-shadow: 0 40px 80px rgba(0,0,0,0.4);
+}
+
+.summit-form-step-title {
+  font-family: var(--s-font-display);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--s-text-100);
+  margin: 0 0 var(--s-space-2);
+}
+
+.summit-form-step-subtitle {
+  color: var(--s-text-400);
+  font-size: 0.9rem;
+  margin-bottom: var(--s-space-8);
+}
+
+/* Form Fields */
+.summit-form-group {
+  margin-bottom: var(--s-space-5);
+}
+
+.summit-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-space-4);
+  margin-bottom: var(--s-space-5);
+}
+
+.summit-form-label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--s-text-200);
+  margin-bottom: var(--s-space-2);
+  letter-spacing: 0.02em;
+}
+
+.summit-form-label-required::after {
+  content: ' *';
+  color: #ff6b6b;
+}
+
+.summit-form-input,
+.summit-form-select,
+.summit-form-textarea {
+  width: 100%;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--s-radius-md);
+  color: var(--s-text-100);
+  font-family: var(--s-font-body);
+  font-size: 0.95rem;
+  padding: var(--s-space-3) var(--s-space-4);
+  transition: all var(--s-transition-fast);
+  outline: none;
+  box-sizing: border-box;
+}
+
+.summit-form-input::placeholder,
+.summit-form-textarea::placeholder {
+  color: var(--s-text-400);
+}
+
+.summit-form-input:focus,
+.summit-form-select:focus,
+.summit-form-textarea:focus {
+  border-color: var(--s-gold-500);
+  background: rgba(255,255,255,0.07);
+  box-shadow: 0 0 0 3px var(--s-gold-glow);
+}
+
+.summit-form-input.is-error,
+.summit-form-select.is-error,
+.summit-form-textarea.is-error {
+  border-color: #ff6b6b;
+  box-shadow: 0 0 0 3px rgba(255,107,107,0.2);
+}
+
+.summit-form-select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(255,255,255,0.4)' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right var(--s-space-4) center;
+  padding-right: var(--s-space-10);
+}
+
+.summit-form-select option {
+  background: var(--s-bg-700);
+  color: var(--s-text-100);
+}
+
+.summit-form-textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.summit-form-error {
+  color: #ff8a8a;
+  font-size: 0.8rem;
+  margin-top: var(--s-space-1);
+  display: flex;
+  align-items: center;
+  gap: var(--s-space-1);
+}
+
+/* Checkbox Group */
+.summit-checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-space-2);
+}
+
+.summit-checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: var(--s-space-3);
+  padding: var(--s-space-3) var(--s-space-4);
+  border-radius: var(--s-radius-md);
+  border: 1px solid var(--s-glass-border);
+  cursor: pointer;
+  transition: all var(--s-transition-fast);
+  background: var(--s-glass-bg);
+  user-select: none;
+}
+
+.summit-checkbox-item:hover {
+  border-color: rgba(245,197,24,0.3);
+  background: rgba(245,197,24,0.04);
+}
+
+.summit-checkbox-item.is-checked {
+  border-color: rgba(245,197,24,0.4);
+  background: rgba(245,197,24,0.07);
+}
+
+.summit-checkbox-input {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  accent-color: var(--s-gold-500);
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.summit-checkbox-label {
+  font-size: 0.9rem;
+  color: var(--s-text-200);
+  cursor: pointer;
+  flex: 1;
+}
+
+/* Form Navigation Buttons */
+.summit-form-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: var(--s-space-8);
+  gap: var(--s-space-4);
+}
+
+.summit-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-space-2);
+  background: linear-gradient(135deg, var(--s-gold-500), #ff9f1c);
+  color: #0a0e1a;
+  font-family: var(--s-font-display);
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: var(--s-space-3) var(--s-space-8);
+  border-radius: var(--s-radius-full);
+  border: none;
+  cursor: pointer;
+  transition: all var(--s-transition-spring);
+  box-shadow: 0 4px 16px rgba(245,197,24,0.3);
+}
+
+.summit-btn-primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(245,197,24,0.45);
+}
+
+.summit-btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.summit-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-space-2);
+  background: transparent;
+  color: var(--s-text-300);
+  font-family: var(--s-font-display);
+  font-weight: 500;
+  font-size: 0.95rem;
+  padding: var(--s-space-3) var(--s-space-6);
+  border-radius: var(--s-radius-full);
+  border: 1px solid var(--s-glass-border);
+  cursor: pointer;
+  transition: all var(--s-transition-base);
+}
+
+.summit-btn-secondary:hover {
+  border-color: rgba(255,255,255,0.2);
+  color: var(--s-text-100);
+  background: var(--s-glass-hover);
+}
+
+/* Success State */
+.summit-form-success {
+  text-align: center;
+  padding: var(--s-space-16) var(--s-space-8);
+}
+
+.summit-form-success-icon {
+  font-size: 5rem;
+  animation: summitBounce 0.6s var(--s-transition-spring);
+}
+
+@keyframes summitBounce {
+  0% { transform: scale(0); }
+  100% { transform: scale(1); }
+}
+
+/* Phone Input Override */
+.summit-phone-wrap .react-tel-input .form-control {
+  width: 100% !important;
+  background: rgba(255,255,255,0.05) !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  border-radius: var(--s-radius-md) !important;
+  color: var(--s-text-100) !important;
+  font-size: 0.95rem !important;
+  padding-left: 52px !important;
+  height: 44px !important;
+}
+
+.summit-phone-wrap .react-tel-input .form-control:focus {
+  border-color: var(--s-gold-500) !important;
+  box-shadow: 0 0 0 3px var(--s-gold-glow) !important;
+}
+
+.summit-phone-wrap .react-tel-input .flag-dropdown {
+  background: rgba(255,255,255,0.05) !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+  border-radius: var(--s-radius-md) 0 0 var(--s-radius-md) !important;
+}
+
+.summit-phone-wrap .react-tel-input .selected-flag:hover,
+.summit-phone-wrap .react-tel-input .selected-flag:focus {
+  background: rgba(255,255,255,0.1) !important;
+}
+
+.summit-phone-wrap .react-tel-input .country-list {
+  background: var(--s-bg-700) !important;
+  border: 1px solid var(--s-glass-border) !important;
+  border-radius: var(--s-radius-md) !important;
+}
+
+.summit-phone-wrap .react-tel-input .country-list .country:hover {
+  background: var(--s-glass-hover) !important;
+}
+
+/* --------------------------------------------------------------------------
+   15. SUMMIT FOOTER
+   -------------------------------------------------------------------------- */
+.summit-footer {
+  background: var(--s-bg-900);
+  border-top: 1px solid var(--s-glass-border);
+  padding: var(--s-space-10) 0;
+}
+
+.summit-footer-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--s-space-4);
+}
+
+.summit-footer-brand {
+  font-family: var(--s-font-display);
+  font-weight: 700;
+  color: var(--s-text-200);
+  font-size: 1rem;
+}
+
+.summit-footer-brand span {
+  color: var(--s-gold-400);
+}
+
+.summit-footer-links {
+  display: flex;
+  gap: var(--s-space-6);
+}
+
+.summit-footer-link {
+  color: var(--s-text-400);
+  font-size: 0.875rem;
+  text-decoration: none;
+  transition: color var(--s-transition-fast);
+}
+
+.summit-footer-link:hover {
+  color: var(--s-text-100);
+}
+
+.summit-footer-copyright {
+  color: var(--s-text-400);
+  font-size: 0.8rem;
+  width: 100%;
+  text-align: center;
+  margin-top: var(--s-space-4);
+  padding-top: var(--s-space-4);
+  border-top: 1px solid var(--s-glass-border);
+}
+
+/* --------------------------------------------------------------------------
+   16. RESPONSIVE BREAKPOINTS
+   -------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+  .summit-stats-grid          { grid-template-columns: repeat(2, 1fr); }
+  .summit-roundtable-inner    { grid-template-columns: 1fr; }
+  .summit-journey-intro       { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 768px) {
+  .summit-tracks-grid         { grid-template-columns: 1fr; }
+  .summit-partners-grid       { grid-template-columns: 1fr; }
+  .summit-form-row            { grid-template-columns: 1fr; }
+  .summit-hero-title          { font-size: clamp(2rem, 8vw, 3.5rem); }
+  .summit-form-card           { padding: var(--s-space-6); }
+  .summit-countdown-unit      { min-width: 60px; padding: var(--s-space-3); }
+  .summit-countdown-value     { font-size: 1.8rem; }
+  .summit-hero-meta           { gap: var(--s-space-4); }
+}
+
+@media (max-width: 480px) {
+  .summit-stats-grid          { grid-template-columns: repeat(2, 1fr); }
+  .summit-journey-grid        { grid-template-columns: repeat(2, 1fr); }
+  .summit-footer-inner        { flex-direction: column; text-align: center; }
+  .summit-container           { padding: 0 var(--s-space-4); }
+}
+
+/* --------------------------------------------------------------------------
+   17. ACCESSIBILITY
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.summit-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Focus visible for keyboard navigation */
+.summit-hero-cta:focus-visible,
+.summit-btn-primary:focus-visible,
+.summit-btn-secondary:focus-visible {
+  outline: 2px solid var(--s-gold-500);
+  outline-offset: 3px;
+}

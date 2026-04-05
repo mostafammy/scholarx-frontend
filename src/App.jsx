@@ -1,4 +1,5 @@
 import React from "react";
+import { HelmetProvider } from 'react-helmet-async';
 import {
   BrowserRouter as Router,
   Routes,
@@ -44,6 +45,8 @@ import Certificates from "./pages/Certificates/Certificates";
 import CertificateVerify from "./pages/CertificateVerify/CertificateVerify";
 import PrivacyPolicy from "./pages/PrivacyPolicy/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService/TermsOfService";
+// Summit 2026
+import { SummitPage, SummitDashboard } from "./pages/Summit2026";
 
 // Layout component to ensure navbar consistency
 const Layout = ({ children, path }) => {
@@ -107,6 +110,7 @@ function App() {
   const ENABLE_DEMOS = import.meta.env.VITE_ENABLE_DEMOS === "true";
 
   return (
+    <HelmetProvider>
     <QueryProvider>
       <UserProvider>
         <Router>
@@ -308,12 +312,26 @@ function App() {
                 }
               />
 
+              {/* Summit 2026 — public registration page (standalone, no NavBar) */}
+              <Route path="/summit-2026" element={<SummitPage />} />
+
+              {/* Summit 2026 — admin dashboard (admin role only) */}
+              <Route
+                path="/summit-2026/dashboard"
+                element={
+                  <AdminRoute>
+                    <SummitDashboard />
+                  </AdminRoute>
+                }
+              />
+
               <Route path="*" element={<NotFound />} />
             </Routes>
           </div>
         </Router>
       </UserProvider>
     </QueryProvider>
+    </HelmetProvider>
   );
 }
 

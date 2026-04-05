@@ -1,0 +1,531 @@
+/* ==========================================================================
+   SUMMIT 2026 — ADMIN DASHBOARD STYLES
+   Separate concern from SummitPage.css (Single Responsibility)
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
+
+/* --------------------------------------------------------------------------
+   Dashboard Root
+   -------------------------------------------------------------------------- */
+.summit-dashboard {
+  font-family: var(--s-font-body, 'Inter', sans-serif);
+  background: #050911;
+  min-height: 100vh;
+  color: #ffffff;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* --------------------------------------------------------------------------
+   Dashboard Header
+   -------------------------------------------------------------------------- */
+.summit-db-header {
+  background: rgba(13, 21, 41, 0.95);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  padding: 20px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(20px);
+}
+
+.summit-db-header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.summit-db-logo-badge {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #f5c518, #ff9f1c);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+}
+
+.summit-db-header-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.summit-db-header-subtitle {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.45);
+  margin-top: 2px;
+}
+
+.summit-db-header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.summit-db-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: rgba(255,255,255,0.5);
+  font-size: 0.85rem;
+  text-decoration: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.1);
+  transition: all 250ms ease;
+}
+
+.summit-db-back-link:hover {
+  color: #ffffff;
+  border-color: rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.05);
+}
+
+.summit-db-refresh-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: rgba(255,255,255,0.7);
+  font-size: 0.85rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 500;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: transparent;
+  cursor: pointer;
+  transition: all 250ms ease;
+}
+
+.summit-db-refresh-btn:hover {
+  color: #ffffff;
+  background: rgba(255,255,255,0.06);
+}
+
+/* --------------------------------------------------------------------------
+   Dashboard Body
+   -------------------------------------------------------------------------- */
+.summit-db-body {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 32px;
+}
+
+/* --------------------------------------------------------------------------
+   Stats Cards Row
+   -------------------------------------------------------------------------- */
+.summit-db-stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.summit-db-stat-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: all 300ms cubic-bezier(0.16,1,0.3,1);
+  position: relative;
+  overflow: hidden;
+}
+
+.summit-db-stat-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 400ms ease;
+}
+
+.summit-db-stat-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255,255,255,0.14);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+}
+
+.summit-db-stat-card:hover::after {
+  transform: scaleX(1);
+}
+
+.summit-db-stat-card--total::after  { background: linear-gradient(90deg, #f5c518, #ff9f1c); }
+.summit-db-stat-card--today::after  { background: linear-gradient(90deg, #69f0ae, #00c896); }
+.summit-db-stat-card--gov::after    { background: linear-gradient(90deg, #4fc3f7, #0057f8); }
+.summit-db-stat-card--track::after  { background: linear-gradient(90deg, #ff8a65, #ff5722); }
+
+.summit-db-stat-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  margin-bottom: 4px;
+}
+
+.summit-db-stat-icon--total { background: rgba(245,197,24,0.12); }
+.summit-db-stat-icon--today { background: rgba(105,240,174,0.12); }
+.summit-db-stat-icon--gov   { background: rgba(79,195,247,0.12); }
+.summit-db-stat-icon--track { background: rgba(255,138,101,0.12); }
+
+.summit-db-stat-value {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1;
+}
+
+.summit-db-stat-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.45);
+}
+
+.summit-db-stat-sub {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.35);
+}
+
+/* --------------------------------------------------------------------------
+   Filter Bar
+   -------------------------------------------------------------------------- */
+.summit-db-filter-bar {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 20px 24px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.summit-db-filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+  min-width: 160px;
+}
+
+.summit-db-filter-group--search {
+  flex: 2;
+  min-width: 260px;
+}
+
+.summit-db-filter-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.4);
+}
+
+.summit-db-filter-input,
+.summit-db-filter-select {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  color: #ffffff;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.875rem;
+  padding: 9px 14px;
+  width: 100%;
+  outline: none;
+  box-sizing: border-box;
+  transition: all 200ms ease;
+}
+
+.summit-db-filter-input::placeholder {
+  color: rgba(255,255,255,0.3);
+}
+
+.summit-db-filter-input:focus,
+.summit-db-filter-select:focus {
+  border-color: #f5c518;
+  box-shadow: 0 0 0 3px rgba(245,197,24,0.15);
+}
+
+.summit-db-filter-select option {
+  background: #0d1529;
+  color: #ffffff;
+}
+
+.summit-db-filter-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(255,255,255,0.4)' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 36px;
+  cursor: pointer;
+}
+
+.summit-db-filter-actions {
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+  flex-shrink: 0;
+}
+
+.summit-db-btn-reset {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  color: rgba(255,255,255,0.5);
+  font-size: 0.85rem;
+  padding: 9px 16px;
+  cursor: pointer;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 500;
+  transition: all 200ms ease;
+  white-space: nowrap;
+}
+
+.summit-db-btn-reset:hover {
+  border-color: rgba(255,255,255,0.2);
+  color: #ffffff;
+}
+
+/* --------------------------------------------------------------------------
+   Table Toolbar
+   -------------------------------------------------------------------------- */
+.summit-db-table-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.summit-db-table-count {
+  font-size: 0.875rem;
+  color: rgba(255,255,255,0.5);
+}
+
+.summit-db-table-count strong {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.summit-db-table-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.summit-db-btn-export {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #f5c518, #ff9f1c);
+  color: #0a0e1a;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 9px 18px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: all 250ms cubic-bezier(0.34,1.56,0.64,1);
+  box-shadow: 0 4px 12px rgba(245,197,24,0.25);
+}
+
+.summit-db-btn-export:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(245,197,24,0.4);
+}
+
+.summit-db-btn-danger {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  color: #ff6b6b;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 500;
+  font-size: 0.85rem;
+  padding: 9px 16px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,107,107,0.3);
+  cursor: pointer;
+  transition: all 200ms ease;
+}
+
+.summit-db-btn-danger:hover {
+  background: rgba(255,107,107,0.08);
+  border-color: rgba(255,107,107,0.5);
+}
+
+/* --------------------------------------------------------------------------
+   Data Table
+   -------------------------------------------------------------------------- */
+.summit-db-table-wrap {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.summit-db-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.summit-db-table thead tr {
+  background: rgba(255,255,255,0.04);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.summit-db-table th {
+  padding: 14px 16px;
+  text-align: left;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.45);
+  white-space: nowrap;
+  user-select: none;
+}
+
+.summit-db-table th.sortable {
+  cursor: pointer;
+  transition: color 150ms ease;
+}
+
+.summit-db-table th.sortable:hover {
+  color: rgba(255,255,255,0.8);
+}
+
+.summit-db-table th.sort-active {
+  color: #f5c518;
+}
+
+.summit-db-sort-icon {
+  display: inline-block;
+  margin-left: 4px;
+  font-size: 0.65rem;
+  vertical-align: middle;
+}
+
+.summit-db-table tbody tr {
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  transition: background 150ms ease;
+}
+
+.summit-db-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.summit-db-table tbody tr:hover {
+  background: rgba(255,255,255,0.04);
+}
+
+.summit-db-table td {
+  padding: 14px 16px;
+  color: rgba(255,255,255,0.85);
+  vertical-align: middle;
+}
+
+.summit-db-cell-name {
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.summit-db-cell-email {
+  color: rgba(255,255,255,0.55);
+  font-size: 0.8rem;
+}
+
+.summit-db-cell-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.summit-db-tag {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  background: rgba(255,255,255,0.07);
+  color: rgba(255,255,255,0.7);
+  white-space: nowrap;
+}
+
+.summit-db-tag--track {
+  background: rgba(245,197,24,0.1);
+  color: #f5c518;
+}
+
+.summit-db-cell-date {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.45);
+  white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+   Table Empty State
+   -------------------------------------------------------------------------- */
+.summit-db-empty {
+  text-align: center;
+  padding: 80px 40px;
+  color: rgba(255,255,255,0.35);
+}
+
+.summit-db-empty-icon {
+  font-size: 3.5rem;
+  margin-bottom: 16px;
+}
+
+.summit-db-empty-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 8px;
+}
+
+.summit-db-empty-desc {
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+/* --------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+  .summit-db-stats-row { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .summit-db-body      { padding: 20px 16px; }
+  .summit-db-header    { padding: 16px 20px; }
+  .summit-db-stats-row { grid-template-columns: repeat(2, 1fr); }
+  .summit-db-table-wrap { overflow-x: auto; }
+  .summit-db-filter-bar { flex-direction: column; }
+}
+
+@media (max-width: 480px) {
+  .summit-db-stats-row { grid-template-columns: 1fr; }
+}
