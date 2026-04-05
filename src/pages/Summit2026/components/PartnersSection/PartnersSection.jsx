@@ -3,7 +3,7 @@
  */
 
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion } from 'framer-motion'; // eslint-disable-line
 import { SUMMIT_PARTNERS } from '../../constants/eventData';
 
 const containerVariants = {
@@ -57,7 +57,7 @@ const PartnersSection = () => (
         {SUMMIT_PARTNERS.map((partner) => (
           <motion.article
             key={partner.id}
-            className={`summit-glass-card summit-partner-card summit-partner-card--${partner.id}`}
+            className={`summit-glass-card summit-glint-effect summit-partner-card summit-partner-card--${partner.id}`}
             variants={cardVariants}
             aria-label={partner.name}
           >

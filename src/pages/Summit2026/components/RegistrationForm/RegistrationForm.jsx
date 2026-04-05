@@ -18,9 +18,24 @@ const STEP_COMPONENTS = {
 };
 
 const stepVariants = {
-  enter:  (dir) => ({ opacity: 0, x: dir > 0 ? 40 : -40 }),
-  center: { opacity: 1, x: 0 },
-  exit:   (dir) => ({ opacity: 0, x: dir > 0 ? -40 : 40 }),
+  enter: (dir) => ({ 
+    opacity: 0, 
+    x: dir > 0 ? 30 : -30,
+    scale: 0.98,
+    filter: 'blur(4px)'
+  }),
+  center: { 
+    opacity: 1, 
+    x: 0,
+    scale: 1,
+    filter: 'blur(0px)'
+  },
+  exit: (dir) => ({ 
+    opacity: 0, 
+    x: dir > 0 ? -30 : 30,
+    scale: 1.02,
+    filter: 'blur(8px)'
+  }),
 };
 
 const RegistrationForm = () => {

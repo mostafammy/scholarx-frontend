@@ -29,6 +29,11 @@ export const step1Schema = Yup.object({
     .max(150, 'Institution name must be less than 150 characters')
     .required('University / Institution is required'),
 
+  governorate: Yup.string()
+    .trim()
+    .min(2, 'Please select your governorate')
+    .required('Governorate is required'),
+
   fieldOfStudy: Yup.string()
     .trim()
     .min(2, 'Academic major must be at least 2 characters')

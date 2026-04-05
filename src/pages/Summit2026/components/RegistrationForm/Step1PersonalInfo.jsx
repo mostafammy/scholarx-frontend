@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 import { Controller } from 'react-hook-form';
-import { ENGLISH_LEVEL_OPTIONS } from '../../constants/formConstants';
+import { ENGLISH_LEVEL_OPTIONS, EGYPTIAN_GOVERNORATES } from '../../constants/formConstants';
 
 /**
  * @param {{ form: import('react-hook-form').UseFormReturn }} props
@@ -118,6 +118,29 @@ const Step1PersonalInfo = ({ form }) => {
         {errors.university && (
           <p id="university-error" className="summit-form-error" role="alert">
             ⚠ {errors.university.message}
+          </p>
+        )}
+      </div>
+
+      <div className="summit-form-group">
+        <label htmlFor="governorate" className="summit-form-label summit-form-label-required">
+          Governorate
+        </label>
+        <select
+          id="governorate"
+          className={`summit-form-select${errors.governorate ? ' is-error' : ''}`}
+          aria-required="true"
+          aria-describedby={errors.governorate ? 'governorate-error' : undefined}
+          {...register('governorate')}
+        >
+          <option value="">Select your governorate...</option>
+          {EGYPTIAN_GOVERNORATES.map(({ value, label, region }) => (
+            <option key={value} value={value}>{label} ({region})</option>
+          ))}
+        </select>
+        {errors.governorate && (
+          <p id="governorate-error" className="summit-form-error" role="alert">
+            ⚠ {errors.governorate.message}
           </p>
         )}
       </div>
