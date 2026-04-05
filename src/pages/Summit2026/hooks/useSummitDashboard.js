@@ -6,8 +6,8 @@
  * @module useSummitDashboard
  */
 
-import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
-import { registrationRepository } from '../services/RegistrationRepository';
+import { useState, useEffect, useCallback, useMemo, useRef } from "react";
+import { registrationRepository } from "../services/RegistrationRepository";
 
 /**
  * @typedef {Object} DashboardFilters
@@ -24,11 +24,11 @@ import { registrationRepository } from '../services/RegistrationRepository';
  */
 
 const DEFAULT_FILTERS = {
-  search: '',
-  governorate: '',
-  track: '',
-  dateFrom: '',
-  dateTo: '',
+  search: "",
+  governorate: "",
+  track: "",
+  dateFrom: "",
+  dateTo: "",
 };
 
 const DASHBOARD_PAGE_LIMIT = 100;
@@ -58,23 +58,23 @@ export const useSummitDashboard = () => {
     byTrack: {},
   });
   const [filters, setFilters] = useState(DEFAULT_FILTERS);
-  const [sortField, setSortField] = useState('createdAt');
-  const [sortDirection, setSortDirection] = useState('desc');
+  const [sortField, setSortField] = useState("createdAt");
+  const [sortDirection, setSortDirection] = useState("desc");
   const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
   const [lastUpdatedAt, setLastUpdatedAt] = useState(null);
   const isRefreshingRef = useRef(false);
 
   const toDashboardError = useCallback((error) => {
     const status = error?.response?.status;
     if (status === 401 || status === 403) {
-      return 'Session expired or unauthorized. Please login again as admin.';
+      return "Session expired or unauthorized. Please login again as admin.";
     }
 
     return (
       error?.response?.data?.message ||
       error?.message ||
-      'Failed to fetch dashboard data.'
+      "Failed to fetch dashboard data."
     );
   }, []);
 
@@ -103,10 +103,10 @@ export const useSummitDashboard = () => {
 
       setRegistrations(listResult.items || []);
       setStats(statsResult);
-      setErrorMessage('');
+      setErrorMessage("");
       setLastUpdatedAt(new Date());
     } catch (error) {
-      console.error('Failed to fetch summit dashboard data:', error);
+      console.error("Failed to fetch summit dashboard data:", error);
       setErrorMessage(toDashboardError(error));
     } finally {
       setIsLoading(false);
@@ -130,14 +130,14 @@ export const useSummitDashboard = () => {
 
   useEffect(() => {
     const onVisibilityChange = () => {
-      if (document.visibilityState === 'visible') {
+      if (document.visibilityState === "visible") {
         refresh();
       }
     };
 
-    document.addEventListener('visibilitychange', onVisibilityChange);
+    document.addEventListener("visibilitychange", onVisibilityChange);
     return () => {
-      document.removeEventListener('visibilitychange', onVisibilityChange);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
     };
   }, [refresh]);
 
@@ -149,12 +149,15 @@ export const useSummitDashboard = () => {
     setFilters(DEFAULT_FILTERS);
   }, []);
 
-  const toggleSort = useCallback((field) => {
-    setSortDirection((prev) =>
-      sortField === field ? (prev === 'asc' ? 'desc' : 'asc') : 'desc'
-    );
-    setSortField(field);
-  }, [sortField]);
+  const toggleSort = useCallback(
+    (field) => {
+      setSortDirection((prev) =>
+        sortField === field ? (prev === "asc" ? "desc" : "asc") : "desc",
+      );
+      setSortField(field);
+    },
+    [sortField],
+  );
 
   const filtered = useMemo(() => registrations, [registrations]);
 
@@ -178,7 +181,7 @@ export const useSummitDashboard = () => {
     });
 
     const url = window.URL.createObjectURL(blob);
-    const anchor = document.createElement('a');
+    const anchor = document.createElement("a");
     anchor.href = url;
     anchor.download = `summit-registrations-${Date.now()}.csv`;
     document.body.appendChild(anchor);

@@ -6,24 +6,24 @@
  * @module useRegistration
  */
 
-import { useState, useCallback, useMemo } from 'react';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import Swal from 'sweetalert2';
-import { registrationRepository } from '../services/RegistrationRepository';
-import { getSchemaForStep } from '../utils/validators';
-import { FORM_TOTAL_STEPS } from '../constants/formConstants';
+import { useState, useCallback, useMemo } from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import Swal from "sweetalert2";
+import { registrationRepository } from "../services/RegistrationRepository";
+import { getSchemaForStep } from "../utils/validators";
+import { FORM_TOTAL_STEPS } from "../constants/formConstants";
 
 const mapGoalToTrack = (primaryGoal) => {
   switch (primaryGoal) {
-    case 'find-scholarship':
-      return 'global-education';
-    case 'develop-skills':
-      return 'skills-development';
-    case 'build-network':
-      return 'career-excellence';
+    case "find-scholarship":
+      return "global-education";
+    case "develop-skills":
+      return "skills-development";
+    case "build-network":
+      return "career-excellence";
     default:
-      return 'innovation-impact';
+      return "innovation-impact";
   }
 };
 
@@ -54,7 +54,7 @@ export const useRegistration = () => {
 
   const form = useForm({
     resolver: yupResolver(schema),
-    mode: 'onBlur',
+    mode: "onBlur",
     defaultValues: allFormData,
   });
 
@@ -80,22 +80,27 @@ export const useRegistration = () => {
         const track = mapGoalToTrack(merged.primaryGoal);
         const payload = {
           ...merged,
-          graduationYear: Number(merged.graduationYear) || new Date().getFullYear(),
-          status: merged.status || 'undergraduate',
-          englishLevel: merged.englishLevel || 'intermediate',
-          governorate: merged.governorate || 'cairo',
-          referralSources: merged.referralSources?.length ? merged.referralSources : ['other'],
+          graduationYear:
+            Number(merged.graduationYear) || new Date().getFullYear(),
+          status: merged.status || "undergraduate",
+          englishLevel: merged.englishLevel || "intermediate",
+          governorate: merged.governorate || "cairo",
+          referralSources: merged.referralSources?.length
+            ? merged.referralSources
+            : ["other"],
           tracks: merged.tracks?.length ? merged.tracks : [track],
-          workshops: merged.workshops?.length ? merged.workshops : ['networking'],
-          specialAccommodations: merged.specialAccommodations || '',
-          fieldOfStudy: merged.fieldOfStudy || 'General Studies',
+          workshops: merged.workshops?.length
+            ? merged.workshops
+            : ["networking"],
+          specialAccommodations: merged.specialAccommodations || "",
+          fieldOfStudy: merged.fieldOfStudy || "General Studies",
           acceptTerms: true,
         };
 
         await registrationRepository.save(payload);
         setIsSuccess(true);
         await Swal.fire({
-          title: '🎉 Registration Confirmed!',
+          title: "🎉 Registration Confirmed!",
           html: `
             <p style="color: #e2e8f0; font-size: 1rem; line-height: 1.6;">
               Welcome to <strong style="color: #f5c518;">Next Scholar Summit 2026</strong>!<br/>
@@ -105,31 +110,33 @@ export const useRegistration = () => {
               📅 May 1st, 2026 · Nile University, Giza
             </p>
           `,
-          icon: 'success',
-          confirmButtonText: 'See You There! 🚀',
-          background: '#0d1529',
-          color: '#ffffff',
-          confirmButtonColor: '#f5c518',
-          customClass: { confirmButton: 'summit-swal-btn' },
+          icon: "success",
+          confirmButtonText: "See You There! 🚀",
+          background: "#0d1529",
+          color: "#ffffff",
+          confirmButtonColor: "#f5c518",
+          customClass: { confirmButton: "summit-swal-btn" },
         });
       } catch (error) {
-        const isDuplicate = error?.message?.toLowerCase?.().includes('already registered');
+        const isDuplicate = error?.message
+          ?.toLowerCase?.()
+          .includes("already registered");
         await Swal.fire({
-          title: isDuplicate ? '⚠️ Already Registered' : '❌ Submission Failed',
+          title: isDuplicate ? "⚠️ Already Registered" : "❌ Submission Failed",
           text: isDuplicate
-            ? 'This email address is already registered for the summit.'
-            : 'Something went wrong. Please try again.',
-          icon: isDuplicate ? 'warning' : 'error',
-          confirmButtonText: 'OK',
-          background: '#0d1529',
-          color: '#ffffff',
-          confirmButtonColor: '#f5c518',
+            ? "This email address is already registered for the summit."
+            : "Something went wrong. Please try again.",
+          icon: isDuplicate ? "warning" : "error",
+          confirmButtonText: "OK",
+          background: "#0d1529",
+          color: "#ffffff",
+          confirmButtonColor: "#f5c518",
         });
       } finally {
         setIsSubmitting(false);
       }
     },
-    [allFormData, isLastStep]
+    [allFormData, isLastStep],
   );
 
   const onBack = useCallback(() => {

@@ -3,9 +3,9 @@
  * Pure UI — receives data + callbacks. No data fetching. No state.
  */
 
-import React, { useCallback } from 'react';
-import PropTypes from 'prop-types';
-import Swal from 'sweetalert2';
+import React, { useCallback } from "react";
+import PropTypes from "prop-types";
+import Swal from "sweetalert2";
 
 /**
  * Formats an ISO timestamp to a readable local date/time string.
@@ -14,9 +14,11 @@ import Swal from 'sweetalert2';
  */
 const formatDate = (iso) => {
   try {
-    return new Date(iso).toLocaleString('en-EG', {
-      month: 'short', day: 'numeric',
-      hour: '2-digit', minute: '2-digit',
+    return new Date(iso).toLocaleString("en-EG", {
+      month: "short",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
     });
   } catch {
     return iso;
@@ -25,12 +27,12 @@ const formatDate = (iso) => {
 
 /** Column definition for the table header */
 const COLUMNS = [
-  { field: 'fullName',    label: 'Registrant',   sortable: true },
-  { field: 'university',  label: 'Institution',   sortable: false },
-  { field: 'governorate', label: 'Governorate',   sortable: true },
-  { field: 'status',      label: 'Status',        sortable: false },
-  { field: 'tracks',      label: 'Tracks',        sortable: false },
-  { field: 'createdAt',   label: 'Registered At', sortable: true },
+  { field: "fullName", label: "Registrant", sortable: true },
+  { field: "university", label: "Institution", sortable: false },
+  { field: "governorate", label: "Governorate", sortable: true },
+  { field: "status", label: "Status", sortable: false },
+  { field: "tracks", label: "Tracks", sortable: false },
+  { field: "createdAt", label: "Registered At", sortable: true },
 ];
 
 /**
@@ -59,19 +61,19 @@ const RegistrantsTable = ({
 
   const handleClearAll = useCallback(async () => {
     const result = await Swal.fire({
-      title: '⚠️ Clear All Data?',
+      title: "⚠️ Clear All Data?",
       html: `
         <p style="color:#e2e8f0;">This will permanently delete all <strong style="color:#f5c518">${registrations.length}</strong> registrations.
         This action cannot be undone.</p>
       `,
-      icon: 'warning',
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonText: 'Yes, Delete All',
-      cancelButtonText: 'Cancel',
-      confirmButtonColor: '#ff6b6b',
-      cancelButtonColor: '#374151',
-      background: '#0d1529',
-      color: '#ffffff',
+      confirmButtonText: "Yes, Delete All",
+      cancelButtonText: "Cancel",
+      confirmButtonColor: "#ff6b6b",
+      cancelButtonColor: "#374151",
+      background: "#0d1529",
+      color: "#ffffff",
     });
     if (result.isConfirmed) clearAllData();
   }, [registrations.length, clearAllData]);
@@ -81,7 +83,8 @@ const RegistrantsTable = ({
       {/* Toolbar */}
       <div className="summit-db-table-toolbar">
         <p className="summit-db-table-count">
-          Showing <strong>{filtered.length}</strong> of <strong>{registrations.length}</strong> registrations
+          Showing <strong>{filtered.length}</strong> of{" "}
+          <strong>{registrations.length}</strong> registrations
         </p>
         <div className="summit-db-table-actions">
           <button
@@ -113,43 +116,58 @@ const RegistrantsTable = ({
         {filtered.length === 0 ? (
           <div className="summit-db-empty" role="status" aria-live="polite">
             <div className="summit-db-empty-icon" aria-hidden="true">
-              {registrations.length === 0 ? '📭' : '🔍'}
+              {registrations.length === 0 ? "📭" : "🔍"}
             </div>
             <p className="summit-db-empty-title">
-              {registrations.length === 0 ? 'No Registrations Yet' : 'No Results Found'}
+              {registrations.length === 0
+                ? "No Registrations Yet"
+                : "No Results Found"}
             </p>
             <p className="summit-db-empty-desc">
               {registrations.length === 0
-                ? 'Registrations will appear here as people sign up at the summit page.'
-                : 'Try adjusting your filters or search query.'}
+                ? "Registrations will appear here as people sign up at the summit page."
+                : "Try adjusting your filters or search query."}
             </p>
           </div>
         ) : (
-          <table className="summit-db-table" aria-label="Registrations data table">
+          <table
+            className="summit-db-table"
+            aria-label="Registrations data table"
+          >
             <thead>
               <tr>
-                <th scope="col" style={{ width: 32 }}>#</th>
+                <th scope="col" style={{ width: 32 }}>
+                  #
+                </th>
                 {COLUMNS.map(({ field, label, sortable }) => (
                   <th
                     key={field}
                     scope="col"
                     className={[
-                      sortable ? 'sortable' : '',
-                      sortField === field ? 'sort-active' : '',
-                    ].filter(Boolean).join(' ')}
+                      sortable ? "sortable" : "",
+                      sortField === field ? "sort-active" : "",
+                    ]
+                      .filter(Boolean)
+                      .join(" ")}
                     onClick={sortable ? () => toggleSort(field) : undefined}
                     aria-sort={
                       sortField === field
-                        ? sortDirection === 'asc' ? 'ascending' : 'descending'
-                        : sortable ? 'none' : undefined
+                        ? sortDirection === "asc"
+                          ? "ascending"
+                          : "descending"
+                        : sortable
+                          ? "none"
+                          : undefined
                     }
                   >
                     {label}
                     {sortable && (
                       <span className="summit-db-sort-icon" aria-hidden="true">
                         {sortField === field
-                          ? sortDirection === 'asc' ? ' ▲' : ' ▼'
-                          : ' ↕'}
+                          ? sortDirection === "asc"
+                            ? " ▲"
+                            : " ▼"
+                          : " ↕"}
                       </span>
                     )}
                   </th>
@@ -167,25 +185,32 @@ const RegistrantsTable = ({
                       <div className="summit-db-cell-email">{reg.phone}</div>
                     )}
                   </td>
-                  <td>{reg.university || '—'}</td>
-                  <td style={{ textTransform: 'capitalize' }}>
-                    {reg.governorate?.replace(/-/g, ' ') || '—'}
+                  <td>{reg.university || "—"}</td>
+                  <td style={{ textTransform: "capitalize" }}>
+                    {reg.governorate?.replace(/-/g, " ") || "—"}
                   </td>
-                  <td style={{ textTransform: 'capitalize' }}>
-                    {reg.status?.replace(/-/g, ' ') || '—'}
+                  <td style={{ textTransform: "capitalize" }}>
+                    {reg.status?.replace(/-/g, " ") || "—"}
                   </td>
                   <td>
                     {reg.tracks?.length > 0 ? (
                       <div className="summit-db-cell-tags">
                         {reg.tracks.map((t) => (
-                          <span key={t} className="summit-db-tag summit-db-tag--track">
-                            {t.replace(/-/g, ' ')}
+                          <span
+                            key={t}
+                            className="summit-db-tag summit-db-tag--track"
+                          >
+                            {t.replace(/-/g, " ")}
                           </span>
                         ))}
                       </div>
-                    ) : '—'}
+                    ) : (
+                      "—"
+                    )}
                   </td>
-                  <td className="summit-db-cell-date">{formatDate(reg.createdAt)}</td>
+                  <td className="summit-db-cell-date">
+                    {formatDate(reg.createdAt)}
+                  </td>
                 </tr>
               ))}
             </tbody>

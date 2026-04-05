@@ -9,18 +9,18 @@
  * @module RegistrationRepository
  */
 
-import axios from 'axios';
-import Cookies from 'js-cookie';
-import store from '../../../store';
+import axios from "axios";
+import Cookies from "js-cookie";
+import store from "../../../store";
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
-const AUTH_TOKEN_KEY = 'sx_auth';
-const DEFAULT_EVENT_CODE = 'summit-2026';
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000/api";
+const AUTH_TOKEN_KEY = "sx_auth";
+const DEFAULT_EVENT_CODE = "summit-2026";
 
 const api = axios.create({
   baseURL: API_URL,
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
 });
 
@@ -46,12 +46,12 @@ const getAuthHeader = () => {
   const stateToken = store?.getState?.()?.auth?.token;
   const token =
     Cookies.get(AUTH_TOKEN_KEY) ||
-    window.localStorage.getItem('token') ||
+    window.localStorage.getItem("token") ||
     window.localStorage.getItem(AUTH_TOKEN_KEY) ||
     stateToken;
 
   if (!token) {
-    throw new Error('Admin authentication is required. Please login again.');
+    throw new Error("Admin authentication is required. Please login again.");
   }
   return { Authorization: `Bearer ${token}` };
 };
@@ -74,14 +74,14 @@ class ApiRegistrationRepository {
 
   async findAll(params = {}) {
     const now = Date.now();
-    const response = await api.get('/admin/summit/registrations', {
+    const response = await api.get("/admin/summit/registrations", {
       params: {
         _ts: now,
         eventCode: this._eventCode,
         page: 1,
         limit: 100,
-        sortField: 'createdAt',
-        sortDirection: 'desc',
+        sortField: "createdAt",
+        sortDirection: "desc",
         ...params,
       },
       headers: getAuthHeader(),
@@ -101,7 +101,7 @@ class ApiRegistrationRepository {
   }
 
   async emailExists(email) {
-    const response = await api.get('/summit/registrations/check', {
+    const response = await api.get("/summit/registrations/check", {
       params: { email, eventCode: this._eventCode },
     });
     return Boolean(response.data?.data?.isRegistered);
@@ -109,13 +109,15 @@ class ApiRegistrationRepository {
 
   async save(data) {
     try {
-      const response = await api.post('/summit/registrations', {
+      const response = await api.post("/summit/registrations", {
         ...data,
         eventCode: this._eventCode,
       });
       return response.data?.data?.registration;
     } catch (error) {
-      throw new Error(toErrorMessage(error, 'Failed to submit summit registration'));
+      throw new Error(
+        toErrorMessage(error, "Failed to submit summit registration"),
+      );
     }
   }
 
@@ -134,7 +136,7 @@ class ApiRegistrationRepository {
 
   async getStats() {
     const now = Date.now();
-    const response = await api.get('/admin/summit/dashboard/stats', {
+    const response = await api.get("/admin/summit/dashboard/stats", {
       params: { _ts: now, eventCode: this._eventCode },
       headers: getAuthHeader(),
     });
@@ -164,16 +166,16 @@ class ApiRegistrationRepository {
   }
 
   async exportCsv(params = {}) {
-    const response = await api.get('/admin/summit/registrations/export.csv', {
+    const response = await api.get("/admin/summit/registrations/export.csv", {
       params: {
         eventCode: this._eventCode,
         ...params,
       },
       headers: {
         ...getAuthHeader(),
-        Accept: 'text/csv',
+        Accept: "text/csv",
       },
-      responseType: 'blob',
+      responseType: "blob",
     });
     return response.data;
   }

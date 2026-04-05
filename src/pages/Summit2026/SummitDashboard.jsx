@@ -4,14 +4,14 @@
  * Protected by AdminRoute in App.jsx.
  */
 
-import React, { useCallback } from 'react';
-import { Helmet } from 'react-helmet-async';
-import { Link } from 'react-router-dom';
-import { useSummitDashboard } from './hooks/useSummitDashboard';
-import StatsCards       from './components/Dashboard/StatsCards';
-import FilterBar        from './components/Dashboard/FilterBar';
-import RegistrantsTable from './components/Dashboard/RegistrantsTable';
-import './SummitDashboard.css';
+import React, { useCallback } from "react";
+import { Helmet } from "react-helmet-async";
+import { Link } from "react-router-dom";
+import { useSummitDashboard } from "./hooks/useSummitDashboard";
+import StatsCards from "./components/Dashboard/StatsCards";
+import FilterBar from "./components/Dashboard/FilterBar";
+import RegistrantsTable from "./components/Dashboard/RegistrantsTable";
+import "./SummitDashboard.css";
 
 const SummitDashboard = () => {
   const {
@@ -43,9 +43,13 @@ const SummitDashboard = () => {
         {/* Header */}
         <header className="summit-db-header" role="banner">
           <div className="summit-db-header-left">
-            <div className="summit-db-logo-badge" aria-hidden="true">🏆</div>
+            <div className="summit-db-logo-badge" aria-hidden="true">
+              🏆
+            </div>
             <div>
-              <div className="summit-db-header-title">Summit 2026 — Admin Dashboard</div>
+              <div className="summit-db-header-title">
+                Summit 2026 — Admin Dashboard
+              </div>
               <div className="summit-db-header-subtitle">
                 Registration management &amp; analytics
               </div>
@@ -60,7 +64,7 @@ const SummitDashboard = () => {
               aria-label="Refresh data"
               disabled={isLoading}
             >
-              {isLoading ? '↻ Refreshing...' : '↻ Refresh'}
+              {isLoading ? "↻ Refreshing..." : "↻ Refresh"}
             </button>
             <Link
               to="/summit-2026"
@@ -80,7 +84,7 @@ const SummitDashboard = () => {
             <span>
               {lastUpdatedAt
                 ? `Live data - Last update: ${lastUpdatedAt.toLocaleTimeString()}`
-                : 'Live data - Waiting for first successful fetch'}
+                : "Live data - Waiting for first successful fetch"}
             </span>
           </div>
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { HelmetProvider } from 'react-helmet-async';
+import { HelmetProvider } from "react-helmet-async";
 import {
   BrowserRouter as Router,
   Routes,
@@ -95,226 +95,226 @@ function App() {
 
   return (
     <HelmetProvider>
-    <QueryProvider>
-      <UserProvider>
-        <Router>
-          <div className="">
-            <Routes>
-              <Route
-                path="/"
-                element={
-                  <LayoutWithPath>
-                    <Home />
-                  </LayoutWithPath>
-                }
-              />
-              <Route
-                path="/about"
-                element={
-                  <LayoutWithPath>
-                    <About />
-                  </LayoutWithPath>
-                }
-              />
-              <Route
-                path="/services"
-                element={
-                  <LayoutWithPath>
-                    <Services />
-                  </LayoutWithPath>
-                }
-              />
-              {ENABLE_DEMOS && (
+      <QueryProvider>
+        <UserProvider>
+          <Router>
+            <div className="">
+              <Routes>
                 <Route
-                  path="/services/demo"
+                  path="/"
                   element={
                     <LayoutWithPath>
-                      <DemoPage />
+                      <Home />
                     </LayoutWithPath>
                   }
                 />
-              )}
-              <Route
-                path="/courses"
-                element={
-                  <LayoutWithPath>
-                    <Courses />
-                  </LayoutWithPath>
-                }
-              />
-              <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<Signup />} />
-              <Route
-                path="/CoursePage/:courseId"
-                element={
-                  <LayoutWithPath>
-                    <CoursePage />
-                  </LayoutWithPath>
-                }
-              />
-              <Route
-                path="/course/:courseId/lessons"
-                element={<LessonPage />}
-              />
-              <Route
-                path="/Contact"
-                element={
-                  <LayoutWithPath>
-                    <Contact />
-                  </LayoutWithPath>
-                }
-              />
-              <Route path="/forget-password" element={<ForgetPassword />} />
-              <Route path="/reset-password" element={<ResetPassword />} />
-              <Route
-                path="/search-results"
-                element={
-                  <LayoutWithPath>
-                    <SearchResults />
-                  </LayoutWithPath>
-                }
-              />
-              <Route
-                path="/auth/google"
-                element={
-                  <LayoutWithPath>
-                    <GoogleCallback />
-                  </LayoutWithPath>
-                }
-              />
-              <Route path="/verify-email" element={<VerifyEmail />} />
-              <Route
-                path="/profile"
-                element={
-                  <LayoutWithPath>
-                    <Profile />
-                  </LayoutWithPath>
-                }
-              />
-              <Route
-                path="/mycourses"
-                element={
-                  <LayoutWithPath>
-                    <MyCourses />
-                  </LayoutWithPath>
-                }
-              />
-              <Route
-                path="/certificates"
-                element={
-                  <LayoutWithPath>
-                    <Certificates />
-                  </LayoutWithPath>
-                }
-              />
-              {/* Public certificate verification - no auth required */}
-              <Route
-                path="/certificates/verify/:certificateId"
-                element={
-                  <LayoutWithPath>
-                    <CertificateVerify />
-                  </LayoutWithPath>
-                }
-              />
-              <Route
-                path="/privacy-policy"
-                element={
-                  <LayoutWithPath>
-                    <PrivacyPolicy />
-                  </LayoutWithPath>
-                }
-              />
-              <Route
-                path="/terms-of-service"
-                element={
-                  <LayoutWithPath>
-                    <TermsOfService />
-                  </LayoutWithPath>
-                }
-              />
-              {/* Admin Routes */}
-              <Route
-                path="/admin/dashboard"
-                element={
-                  <AdminRoute>
+                <Route
+                  path="/about"
+                  element={
                     <LayoutWithPath>
-                      <AdminDashboard />
+                      <About />
                     </LayoutWithPath>
-                  </AdminRoute>
-                }
-              />
-              <Route
-                path="/admin/users"
-                element={
-                  <AdminRoute>
+                  }
+                />
+                <Route
+                  path="/services"
+                  element={
                     <LayoutWithPath>
-                      <AdminUsers />
+                      <Services />
                     </LayoutWithPath>
-                  </AdminRoute>
-                }
-              />
-              <Route
-                path="/admin/courses"
-                element={
-                  <AdminRoute>
+                  }
+                />
+                {ENABLE_DEMOS && (
+                  <Route
+                    path="/services/demo"
+                    element={
+                      <LayoutWithPath>
+                        <DemoPage />
+                      </LayoutWithPath>
+                    }
+                  />
+                )}
+                <Route
+                  path="/courses"
+                  element={
                     <LayoutWithPath>
-                      <AdminCourses />
+                      <Courses />
                     </LayoutWithPath>
-                  </AdminRoute>
-                }
-              />
-              <Route
-                path="/admin/subscriptions"
-                element={
-                  <AdminRoute>
+                  }
+                />
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<Signup />} />
+                <Route
+                  path="/CoursePage/:courseId"
+                  element={
                     <LayoutWithPath>
-                      <AdminSubscriptions />
+                      <CoursePage />
                     </LayoutWithPath>
-                  </AdminRoute>
-                }
-              />
-              <Route
-                path="/admin/reports"
-                element={
-                  <AdminRoute>
+                  }
+                />
+                <Route
+                  path="/course/:courseId/lessons"
+                  element={<LessonPage />}
+                />
+                <Route
+                  path="/Contact"
+                  element={
                     <LayoutWithPath>
-                      <AdminReports />
+                      <Contact />
                     </LayoutWithPath>
-                  </AdminRoute>
-                }
-              />
+                  }
+                />
+                <Route path="/forget-password" element={<ForgetPassword />} />
+                <Route path="/reset-password" element={<ResetPassword />} />
+                <Route
+                  path="/search-results"
+                  element={
+                    <LayoutWithPath>
+                      <SearchResults />
+                    </LayoutWithPath>
+                  }
+                />
+                <Route
+                  path="/auth/google"
+                  element={
+                    <LayoutWithPath>
+                      <GoogleCallback />
+                    </LayoutWithPath>
+                  }
+                />
+                <Route path="/verify-email" element={<VerifyEmail />} />
+                <Route
+                  path="/profile"
+                  element={
+                    <LayoutWithPath>
+                      <Profile />
+                    </LayoutWithPath>
+                  }
+                />
+                <Route
+                  path="/mycourses"
+                  element={
+                    <LayoutWithPath>
+                      <MyCourses />
+                    </LayoutWithPath>
+                  }
+                />
+                <Route
+                  path="/certificates"
+                  element={
+                    <LayoutWithPath>
+                      <Certificates />
+                    </LayoutWithPath>
+                  }
+                />
+                {/* Public certificate verification - no auth required */}
+                <Route
+                  path="/certificates/verify/:certificateId"
+                  element={
+                    <LayoutWithPath>
+                      <CertificateVerify />
+                    </LayoutWithPath>
+                  }
+                />
+                <Route
+                  path="/privacy-policy"
+                  element={
+                    <LayoutWithPath>
+                      <PrivacyPolicy />
+                    </LayoutWithPath>
+                  }
+                />
+                <Route
+                  path="/terms-of-service"
+                  element={
+                    <LayoutWithPath>
+                      <TermsOfService />
+                    </LayoutWithPath>
+                  }
+                />
+                {/* Admin Routes */}
+                <Route
+                  path="/admin/dashboard"
+                  element={
+                    <AdminRoute>
+                      <LayoutWithPath>
+                        <AdminDashboard />
+                      </LayoutWithPath>
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="/admin/users"
+                  element={
+                    <AdminRoute>
+                      <LayoutWithPath>
+                        <AdminUsers />
+                      </LayoutWithPath>
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="/admin/courses"
+                  element={
+                    <AdminRoute>
+                      <LayoutWithPath>
+                        <AdminCourses />
+                      </LayoutWithPath>
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="/admin/subscriptions"
+                  element={
+                    <AdminRoute>
+                      <LayoutWithPath>
+                        <AdminSubscriptions />
+                      </LayoutWithPath>
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="/admin/reports"
+                  element={
+                    <AdminRoute>
+                      <LayoutWithPath>
+                        <AdminReports />
+                      </LayoutWithPath>
+                    </AdminRoute>
+                  }
+                />
 
-              {/* Sales Dashboard — accessible to sales + admin roles */}
-              <Route
-                path="/sales/dashboard"
-                element={
-                  <SalesRoute>
-                    <LayoutWithPath>
-                      <SalesDashboard />
-                    </LayoutWithPath>
-                  </SalesRoute>
-                }
-              />
+                {/* Sales Dashboard — accessible to sales + admin roles */}
+                <Route
+                  path="/sales/dashboard"
+                  element={
+                    <SalesRoute>
+                      <LayoutWithPath>
+                        <SalesDashboard />
+                      </LayoutWithPath>
+                    </SalesRoute>
+                  }
+                />
 
-              {/* Summit 2026 — public registration page (standalone, no NavBar) */}
-              <Route path="/summit-2026" element={<SummitPage />} />
+                {/* Summit 2026 — public registration page (standalone, no NavBar) */}
+                <Route path="/summit-2026" element={<SummitPage />} />
 
-              {/* Summit 2026 — admin dashboard (admin role only) */}
-              <Route
-                path="/summit-2026/dashboard"
-                element={
-                  <AdminRoute>
-                    <SummitDashboard />
-                  </AdminRoute>
-                }
-              />
+                {/* Summit 2026 — admin dashboard (admin role only) */}
+                <Route
+                  path="/summit-2026/dashboard"
+                  element={
+                    <AdminRoute>
+                      <SummitDashboard />
+                    </AdminRoute>
+                  }
+                />
 
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </div>
-        </Router>
-      </UserProvider>
-    </QueryProvider>
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </div>
+          </Router>
+        </UserProvider>
+      </QueryProvider>
     </HelmetProvider>
   );
 }

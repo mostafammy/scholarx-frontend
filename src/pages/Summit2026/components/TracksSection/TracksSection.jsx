@@ -3,10 +3,10 @@
  * Data-driven: adding a new track requires only eventData.js update (OCP).
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import { motion } from 'framer-motion';
-import { SUMMIT_TRACKS } from '../../constants/eventData';
+import React from "react";
+import PropTypes from "prop-types";
+import { motion } from "framer-motion";
+import { SUMMIT_TRACKS } from "../../constants/eventData";
 
 const containerVariants = {
   hidden: {},
@@ -14,9 +14,13 @@ const containerVariants = {
 };
 
 const cardVariants = {
-  hidden:  { opacity: 0, y: 32, scale: 0.96 },
-  visible: { opacity: 1, y: 0,  scale: 1,
-    transition: { duration: 0.55, ease: [0.16, 1, 0.3, 1] } },
+  hidden: { opacity: 0, y: 32, scale: 0.96 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.55, ease: [0.16, 1, 0.3, 1] },
+  },
 };
 
 /**
@@ -40,7 +44,7 @@ const TrackCard = React.memo(({ track }) => (
   </motion.article>
 ));
 
-TrackCard.displayName = 'TrackCard';
+TrackCard.displayName = "TrackCard";
 TrackCard.propTypes = {
   track: PropTypes.shape({
     id: PropTypes.string.isRequired,
@@ -61,12 +65,15 @@ const TracksSection = () => (
   >
     <div className="summit-container">
       <div className="summit-section-header">
-        <div className="summit-badge" aria-hidden="true">✅ What You Will Gain</div>
+        <div className="summit-badge" aria-hidden="true">
+          ✅ What You Will Gain
+        </div>
         <h2 id="tracks-heading" className="summit-section-title">
           4 Strategic Tracks Designed for Your Future
         </h2>
         <p className="summit-section-subtitle">
-          Explore practical sessions that move you from ambition to global readiness.
+          Explore practical sessions that move you from ambition to global
+          readiness.
         </p>
       </div>
 
