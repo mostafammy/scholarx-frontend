@@ -52,6 +52,16 @@ export const step1Schema = Yup.object({
     .oneOf(['beginner', 'intermediate', 'upper-intermediate', 'advanced', 'fluent'])
     .required('Please select your English level'),
 
+  appliedForScholarshipsRecently: Yup.string()
+    .oneOf(['yes', 'no'])
+    .required('Please select whether you applied for scholarships recently'),
+
+  biggestScholarshipHurdle: Yup.string()
+    .trim()
+    .min(5, 'Please describe your biggest hurdle in at least 5 characters')
+    .max(500, 'Biggest hurdle must be less than 500 characters')
+    .required('Please tell us your biggest hurdle'),
+
   acceptTerms: Yup.boolean()
     .oneOf([true], 'You must accept the terms and conditions to register')
     .required('You must accept the terms and conditions to register'),

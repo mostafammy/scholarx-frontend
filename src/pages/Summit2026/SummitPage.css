@@ -354,6 +354,62 @@
   margin: 0 auto;
 }
 
+.summit-sponsor-marquee-wrap {
+  margin-bottom: var(--s-space-8);
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: var(--s-radius-full);
+  background: rgba(255,255,255,0.06);
+  overflow: hidden;
+}
+
+.summit-sponsor-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-space-3);
+  min-height: 58px;
+  padding: var(--s-space-2) var(--s-space-5);
+  margin: var(--s-space-2) var(--s-space-3);
+  border-radius: var(--s-radius-full);
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(9, 14, 28, 0.8);
+}
+
+.summit-sponsor-logo-wrap {
+  width: 56px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.summit-sponsor-logo {
+  display: block;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.35));
+}
+
+.summit-sponsor-logo--scholarx {
+  max-width: 38px;
+  max-height: 30px;
+}
+
+.summit-sponsor-logo--eujc {
+  max-width: 64px;
+  max-height: 28px;
+}
+
+.summit-sponsor-logo--eu {
+  max-width: 52px;
+  max-height: 24px;
+}
+
+.summit-sponsor-name {
+  font-size: 0.78rem;
+  color: var(--s-text-200);
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+
 .summit-hero-organizers {
   display: inline-flex;
   align-items: center;
@@ -1588,6 +1644,17 @@
   .summit-hero-org-name       { font-size: 0.7rem; letter-spacing: 0.02em; }
   .summit-hero-org-logo--scholarx { height: 26px; width: auto; }
   .summit-hero-org-logo--eujc { height: 32px; width: auto; }
+  .summit-sponsor-chip {
+    min-height: 52px;
+    padding: var(--s-space-2) var(--s-space-4);
+  }
+  .summit-sponsor-name {
+    font-size: 0.72rem;
+  }
+  .summit-sponsor-logo-wrap {
+    width: 48px;
+    height: 30px;
+  }
   .summit-partner-logo-icon { width: 72px; height: 72px; padding: 12px; }
   .summit-partner-logo-icon--wide { width: 180px; height: 72px; padding: 12px 16px; }
 }

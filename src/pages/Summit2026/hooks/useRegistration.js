@@ -84,6 +84,10 @@ export const useRegistration = () => {
             Number(merged.graduationYear) || new Date().getFullYear(),
           status: merged.status,
           englishLevel: merged.englishLevel || "intermediate",
+          appliedForScholarshipsRecently:
+            merged.appliedForScholarshipsRecently === "yes",
+          biggestScholarshipHurdle:
+            merged.biggestScholarshipHurdle?.trim() || "Not provided",
           governorate: merged.governorate || "cairo",
           referralSources: merged.referralSources?.length
             ? merged.referralSources

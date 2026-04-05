@@ -236,6 +236,48 @@ const Step1PersonalInfo = ({ form }) => {
       </div>
 
       <div className="summit-form-group">
+        <label htmlFor="appliedForScholarshipsRecently" className="summit-form-label summit-form-label-required">
+          Have you applied for scholarships recently?
+        </label>
+        <select
+          id="appliedForScholarshipsRecently"
+          className={`summit-form-select${errors.appliedForScholarshipsRecently ? ' is-error' : ''}`}
+          aria-required="true"
+          aria-describedby={errors.appliedForScholarshipsRecently ? 'appliedForScholarshipsRecently-error' : undefined}
+          {...register('appliedForScholarshipsRecently')}
+        >
+          <option value="">Select an option...</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </select>
+        {errors.appliedForScholarshipsRecently && (
+          <p id="appliedForScholarshipsRecently-error" className="summit-form-error" role="alert">
+            ⚠ {errors.appliedForScholarshipsRecently.message}
+          </p>
+        )}
+      </div>
+
+      <div className="summit-form-group">
+        <label htmlFor="biggestScholarshipHurdle" className="summit-form-label summit-form-label-required">
+          What is the biggest hurdle you faced?
+        </label>
+        <textarea
+          id="biggestScholarshipHurdle"
+          rows={4}
+          placeholder="Share your biggest challenge (e.g., essay writing, finding opportunities, interview prep)..."
+          className={`summit-form-textarea${errors.biggestScholarshipHurdle ? ' is-error' : ''}`}
+          aria-required="true"
+          aria-describedby={errors.biggestScholarshipHurdle ? 'biggestScholarshipHurdle-error' : undefined}
+          {...register('biggestScholarshipHurdle')}
+        />
+        {errors.biggestScholarshipHurdle && (
+          <p id="biggestScholarshipHurdle-error" className="summit-form-error" role="alert">
+            ⚠ {errors.biggestScholarshipHurdle.message}
+          </p>
+        )}
+      </div>
+
+      <div className="summit-form-group">
         <label
           className={`summit-checkbox-item${errors.acceptTerms ? ' is-error' : ''}`}
           htmlFor="acceptTerms"

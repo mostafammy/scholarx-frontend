@@ -4,10 +4,35 @@
  * All business logic delegated to useCountdown hook.
  */
 
-import React, { useMemo, useCallback } from 'react';
-import PropTypes from 'prop-types';
-import { useCountdown } from '../../hooks/useCountdown';
-import { EVENT_META } from '../../constants/eventData';
+import React, { useMemo, useCallback } from "react";
+import PropTypes from "prop-types";
+import Marquee from "react-fast-marquee";
+import { useCountdown } from "../../hooks/useCountdown";
+import { EVENT_META } from "../../constants/eventData";
+
+const SPONSOR_ITEMS = [
+  {
+    id: "scholarx",
+    logoSrc: "/ScholarX-Logo-Icon-White-Blue-BG_ScholarX.svg",
+    logoAlt: "ScholarX logo",
+    name: "",
+    logoClass: "summit-sponsor-logo summit-sponsor-logo--scholarx",
+  },
+  {
+    id: "eujc-eumb",
+    logoSrc: "/_Colored, Transparent bkgd- EUJC EUMB logos.png",
+    logoAlt: "EU Jeel Connect and EU MedBridge logos",
+    name: "",
+    logoClass: "summit-sponsor-logo summit-sponsor-logo--eujc",
+  },
+  {
+    id: "eu-funded",
+    logoSrc: "/_Colored, Transparent bkgd- EUJC EUMB logos.png",
+    logoAlt: "European Union partner logos",
+    name: "",
+    logoClass: "summit-sponsor-logo summit-sponsor-logo--eu",
+  },
+];
 
 /* ── Star Particles ─────────────────────────────────────────────────────── */
 
@@ -27,7 +52,7 @@ const StarField = React.memo(() => {
         duration: `${(Math.random() * 4 + 2).toFixed(1)}s`,
         delay: `${(Math.random() * 6).toFixed(1)}s`,
       })),
-    []
+    [],
   );
 
   return (
@@ -50,7 +75,7 @@ const StarField = React.memo(() => {
     </div>
   );
 });
-StarField.displayName = 'StarField';
+StarField.displayName = "StarField";
 
 /* ── Countdown Unit ─────────────────────────────────────────────────────── */
 
@@ -60,18 +85,24 @@ StarField.displayName = 'StarField';
  */
 const CountdownUnit = React.memo(({ value, label, showSeparator = true }) => (
   <>
-    <div className="summit-countdown-unit" role="timer" aria-label={`${value} ${label}`}>
+    <div
+      className="summit-countdown-unit"
+      role="timer"
+      aria-label={`${value} ${label}`}
+    >
       <span className="summit-countdown-value">
-        {String(value).padStart(2, '0')}
+        {String(value).padStart(2, "0")}
       </span>
       <span className="summit-countdown-unit-label">{label}</span>
     </div>
     {showSeparator && (
-      <span className="summit-countdown-separator" aria-hidden="true">:</span>
+      <span className="summit-countdown-separator" aria-hidden="true">
+        :
+      </span>
     )}
   </>
 ));
-CountdownUnit.displayName = 'CountdownUnit';
+CountdownUnit.displayName = "CountdownUnit";
 CountdownUnit.propTypes = {
   value: PropTypes.number.isRequired,
   label: PropTypes.string.isRequired,
@@ -84,19 +115,23 @@ CountdownUnit.propTypes = {
  * @param {{ onRegisterClick: () => void }} props
  */
 const HeroSection = ({ onRegisterClick }) => {
-  const { days, hours, minutes, seconds, isExpired } = useCountdown(EVENT_META.date);
+  const { days, hours, minutes, seconds, isExpired } = useCountdown(
+    EVENT_META.date,
+  );
 
   const handleRegister = useCallback(
     (e) => {
       e.preventDefault();
       onRegisterClick();
     },
-    [onRegisterClick]
+    [onRegisterClick],
   );
 
   const handleLearnMore = useCallback((e) => {
     e.preventDefault();
-    document.getElementById('summit-journey')?.scrollIntoView({ behavior: 'smooth' });
+    document
+      .getElementById("summit-journey")
+      ?.scrollIntoView({ behavior: "smooth" });
   }, []);
 
   return (
@@ -107,71 +142,96 @@ const HeroSection = ({ onRegisterClick }) => {
       <div
         aria-hidden="true"
         style={{
-          position: 'absolute', width: 500, height: 500, borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(245,197,24,0.07) 0%, transparent 65%)',
-          bottom: -100, right: -80, pointerEvents: 'none',
+          position: "absolute",
+          width: 500,
+          height: 500,
+          borderRadius: "50%",
+          background:
+            "radial-gradient(circle, rgba(245,197,24,0.07) 0%, transparent 65%)",
+          bottom: -100,
+          right: -80,
+          pointerEvents: "none",
         }}
       />
 
       <div className="summit-hero-content">
-        {/* Organizer pill */}
-        <div className="summit-hero-organizers" aria-label="Organized by">
-          <div className="summit-hero-org-item">
-            <div className="summit-hero-org-logo-wrapper">
-              <img
-                src="/ScholarX-Logo-Icon-White-Blue-BG_ScholarX.svg"
-                alt="ScholarX logo"
-                className="summit-hero-org-logo summit-hero-org-logo--scholarx"
-                loading="eager"
-                decoding="async"
-              />
-            </div>
-            <span className="summit-hero-org-name">ScholarX</span>
-          </div>
-          <span className="summit-hero-organizers-dot" />
-          <div className="summit-hero-org-item">
-            <div className="summit-hero-org-logo-wrapper">
-              <img
-                src="/_Colored, Transparent bkgd- EUJC EUMB logos.png"
-                alt="EU Jeel Connect and EU MedBridge logos"
-                className="summit-hero-org-logo summit-hero-org-logo--eujc"
-                loading="eager"
-                decoding="async"
-              />
-            </div>
-          </div>
+        {/* Animated sponsor bar */}
+        <div
+          className="summit-sponsor-marquee-wrap"
+          aria-label="Sponsors and partners"
+        >
+          <Marquee
+            speed={36}
+            gradient={false}
+            pauseOnHover
+            pauseOnClick
+            autoFill
+          >
+            {SPONSOR_ITEMS.map((item) => (
+              <div className="summit-sponsor-chip" key={item.id}>
+                <div className="summit-sponsor-logo-wrap">
+                  <img
+                    src={item.logoSrc}
+                    alt={item.logoAlt}
+                    className={item.logoClass}
+                    loading="eager"
+                    decoding="async"
+                  />
+                </div>
+                <span className="summit-sponsor-name">{item.name}</span>
+              </div>
+            ))}
+          </Marquee>
         </div>
 
         {/* Main title */}
-        <h1 className="summit-hero-title">
-          {EVENT_META.name}
-        </h1>
+        <h1 className="summit-hero-title">{EVENT_META.name}</h1>
 
         {/* Tagline */}
         <p className="summit-hero-tagline" aria-label="Summit theme">
-          Your compass to global opportunities: scholarships, future-ready skills, and limitless possibilities.
+          Your compass to global opportunities: scholarships, future-ready
+          skills, and limitless possibilities.
         </p>
 
         {/* Event meta */}
-        <div className="summit-hero-meta" role="list" aria-label="Event details">
+        <div
+          className="summit-hero-meta"
+          role="list"
+          aria-label="Event details"
+        >
           <div className="summit-hero-meta-item" role="listitem">
-            <span className="summit-hero-meta-icon" aria-hidden="true">📅</span>
+            <span className="summit-hero-meta-icon" aria-hidden="true">
+              📅
+            </span>
             <span>May 1, 2026</span>
           </div>
           <div className="summit-hero-meta-item" role="listitem">
-            <span className="summit-hero-meta-icon" aria-hidden="true">📍</span>
+            <span className="summit-hero-meta-icon" aria-hidden="true">
+              📍
+            </span>
             <span>Nile University, Giza</span>
           </div>
         </div>
 
         {/* Countdown */}
         {!isExpired && (
-          <div className="summit-countdown" role="timer" aria-live="polite" aria-label="Countdown to summit">
-            <p className="summit-countdown-label">Time left until the most important event in your growth journey.</p>
-            <CountdownUnit value={days}    label="Days"    />
-            <CountdownUnit value={hours}   label="Hours"   />
+          <div
+            className="summit-countdown"
+            role="timer"
+            aria-live="polite"
+            aria-label="Countdown to summit"
+          >
+            <p className="summit-countdown-label">
+              Time left until the most important event in your growth journey.
+            </p>
+            <CountdownUnit value={days} label="Days" />
+            <CountdownUnit value={hours} label="Hours" />
             <CountdownUnit value={minutes} label="Minutes" />
-            <CountdownUnit value={seconds} label="Seconds" showSeparator={false} />
+            <CountdownUnit
+              value={seconds}
+              label="Seconds"
+              showSeparator={false}
+            />
           </div>
         )}
 
