@@ -14,6 +14,19 @@ import { registrationRepository } from '../services/RegistrationRepository';
 import { getSchemaForStep } from '../utils/validators';
 import { FORM_TOTAL_STEPS } from '../constants/formConstants';
 
+const mapGoalToTrack = (primaryGoal) => {
+  switch (primaryGoal) {
+    case 'find-scholarship':
+      return 'global-education';
+    case 'develop-skills':
+      return 'skills-development';
+    case 'build-network':
+      return 'career-excellence';
+    default:
+      return 'innovation-impact';
+  }
+};
+
 /**
  * @typedef {Object} UseRegistrationReturn
  * @property {number} currentStep - Active step number (1–3)
@@ -64,7 +77,22 @@ export const useRegistration = () => {
       // Final submission
       setIsSubmitting(true);
       try {
-        registrationRepository.save(merged);
+        const track = mapGoalToTrack(merged.primaryGoal);
+        const payload = {
+          ...merged,
+          graduationYear: Number(merged.graduationYear) || new Date().getFullYear(),
+          status: merged.status || 'undergraduate',
+          englishLevel: merged.englishLevel || 'intermediate',
+          governorate: merged.governorate || 'cairo',
+          referralSources: merged.referralSources?.length ? merged.referralSources : ['other'],
+          tracks: merged.tracks?.length ? merged.tracks : [track],
+          workshops: merged.workshops?.length ? merged.workshops : ['networking'],
+          specialAccommodations: merged.specialAccommodations || '',
+          fieldOfStudy: merged.fieldOfStudy || 'General Studies',
+          acceptTerms: true,
+        };
+
+        await registrationRepository.save(payload);
         setIsSuccess(true);
         await Swal.fire({
           title: '🎉 Registration Confirmed!',
@@ -85,7 +113,7 @@ export const useRegistration = () => {
           customClass: { confirmButton: 'summit-swal-btn' },
         });
       } catch (error) {
-        const isDuplicate = error.message?.includes('already registered');
+        const isDuplicate = error?.message?.toLowerCase?.().includes('already registered');
         await Swal.fire({
           title: isDuplicate ? '⚠️ Already Registered' : '❌ Submission Failed',
           text: isDuplicate

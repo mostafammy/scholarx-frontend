@@ -236,6 +236,45 @@
   text-transform: uppercase;
 }
 
+.summit-hero-org-item {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--s-space-2);
+  text-align: center;
+}
+
+.summit-hero-org-logo-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 56px;
+}
+
+.summit-hero-org-logo {
+  display: block;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.35));
+}
+
+.summit-hero-org-logo--scholarx {
+  width: auto;
+  height: 32px;
+}
+
+.summit-hero-org-logo--eujc {
+  width: auto;
+  height: 48px;
+}
+
+.summit-hero-org-name {
+  font-size: 0.75rem;
+  color: var(--s-text-200);
+  letter-spacing: 0.04em;
+  text-transform: none;
+}
+
 .summit-hero-organizers-dot {
   width: 4px;
   height: 4px;
@@ -583,7 +622,6 @@
   align-items: center;
 }
 
-.summit-roundtable-text {}
 
 .summit-roundtable-title {
   font-family: var(--s-font-display);
@@ -855,23 +893,48 @@
   background: linear-gradient(90deg, var(--s-blue-600), var(--s-blue-400));
 }
 
+.summit-partner-card--eu-jeel-connect::before {
+  background: linear-gradient(90deg, var(--s-blue-600), var(--s-blue-400));
+}
+
 .summit-partner-logo-area {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
   gap: var(--s-space-4);
   margin-bottom: var(--s-space-6);
 }
 
 .summit-partner-logo-icon {
-  width: 56px;
-  height: 56px;
+  width: 84px;
+  height: 84px;
   border-radius: var(--s-radius-md);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.8rem;
   flex-shrink: 0;
+  padding: 16px;
+  box-sizing: border-box;
 }
+
+.summit-partner-logo-icon--wide {
+  width: auto;
+  min-width: 240px;
+  max-width: 100%;
+  height: 84px;
+  border-radius: var(--s-radius-lg);
+  padding: 16px 24px;
+  box-sizing: border-box;
+}
+
+.summit-partner-logo-img {
+  display: block;
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+}
+
 
 .summit-partner-name {
   font-family: var(--s-font-display);
@@ -1346,6 +1409,18 @@
   .summit-countdown-unit      { min-width: 60px; padding: var(--s-space-3); }
   .summit-countdown-value     { font-size: 1.8rem; }
   .summit-hero-meta           { gap: var(--s-space-4); }
+  .summit-hero-organizers {
+    flex-direction: column;
+    gap: var(--s-space-2);
+    text-transform: none;
+    padding: var(--s-space-3) var(--s-space-4);
+  }
+  .summit-hero-organizers-dot { display: none; }
+  .summit-hero-org-name       { font-size: 0.7rem; letter-spacing: 0.02em; }
+  .summit-hero-org-logo--scholarx { height: 26px; width: auto; }
+  .summit-hero-org-logo--eujc { height: 32px; width: auto; }
+  .summit-partner-logo-icon { width: 72px; height: 72px; padding: 12px; }
+  .summit-partner-logo-icon--wide { width: 180px; height: 72px; padding: 12px 16px; }
 }
 
 @media (max-width: 480px) {

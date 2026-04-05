@@ -61,12 +61,12 @@ const TracksSection = () => (
   >
     <div className="summit-container">
       <div className="summit-section-header">
-        <div className="summit-badge" aria-hidden="true">🎯 Strategic Tracks</div>
+        <div className="summit-badge" aria-hidden="true">✅ What You Will Gain</div>
         <h2 id="tracks-heading" className="summit-section-title">
-          Four Pillars of Excellence
+          4 Strategic Tracks Designed for Your Future
         </h2>
         <p className="summit-section-subtitle">
-          Every track is designed to create real, measurable impact — from classroom to boardroom, from local to global.
+          Explore practical sessions that move you from ambition to global readiness.
         </p>
       </div>
 

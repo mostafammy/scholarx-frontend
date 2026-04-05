@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 import { Controller } from 'react-hook-form';
-import { GRADUATION_YEAR_OPTIONS } from '../../constants/formConstants';
+import { ENGLISH_LEVEL_OPTIONS } from '../../constants/formConstants';
 
 /**
  * @param {{ form: import('react-hook-form').UseFormReturn }} props
@@ -19,13 +19,13 @@ const Step1PersonalInfo = ({ form }) => {
 
   return (
     <div role="group" aria-labelledby="step1-title">
-      <h3 id="step1-title" className="summit-form-step-title">Personal Information</h3>
-      <p className="summit-form-step-subtitle">Let's start with your basic details.</p>
+      <h3 id="step1-title" className="summit-form-step-title">Simple Registration Form</h3>
+      <p className="summit-form-step-subtitle">Fill in your details and secure your seat now.</p>
 
       {/* Full Name */}
       <div className="summit-form-group">
         <label htmlFor="fullName" className="summit-form-label summit-form-label-required">
-          Full Name
+          Full Name (Three Names)
         </label>
         <input
           id="fullName"
@@ -69,7 +69,7 @@ const Step1PersonalInfo = ({ form }) => {
       {/* Phone */}
       <div className="summit-form-group">
         <label htmlFor="phone" className="summit-form-label summit-form-label-required">
-          Phone Number
+          WhatsApp Phone Number
         </label>
         <div className="summit-phone-wrap">
           <Controller
@@ -100,50 +100,117 @@ const Step1PersonalInfo = ({ form }) => {
         )}
       </div>
 
-      {/* University + Graduation Year */}
-      <div className="summit-form-row">
-        <div className="summit-form-group" style={{ marginBottom: 0 }}>
-          <label htmlFor="university" className="summit-form-label summit-form-label-required">
-            University / Institution
-          </label>
-          <input
-            id="university"
-            type="text"
-            autoComplete="organization"
-            placeholder="e.g. Cairo University"
-            className={`summit-form-input${errors.university ? ' is-error' : ''}`}
-            aria-describedby={errors.university ? 'university-error' : undefined}
-            aria-required="true"
-            {...register('university')}
-          />
-          {errors.university && (
-            <p id="university-error" className="summit-form-error" role="alert">
-              ⚠ {errors.university.message}
-            </p>
-          )}
-        </div>
+      {/* University / Major */}
+      <div className="summit-form-group">
+        <label htmlFor="university" className="summit-form-label summit-form-label-required">
+          University / Major
+        </label>
+        <input
+          id="university"
+          type="text"
+          autoComplete="organization"
+          placeholder="e.g. Nile University - Computer Science"
+          className={`summit-form-input${errors.university ? ' is-error' : ''}`}
+          aria-describedby={errors.university ? 'university-error' : undefined}
+          aria-required="true"
+          {...register('university')}
+        />
+        {errors.university && (
+          <p id="university-error" className="summit-form-error" role="alert">
+            ⚠ {errors.university.message}
+          </p>
+        )}
+      </div>
 
-        <div className="summit-form-group" style={{ marginBottom: 0 }}>
-          <label htmlFor="graduationYear" className="summit-form-label summit-form-label-required">
-            Graduation Year
-          </label>
+      <div className="summit-form-group">
+        <label htmlFor="fieldOfStudy" className="summit-form-label summit-form-label-required">
+          Academic Major / Field
+        </label>
+        <input
+          id="fieldOfStudy"
+          type="text"
+          placeholder="e.g. Computer Science"
+          className={`summit-form-input${errors.fieldOfStudy ? ' is-error' : ''}`}
+          aria-describedby={errors.fieldOfStudy ? 'fieldOfStudy-error' : undefined}
+          aria-required="true"
+          {...register('fieldOfStudy')}
+        />
+        {errors.fieldOfStudy && (
+          <p id="fieldOfStudy-error" className="summit-form-error" role="alert">
+            ⚠ {errors.fieldOfStudy.message}
+          </p>
+        )}
+      </div>
+
+      <div className="summit-form-group">
+        <label htmlFor="primaryGoal" className="summit-form-label summit-form-label-required">
+          What is your primary goal for attending?
+        </label>
+        <select
+          id="primaryGoal"
+          className={`summit-form-select${errors.primaryGoal ? ' is-error' : ''}`}
+          aria-required="true"
+          aria-describedby={errors.primaryGoal ? 'primaryGoal-error' : undefined}
+          {...register('primaryGoal')}
+        >
+          <option value="">Select your goal...</option>
+          <option value="find-scholarship">Finding a scholarship</option>
+          <option value="develop-skills">Developing my skills</option>
+          <option value="build-network">Building my network</option>
+          <option value="other">Other</option>
+        </select>
+        {errors.primaryGoal && (
+          <p id="primaryGoal-error" className="summit-form-error" role="alert">
+            ⚠ {errors.primaryGoal.message}
+          </p>
+        )}
+      </div>
+
+      <div className="summit-form-group">
+        <label htmlFor="englishLevel" className="summit-form-label summit-form-label-required">
+          What is your English level?
+        </label>
+        <select
+          id="englishLevel"
+          className={`summit-form-select${errors.englishLevel ? ' is-error' : ''}`}
+          aria-required="true"
+          aria-describedby={errors.englishLevel ? 'englishLevel-error' : undefined}
+          {...register('englishLevel')}
+        >
+          {ENGLISH_LEVEL_OPTIONS.map(({ value, label }) => (
+            <option key={value || 'empty'} value={value}>{label}</option>
+          ))}
+        </select>
+        {errors.englishLevel && (
+          <p id="englishLevel-error" className="summit-form-error" role="alert">
+            ⚠ {errors.englishLevel.message}
+          </p>
+        )}
+      </div>
+
+      <div className="summit-form-group">
+        <label
+          className={`summit-checkbox-item${errors.acceptTerms ? ' is-error' : ''}`}
+          htmlFor="acceptTerms"
+          style={{ border: errors.acceptTerms ? '1px solid rgba(255,107,107,0.4)' : undefined }}
+        >
           <input
-            id="graduationYear"
-            type="number"
-            placeholder="e.g. 2025"
-            min="1990"
-            max="2035"
-            className={`summit-form-input${errors.graduationYear ? ' is-error' : ''}`}
-            aria-describedby={errors.graduationYear ? 'year-error' : undefined}
+            id="acceptTerms"
+            type="checkbox"
+            className="summit-checkbox-input"
             aria-required="true"
-            {...register('graduationYear')}
+            aria-describedby={errors.acceptTerms ? 'terms-error' : undefined}
+            {...register('acceptTerms')}
           />
-          {errors.graduationYear && (
-            <p id="year-error" className="summit-form-error" role="alert">
-              ⚠ {errors.graduationYear.message}
-            </p>
-          )}
-        </div>
+          <span className="summit-checkbox-label">
+            I agree to the Terms and Conditions and consent to data processing for registration.
+          </span>
+        </label>
+        {errors.acceptTerms && (
+          <p id="terms-error" className="summit-form-error" role="alert">
+            ⚠ {errors.acceptTerms.message}
+          </p>
+        )}
       </div>
     </div>
   );

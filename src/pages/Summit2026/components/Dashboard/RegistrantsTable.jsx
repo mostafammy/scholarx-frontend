@@ -5,7 +5,6 @@
 
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { downloadCSV } from '../../utils/csvExport';
 import Swal from 'sweetalert2';
 
 /**
@@ -42,6 +41,7 @@ const COLUMNS = [
  *   sortDirection: 'asc' | 'desc',
  *   toggleSort: (field: string) => void,
  *   clearAllData: () => void,
+ *   exportFilteredCsv: () => Promise<void>,
  * }} props
  */
 const RegistrantsTable = ({
@@ -51,10 +51,11 @@ const RegistrantsTable = ({
   sortDirection,
   toggleSort,
   clearAllData,
+  exportFilteredCsv,
 }) => {
   const handleExport = useCallback(() => {
-    downloadCSV(filtered, `summit2026-registrations-${Date.now()}.csv`);
-  }, [filtered]);
+    exportFilteredCsv();
+  }, [exportFilteredCsv]);
 
   const handleClearAll = useCallback(async () => {
     const result = await Swal.fire({
@@ -157,7 +158,7 @@ const RegistrantsTable = ({
             </thead>
             <tbody>
               {filtered.map((reg, idx) => (
-                <tr key={reg.id}>
+                <tr key={reg._id || reg.id}>
                   <td className="summit-db-cell-date">{idx + 1}</td>
                   <td>
                     <div className="summit-db-cell-name">{reg.fullName}</div>
@@ -202,6 +203,7 @@ RegistrantsTable.propTypes = {
   sortDirection: PropTypes.string.isRequired,
   toggleSort: PropTypes.func.isRequired,
   clearAllData: PropTypes.func.isRequired,
+  exportFilteredCsv: PropTypes.func.isRequired,
 };
 
 export default React.memo(RegistrantsTable);

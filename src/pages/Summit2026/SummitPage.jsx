@@ -8,7 +8,6 @@ import React, { useRef, useCallback } from 'react';
 import { Helmet } from 'react-helmet-async';
 import HeroSection         from './components/HeroSection/HeroSection';
 import JourneySection      from './components/JourneySection/JourneySection';
-import RoundtableSection   from './components/RoundtableSection/RoundtableSection';
 import StatsBar            from './components/StatsBar/StatsBar';
 import TracksSection       from './components/TracksSection/TracksSection';
 import PartnersSection     from './components/PartnersSection/PartnersSection';
@@ -56,25 +55,22 @@ const SummitPage = () => {
       </Helmet>
 
       <main className="summit-page" id="summit-main">
-        {/* 1. Hero — full-screen cinematic */}
+        {/* 1. Hero */}
         <HeroSection onRegisterClick={scrollToRegistration} />
 
-        {/* 2. Journey — 10 governorates */}
+        {/* 2. Hook */}
         <JourneySection />
 
-        {/* 3. Roundtable — pre-summit exclusive */}
-        <RoundtableSection />
-
-        {/* 4. Stats — animated counters */}
+        {/* 3. Stats */}
         <StatsBar />
 
-        {/* 5. Tracks — strategic pillars */}
+        {/* 4. Value proposition */}
         <TracksSection />
 
-        {/* 6. Partners — ScholarX × EU Jeel Connect */}
+        {/* 5. Partners */}
         <PartnersSection />
 
-        {/* 7. Registration — 3-step form (ref for scroll-to) */}
+        {/* 6. Registration */}
         <div ref={registrationRef}>
           <RegistrationForm />
         </div>

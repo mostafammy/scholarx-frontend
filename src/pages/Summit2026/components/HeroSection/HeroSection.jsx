@@ -116,9 +116,30 @@ const HeroSection = ({ onRegisterClick }) => {
       <div className="summit-hero-content">
         {/* Organizer pill */}
         <div className="summit-hero-organizers" aria-label="Organized by">
-          <span>ScholarX</span>
+          <div className="summit-hero-org-item">
+            <div className="summit-hero-org-logo-wrapper">
+              <img
+                src="/ScholarX-Logo-Icon-White-Blue-BG_ScholarX.svg"
+                alt="ScholarX logo"
+                className="summit-hero-org-logo summit-hero-org-logo--scholarx"
+                loading="eager"
+                decoding="async"
+              />
+            </div>
+            <span className="summit-hero-org-name">ScholarX</span>
+          </div>
           <span className="summit-hero-organizers-dot" />
-          <span>EU Jeel Connect</span>
+          <div className="summit-hero-org-item">
+            <div className="summit-hero-org-logo-wrapper">
+              <img
+                src="/_Colored, Transparent bkgd- EUJC EUMB logos.png"
+                alt="EU Jeel Connect and EU MedBridge logos"
+                className="summit-hero-org-logo summit-hero-org-logo--eujc"
+                loading="eager"
+                decoding="async"
+              />
+            </div>
+          </div>
         </div>
 
         {/* Main title */}
@@ -128,29 +149,25 @@ const HeroSection = ({ onRegisterClick }) => {
 
         {/* Tagline */}
         <p className="summit-hero-tagline" aria-label="Summit theme">
-          {EVENT_META.tagline}
+          Your compass to global opportunities: scholarships, future-ready skills, and limitless possibilities.
         </p>
 
         {/* Event meta */}
         <div className="summit-hero-meta" role="list" aria-label="Event details">
           <div className="summit-hero-meta-item" role="listitem">
             <span className="summit-hero-meta-icon" aria-hidden="true">📅</span>
-            <span>May 1st, 2026</span>
+            <span>May 1, 2026</span>
           </div>
           <div className="summit-hero-meta-item" role="listitem">
             <span className="summit-hero-meta-icon" aria-hidden="true">📍</span>
-            <span>{EVENT_META.venue}</span>
-          </div>
-          <div className="summit-hero-meta-item" role="listitem">
-            <span className="summit-hero-meta-icon" aria-hidden="true">🎓</span>
-            <span>1200+ Attendees</span>
+            <span>Nile University, Giza</span>
           </div>
         </div>
 
         {/* Countdown */}
         {!isExpired && (
           <div className="summit-countdown" role="timer" aria-live="polite" aria-label="Countdown to summit">
-            <p className="summit-countdown-label">Summit begins in</p>
+            <p className="summit-countdown-label">Time left until the most important event in your growth journey.</p>
             <CountdownUnit value={days}    label="Days"    />
             <CountdownUnit value={hours}   label="Hours"   />
             <CountdownUnit value={minutes} label="Minutes" />
@@ -167,7 +184,7 @@ const HeroSection = ({ onRegisterClick }) => {
             onClick={handleRegister}
             aria-label="Register for the summit"
           >
-            Register Now
+            Register for Free Now
             <span aria-hidden="true">→</span>
           </a>
           <a

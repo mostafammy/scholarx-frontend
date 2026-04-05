@@ -25,7 +25,11 @@ const SummitDashboard = () => {
     sortDirection,
     toggleSort,
     clearAllData,
+    exportFilteredCsv,
     refresh,
+    isLoading,
+    errorMessage,
+    lastUpdatedAt,
   } = useSummitDashboard();
 
   return (
@@ -54,8 +58,9 @@ const SummitDashboard = () => {
               className="summit-db-refresh-btn"
               onClick={refresh}
               aria-label="Refresh data"
+              disabled={isLoading}
             >
-              ↻ Refresh
+              {isLoading ? '↻ Refreshing...' : '↻ Refresh'}
             </button>
             <Link
               to="/summit-2026"
@@ -70,6 +75,21 @@ const SummitDashboard = () => {
 
         {/* Body */}
         <main className="summit-db-body" id="dashboard-main">
+          <div className="summit-db-live-meta" role="status" aria-live="polite">
+            <span className="summit-db-live-dot" aria-hidden="true" />
+            <span>
+              {lastUpdatedAt
+                ? `Live data - Last update: ${lastUpdatedAt.toLocaleTimeString()}`
+                : 'Live data - Waiting for first successful fetch'}
+            </span>
+          </div>
+
+          {errorMessage && (
+            <div className="summit-db-error" role="alert">
+              {errorMessage}
+            </div>
+          )}
+
           <StatsCards stats={stats} />
           <FilterBar
             filters={filters}
@@ -83,6 +103,7 @@ const SummitDashboard = () => {
             sortDirection={sortDirection}
             toggleSort={toggleSort}
             clearAllData={clearAllData}
+            exportFilteredCsv={exportFilteredCsv}
           />
         </main>
       </div>

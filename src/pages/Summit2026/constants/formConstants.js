@@ -7,16 +7,14 @@ import { SUMMIT_TRACKS } from './eventData';
 import { EGYPTIAN_GOVERNORATES } from './governorates';
 
 /** Total number of registration form steps */
-export const FORM_TOTAL_STEPS = 3;
+export const FORM_TOTAL_STEPS = 1;
 
 /**
  * Describes each form step for the StepIndicator component.
  * @type {readonly { step: number, title: string, description: string }[]}
  */
 export const FORM_STEPS_META = Object.freeze([
-  { step: 1, title: 'Personal Info', description: 'Tell us about yourself' },
-  { step: 2, title: 'Profile', description: 'Your academic & professional background' },
-  { step: 3, title: 'Interests', description: 'What brings you to the summit?' },
+  { step: 1, title: 'Registration Form', description: 'Complete your details to secure your seat' },
 ]);
 
 /**
@@ -44,6 +42,19 @@ export const GRADUATION_YEAR_OPTIONS = Object.freeze([
     const year = 2020 + i;
     return { value: String(year), label: String(year) };
   }),
+]);
+
+/**
+ * English proficiency levels.
+ * @type {readonly { value: string, label: string }[]}
+ */
+export const ENGLISH_LEVEL_OPTIONS = Object.freeze([
+  { value: '', label: 'Select your English level...' },
+  { value: 'beginner', label: 'Beginner' },
+  { value: 'intermediate', label: 'Intermediate' },
+  { value: 'upper-intermediate', label: 'Upper-Intermediate' },
+  { value: 'advanced', label: 'Advanced' },
+  { value: 'fluent', label: 'Fluent' },
 ]);
 
 /**

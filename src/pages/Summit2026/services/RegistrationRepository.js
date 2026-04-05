@@ -1,16 +1,28 @@
 /**
- * @fileoverview Registration Repository — Repository Pattern implementation.
+ * @fileoverview Registration Repository — API-backed Repository Pattern implementation.
  *
- * Applies:
- * - Repository Pattern (D in SOLID): Abstracts data persistence behind an interface.
- * - Single Responsibility: This class ONLY handles data access for registrations.
- * - Dependency Inversion: Consumers depend on the abstract interface, not localStorage directly.
- * - Open/Closed: Swap to IndexedDB or REST API by replacing this class — consumers unchanged.
+ * Responsibilities:
+ * - Encapsulate Summit registration API calls
+ * - Normalize API response shapes for UI hooks
+ * - Keep UI decoupled from transport details
  *
  * @module RegistrationRepository
  */
 
-const STORAGE_KEY = 'summit2026_registrations';
+import axios from 'axios';
+import Cookies from 'js-cookie';
+import store from '../../../store';
+
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+const AUTH_TOKEN_KEY = 'sx_auth';
+const DEFAULT_EVENT_CODE = 'summit-2026';
+
+const api = axios.create({
+  baseURL: API_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
 
 /**
  * @typedef {Object} Registration
@@ -30,16 +42,24 @@ const STORAGE_KEY = 'summit2026_registrations';
  * @property {string} specialAccommodations
  */
 
-/**
- * Generates a UUID v4 string without external dependencies.
- * @returns {string}
- */
-const generateId = () => {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
-    const r = (Math.random() * 16) | 0;
-    const v = c === 'x' ? r : (r & 0x3) | 0x8;
-    return v.toString(16);
-  });
+const getAuthHeader = () => {
+  const stateToken = store?.getState?.()?.auth?.token;
+  const token =
+    Cookies.get(AUTH_TOKEN_KEY) ||
+    window.localStorage.getItem('token') ||
+    window.localStorage.getItem(AUTH_TOKEN_KEY) ||
+    stateToken;
+
+  if (!token) {
+    throw new Error('Admin authentication is required. Please login again.');
+  }
+  return { Authorization: `Bearer ${token}` };
+};
+
+const toErrorMessage = (error, fallback) => {
+  if (error?.response?.data?.message) return error.response.data.message;
+  if (error?.message) return error.message;
+  return fallback;
 };
 
 /**
@@ -47,120 +67,121 @@ const generateId = () => {
  * @description Contract that all repository implementations must satisfy.
  */
 
-/**
- * LocalStorage-backed implementation of IRegistrationRepository.
- * To swap to an API, create `ApiRegistrationRepository` with the same public methods.
- */
-class LocalStorageRegistrationRepository {
-  /** @param {string} storageKey */
-  constructor(storageKey) {
-    this._key = storageKey;
+class ApiRegistrationRepository {
+  constructor(eventCode = DEFAULT_EVENT_CODE) {
+    this._eventCode = eventCode;
   }
 
-  /**
-   * Retrieves all registrations, sorted by most recent first.
-   * @returns {Registration[]}
-   */
-  findAll() {
-    try {
-      const raw = localStorage.getItem(this._key);
-      const items = raw ? JSON.parse(raw) : [];
-      return [...items].sort(
-        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-      );
-    } catch {
-      console.error('[RegistrationRepository] Failed to parse stored data.');
-      return [];
-    }
-  }
+  async findAll(params = {}) {
+    const now = Date.now();
+    const response = await api.get('/admin/summit/registrations', {
+      params: {
+        _ts: now,
+        eventCode: this._eventCode,
+        page: 1,
+        limit: 100,
+        sortField: 'createdAt',
+        sortDirection: 'desc',
+        ...params,
+      },
+      headers: getAuthHeader(),
+    });
 
-  /**
-   * Finds a registration by its unique ID.
-   * @param {string} id
-   * @returns {Registration | undefined}
-   */
-  findById(id) {
-    return this.findAll().find((r) => r.id === id);
-  }
-
-  /**
-   * Checks if an email address is already registered.
-   * @param {string} email
-   * @returns {boolean}
-   */
-  emailExists(email) {
-    return this.findAll().some(
-      (r) => r.email.toLowerCase() === email.toLowerCase()
-    );
-  }
-
-  /**
-   * Persists a new registration. Throws if email is already registered.
-   * @param {Omit<Registration, 'id' | 'createdAt'>} data
-   * @returns {Registration} The persisted registration with generated id and timestamp.
-   * @throws {Error} If the email is already registered.
-   */
-  save(data) {
-    if (this.emailExists(data.email)) {
-      throw new Error(`Email "${data.email}" is already registered.`);
-    }
-
-    const registration = {
-      ...data,
-      id: generateId(),
-      createdAt: new Date().toISOString(),
+    return {
+      items: response.data?.data?.registrations || [],
+      pagination: response.data?.data?.pagination || null,
     };
-
-    const existing = this.findAll();
-    localStorage.setItem(
-      this._key,
-      JSON.stringify([...existing, registration])
-    );
-    return registration;
   }
 
-  /**
-   * Deletes all registrations after confirmation.
-   * @returns {void}
-   */
-  deleteAll() {
-    localStorage.removeItem(this._key);
+  async findById(id) {
+    const response = await api.get(`/admin/summit/registrations/${id}`, {
+      headers: getAuthHeader(),
+    });
+    return response.data?.data?.registration || null;
   }
 
-  /**
-   * Returns aggregate statistics for the dashboard.
-   * @returns {{ total: number, todayCount: number, byGovernorate: Record<string, number>, byTrack: Record<string, number> }}
-   */
-  getStats() {
-    const all = this.findAll();
-    const today = new Date().toDateString();
+  async emailExists(email) {
+    const response = await api.get('/summit/registrations/check', {
+      params: { email, eventCode: this._eventCode },
+    });
+    return Boolean(response.data?.data?.isRegistered);
+  }
 
-    const todayCount = all.filter(
-      (r) => new Date(r.createdAt).toDateString() === today
-    ).length;
-
-    const byGovernorate = all.reduce((acc, r) => {
-      const key = r.governorate || 'Unknown';
-      acc[key] = (acc[key] || 0) + 1;
-      return acc;
-    }, {});
-
-    const byTrack = all.reduce((acc, r) => {
-      (r.tracks || []).forEach((track) => {
-        acc[track] = (acc[track] || 0) + 1;
+  async save(data) {
+    try {
+      const response = await api.post('/summit/registrations', {
+        ...data,
+        eventCode: this._eventCode,
       });
-      return acc;
-    }, {});
+      return response.data?.data?.registration;
+    } catch (error) {
+      throw new Error(toErrorMessage(error, 'Failed to submit summit registration'));
+    }
+  }
 
-    return { total: all.length, todayCount, byGovernorate, byTrack };
+  async deleteAll() {
+    while (true) {
+      const { items } = await this.findAll({ page: 1, limit: 100 });
+      if (!items.length) {
+        break;
+      }
+
+      for (const row of items) {
+        await this.deleteById(row._id || row.id);
+      }
+    }
+  }
+
+  async getStats() {
+    const now = Date.now();
+    const response = await api.get('/admin/summit/dashboard/stats', {
+      params: { _ts: now, eventCode: this._eventCode },
+      headers: getAuthHeader(),
+    });
+    return (
+      response.data?.data?.stats || {
+        total: 0,
+        todayCount: 0,
+        byGovernorate: {},
+        byTrack: {},
+      }
+    );
+  }
+
+  async updateStatus(id, status) {
+    const response = await api.patch(
+      `/admin/summit/registrations/${id}/status`,
+      { status },
+      { headers: getAuthHeader() },
+    );
+    return response.data?.data?.registration;
+  }
+
+  async deleteById(id) {
+    await api.delete(`/admin/summit/registrations/${id}`, {
+      headers: getAuthHeader(),
+    });
+  }
+
+  async exportCsv(params = {}) {
+    const response = await api.get('/admin/summit/registrations/export.csv', {
+      params: {
+        eventCode: this._eventCode,
+        ...params,
+      },
+      headers: {
+        ...getAuthHeader(),
+        Accept: 'text/csv',
+      },
+      responseType: 'blob',
+    });
+    return response.data;
   }
 }
 
 /**
  * Singleton instance. Import this — do NOT instantiate directly in components.
  * Follows Dependency Inversion: components consume this interface, not the class.
- * @type {LocalStorageRegistrationRepository}
+ * @type {ApiRegistrationRepository}
  */
-export const registrationRepository = new LocalStorageRegistrationRepository(
-  STORAGE_KEY
-);
+export const registrationRepository = new ApiRegistrationRepository();

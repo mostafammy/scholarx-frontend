@@ -29,49 +29,30 @@ export const step1Schema = Yup.object({
     .max(150, 'Institution name must be less than 150 characters')
     .required('University / Institution is required'),
 
-  graduationYear: Yup.string()
-    .required('Please select your graduation year'),
-});
-
-/** @type {import('yup').ObjectSchema} */
-export const step2Schema = Yup.object({
-  status: Yup.string()
-    .required('Please select your current status'),
-
   fieldOfStudy: Yup.string()
     .trim()
-    .min(2, 'Field of study must be at least 2 characters')
-    .max(100, 'Field of study must be less than 100 characters')
-    .required('Field of study / industry is required'),
+    .min(2, 'Academic major must be at least 2 characters')
+    .max(100, 'Academic major must be less than 100 characters')
+    .required('Academic major / field is required'),
 
-  governorate: Yup.string()
-    .required('Please select your governorate'),
+  primaryGoal: Yup.string()
+    .oneOf(['find-scholarship', 'develop-skills', 'build-network', 'other'])
+    .required('Please select your primary goal'),
 
-  referralSources: Yup.array()
-    .of(Yup.string())
-    .min(1, 'Please select at least one source')
-    .required('Please tell us how you heard about the summit'),
-});
-
-/** @type {import('yup').ObjectSchema} */
-export const step3Schema = Yup.object({
-  tracks: Yup.array()
-    .of(Yup.string())
-    .min(1, 'Please select at least one track of interest')
-    .required('Please select at least one track of interest'),
-
-  workshops: Yup.array()
-    .of(Yup.string())
-    .min(1, 'Please select at least one workshop')
-    .max(5, 'You may select up to 5 workshops'),
-
-  specialAccommodations: Yup.string()
-    .max(500, 'Please keep accommodations note under 500 characters'),
+  englishLevel: Yup.string()
+    .oneOf(['beginner', 'intermediate', 'upper-intermediate', 'advanced', 'fluent'])
+    .required('Please select your English level'),
 
   acceptTerms: Yup.boolean()
     .oneOf([true], 'You must accept the terms and conditions to register')
     .required('You must accept the terms and conditions to register'),
 });
+
+/** @type {import('yup').ObjectSchema} */
+export const step2Schema = step1Schema;
+
+/** @type {import('yup').ObjectSchema} */
+export const step3Schema = step1Schema;
 
 /**
  * Returns the validation schema for the given step number.

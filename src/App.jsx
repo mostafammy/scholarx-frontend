@@ -79,22 +79,6 @@ const SalesRoute = ({ children }) => {
 const AdminRoute = ({ children }) => {
   const { isAuthenticated, isAdmin } = useSelector((state) => state.auth);
 
-  // #region agent log
-  fetch("http://127.0.0.1:7242/ingest/4b8c686f-b237-4ff5-a74e-1c2aac42233b", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      sessionId: "debug-session",
-      runId: "run1",
-      hypothesisId: "H4",
-      location: "App.jsx:AdminRoute",
-      message: "AdminRoute check",
-      data: { isAuthenticated, isAdmin },
-      timestamp: Date.now(),
-    }),
-  }).catch(() => {});
-  // #endregion
-
   if (!isAuthenticated) {
     return <Navigate to="/login" />;
   }

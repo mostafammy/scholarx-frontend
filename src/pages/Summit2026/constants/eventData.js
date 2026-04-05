@@ -15,7 +15,7 @@
  */
 export const EVENT_META = Object.freeze({
   name: 'Next Scholar Summit 2026',
-  tagline: 'From Local Impact to Global Policy',
+  tagline: 'From local ambition to global impact.',
   /** ISO 8601 date string — used by useCountdown hook */
   date: '2026-05-01T09:00:00+02:00',
   venue: 'Nile University, Giza, Egypt',
@@ -69,7 +69,7 @@ export const SUMMIT_TRACKS = Object.freeze([
     icon: '🌍',
     title: 'Global Education & Scholarships',
     description:
-      'Bridging the gap to fully-funded international programs. Unlock pathways to world-class universities and research opportunities.',
+      'Learn the real admission strategy for international programs and fully funded scholarships from experts who already walked this path.',
     color: '#f5c518',
     gradient: 'linear-gradient(135deg, rgba(245,197,24,0.15), rgba(255,165,0,0.05))',
     borderColor: 'rgba(245,197,24,0.4)',
@@ -79,7 +79,7 @@ export const SUMMIT_TRACKS = Object.freeze([
     icon: '⚡',
     title: 'Skills Development',
     description:
-      'Mastering Digital Personal Branding, AI, and Cybersecurity. Equip yourself with the tools that define the future of work.',
+      'Join practical workshops on personal branding, AI tools, and cybersecurity to build skills the global market demands.',
     color: '#4fc3f7',
     gradient: 'linear-gradient(135deg, rgba(79,195,247,0.15), rgba(0,87,248,0.05))',
     borderColor: 'rgba(79,195,247,0.4)',
@@ -89,7 +89,7 @@ export const SUMMIT_TRACKS = Object.freeze([
     icon: '🚀',
     title: 'Career Excellence',
     description:
-      'Direct connections with corporate leaders and market experts. Navigate your professional trajectory with confidence.',
+      'Connect directly with industry leaders and market experts through high-value networking to understand what employers want today.',
     color: '#ff8a65',
     gradient: 'linear-gradient(135deg, rgba(255,138,101,0.15), rgba(255,87,34,0.05))',
     borderColor: 'rgba(255,138,101,0.4)',
@@ -99,7 +99,7 @@ export const SUMMIT_TRACKS = Object.freeze([
     icon: '🌱',
     title: 'Innovation & Impact',
     description:
-      'Focusing on Green Entrepreneurship and sustainable youth-led projects. Build ventures that matter for people and planet.',
+      'Explore green entrepreneurship and learn how to turn ideas into sustainable, youth-led projects with real-world impact.',
     color: '#69f0ae',
     gradient: 'linear-gradient(135deg, rgba(105,240,174,0.15), rgba(0,200,150,0.05))',
     borderColor: 'rgba(105,240,174,0.4)',
@@ -114,18 +114,18 @@ export const SUMMIT_PARTNERS = Object.freeze([
   {
     id: 'scholarx',
     name: 'ScholarX',
-    tagline: "Egypt's Gateway to Global Education",
+    tagline: "Egypt's leading platform for youth empowerment",
     description:
-      "Egypt's leading platform for educational opportunities and youth empowerment. ScholarX connects ambitious students with fully-funded scholarships, international programs, and career-accelerating resources.",
+      "ScholarX empowers youth with educational opportunities, skill development, and practical pathways to global growth.",
     accentColor: '#f5c518',
     website: 'https://scholarx.net',
   },
   {
     id: 'eu-jeel-connect',
     name: 'EU Jeel Connect',
-    tagline: 'Bridging Europe & the Southern Neighborhood',
+    tagline: 'Connecting youth in the Southern Neighbourhood to global opportunities',
     description:
-      'An initiative by EU Med-Bridge (formerly EU NEIGHBOURS south), aimed at fostering communication between the European Union and young people across the Southern Neighborhood. This partnership ensures a high-level exchange of expertise and direct access to international networks.',
+      'A European Union initiative that links young people in the Southern Neighbourhood with global opportunities, collaboration, and knowledge exchange.',
     accentColor: '#003da5',
     website: '#',
   },

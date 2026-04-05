@@ -6,7 +6,7 @@
  * @module useSummitDashboard
  */
 
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { registrationRepository } from '../services/RegistrationRepository';
 
 /**
@@ -31,21 +31,7 @@ const DEFAULT_FILTERS = {
   dateTo: '',
 };
 
-/**
- * Applies text search across name, email, and university fields.
- * @param {import('../services/RegistrationRepository').Registration} reg
- * @param {string} search
- * @returns {boolean}
- */
-const matchesSearch = (reg, search) => {
-  if (!search.trim()) return true;
-  const q = search.toLowerCase();
-  return (
-    reg.fullName?.toLowerCase().includes(q) ||
-    reg.email?.toLowerCase().includes(q) ||
-    reg.university?.toLowerCase().includes(q)
-  );
-};
+const DASHBOARD_PAGE_LIMIT = 100;
 
 /**
  * Custom hook for the summit admin dashboard.
@@ -65,19 +51,95 @@ const matchesSearch = (reg, search) => {
  */
 export const useSummitDashboard = () => {
   const [registrations, setRegistrations] = useState([]);
+  const [stats, setStats] = useState({
+    total: 0,
+    todayCount: 0,
+    byGovernorate: {},
+    byTrack: {},
+  });
   const [filters, setFilters] = useState(DEFAULT_FILTERS);
   const [sortField, setSortField] = useState('createdAt');
   const [sortDirection, setSortDirection] = useState('desc');
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [lastUpdatedAt, setLastUpdatedAt] = useState(null);
+  const isRefreshingRef = useRef(false);
 
-  const refresh = useCallback(() => {
-    setRegistrations(registrationRepository.findAll());
+  const toDashboardError = useCallback((error) => {
+    const status = error?.response?.status;
+    if (status === 401 || status === 403) {
+      return 'Session expired or unauthorized. Please login again as admin.';
+    }
+
+    return (
+      error?.response?.data?.message ||
+      error?.message ||
+      'Failed to fetch dashboard data.'
+    );
   }, []);
+
+  const refresh = useCallback(async () => {
+    if (isRefreshingRef.current) {
+      return;
+    }
+
+    isRefreshingRef.current = true;
+    setIsLoading(true);
+    try {
+      const [listResult, statsResult] = await Promise.all([
+        registrationRepository.findAll({
+          page: 1,
+          limit: DASHBOARD_PAGE_LIMIT,
+          search: filters.search || undefined,
+          governorate: filters.governorate || undefined,
+          track: filters.track || undefined,
+          dateFrom: filters.dateFrom || undefined,
+          dateTo: filters.dateTo || undefined,
+          sortField,
+          sortDirection,
+        }),
+        registrationRepository.getStats(),
+      ]);
+
+      setRegistrations(listResult.items || []);
+      setStats(statsResult);
+      setErrorMessage('');
+      setLastUpdatedAt(new Date());
+    } catch (error) {
+      console.error('Failed to fetch summit dashboard data:', error);
+      setErrorMessage(toDashboardError(error));
+    } finally {
+      setIsLoading(false);
+      isRefreshingRef.current = false;
+    }
+  }, [filters, sortField, sortDirection, toDashboardError]);
 
   useEffect(() => {
     refresh();
   }, [refresh]);
 
-  const stats = useMemo(() => registrationRepository.getStats(), [registrations]);
+  useEffect(() => {
+    const intervalId = window.setInterval(() => {
+      refresh();
+    }, 5000);
+
+    return () => {
+      window.clearInterval(intervalId);
+    };
+  }, [refresh]);
+
+  useEffect(() => {
+    const onVisibilityChange = () => {
+      if (document.visibilityState === 'visible') {
+        refresh();
+      }
+    };
+
+    document.addEventListener('visibilitychange', onVisibilityChange);
+    return () => {
+      document.removeEventListener('visibilitychange', onVisibilityChange);
+    };
+  }, [refresh]);
 
   const setFilter = useCallback((key, value) => {
     setFilters((prev) => ({ ...prev, [key]: value }));
@@ -94,30 +156,36 @@ export const useSummitDashboard = () => {
     setSortField(field);
   }, [sortField]);
 
-  const filtered = useMemo(() => {
-    let result = registrations.filter((reg) => {
-      if (!matchesSearch(reg, filters.search)) return false;
-      if (filters.governorate && reg.governorate !== filters.governorate) return false;
-      if (filters.track && !reg.tracks?.includes(filters.track)) return false;
-      if (filters.dateFrom && new Date(reg.createdAt) < new Date(filters.dateFrom)) return false;
-      if (filters.dateTo && new Date(reg.createdAt) > new Date(filters.dateTo + 'T23:59:59Z')) return false;
-      return true;
+  const filtered = useMemo(() => registrations, [registrations]);
+
+  const clearAllData = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      await registrationRepository.deleteAll();
+      await refresh();
+    } finally {
+      setIsLoading(false);
+    }
+  }, [refresh]);
+
+  const exportFilteredCsv = useCallback(async () => {
+    const blob = await registrationRepository.exportCsv({
+      search: filters.search || undefined,
+      governorate: filters.governorate || undefined,
+      track: filters.track || undefined,
+      dateFrom: filters.dateFrom || undefined,
+      dateTo: filters.dateTo || undefined,
     });
 
-    result = [...result].sort((a, b) => {
-      const valA = a[sortField] ?? '';
-      const valB = b[sortField] ?? '';
-      const cmp = valA < valB ? -1 : valA > valB ? 1 : 0;
-      return sortDirection === 'asc' ? cmp : -cmp;
-    });
-
-    return result;
-  }, [registrations, filters, sortField, sortDirection]);
-
-  const clearAllData = useCallback(() => {
-    registrationRepository.deleteAll();
-    setRegistrations([]);
-  }, []);
+    const url = window.URL.createObjectURL(blob);
+    const anchor = document.createElement('a');
+    anchor.href = url;
+    anchor.download = `summit-registrations-${Date.now()}.csv`;
+    document.body.appendChild(anchor);
+    anchor.click();
+    anchor.remove();
+    window.URL.revokeObjectURL(url);
+  }, [filters]);
 
   return {
     registrations,
@@ -130,6 +198,10 @@ export const useSummitDashboard = () => {
     sortDirection,
     toggleSort,
     clearAllData,
+    exportFilteredCsv,
     refresh,
+    isLoading,
+    errorMessage,
+    lastUpdatedAt,
   };
 };

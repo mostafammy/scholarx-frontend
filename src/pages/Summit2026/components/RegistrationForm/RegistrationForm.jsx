@@ -10,15 +10,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useRegistration } from '../../hooks/useRegistration';
 import StepIndicator from './StepIndicator';
 import Step1PersonalInfo from './Step1PersonalInfo';
-import Step2ProfessionalProfile from './Step2ProfessionalProfile';
-import Step3Interests from './Step3Interests';
 import { FORM_TOTAL_STEPS } from '../../constants/formConstants';
 
 /** Step component registry — OCP: add steps without modifying this orchestrator */
 const STEP_COMPONENTS = {
   1: Step1PersonalInfo,
-  2: Step2ProfessionalProfile,
-  3: Step3Interests,
 };
 
 const stepVariants = {
@@ -88,11 +84,11 @@ const RegistrationForm = () => {
         <div className="summit-section-header">
           <div className="summit-badge" aria-hidden="true">📝 Free Registration</div>
           <h2 id="registration-heading" className="summit-section-title">
-            Secure Your Seat
+            Confirm Your Registration and Join the Summit
           </h2>
           <p className="summit-section-subtitle">
-            Join 1,200+ students at the most important youth summit in Egypt.
-            Registration is free — seats are limited.
+            Seats are very limited and reserved for the most committed participants.
+            Do not miss your chance to be where opportunities are created.
           </p>
         </div>
 
@@ -149,7 +145,7 @@ const RegistrationForm = () => {
                       Submitting...
                     </>
                   ) : isLastStep ? (
-                    <>Register Now 🚀</>
+                    <>Confirm Registration and Join the Summit</>
                   ) : (
                     <>Continue →</>
                   )}

@@ -16,8 +16,19 @@ const cardVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
 };
 
-/** Partner logo icons — maps partner ID to visual */
-const PARTNER_ICONS = { scholarx: '🎓', 'eu-jeel-connect': '🇪🇺' };
+/** Partner logos mapped by ID */
+const PARTNER_LOGOS = {
+  scholarx: {
+    src: '/ScholarX-Logo-Icon-White-Blue-BG_ScholarX.svg',
+    alt: 'ScholarX logo',
+    className: 'summit-partner-logo-img summit-partner-logo-img--scholarx',
+  },
+  'eu-jeel-connect': {
+    src: '/_Colored, Transparent bkgd- EUJC EUMB logos.png',
+    alt: 'EU Jeel Connect and EU MedBridge logos',
+    className: 'summit-partner-logo-img summit-partner-logo-img--eujc',
+  },
+};
 
 const PartnersSection = () => (
   <section
@@ -27,12 +38,12 @@ const PartnersSection = () => (
   >
     <div className="summit-container">
       <div className="summit-section-header">
-        <div className="summit-badge" aria-hidden="true">🤝 Strategic Partnership</div>
+        <div className="summit-badge" aria-hidden="true">🤝 Partners of Success</div>
         <h2 id="partners-heading" className="summit-section-title">
-          Powered By Two Forces
+          Built Through a Strategic Partnership
         </h2>
         <p className="summit-section-subtitle">
-          A collaboration that bridges national ambition and international excellence.
+          Organized by ScholarX and EU Jeel Connect, with support from the European Union and EU MedBridge.
         </p>
       </div>
 
@@ -52,11 +63,19 @@ const PartnersSection = () => (
           >
             <div className="summit-partner-logo-area">
               <div
-                className="summit-partner-logo-icon"
+                className={`summit-partner-logo-icon ${
+                  partner.id === 'eu-jeel-connect' ? 'summit-partner-logo-icon--wide' : ''
+                }`}
                 style={{ background: `${partner.accentColor}18`, border: `1px solid ${partner.accentColor}30` }}
                 aria-hidden="true"
               >
-                {PARTNER_ICONS[partner.id]}
+                <img
+                  src={PARTNER_LOGOS[partner.id]?.src}
+                  alt={PARTNER_LOGOS[partner.id]?.alt || `${partner.name} logo`}
+                  className={PARTNER_LOGOS[partner.id]?.className || 'summit-partner-logo-img'}
+                  loading="lazy"
+                  decoding="async"
+                />
               </div>
               <div>
                 <h3 className="summit-partner-name">{partner.name}</h3>
@@ -84,10 +103,9 @@ const PartnersSection = () => (
         transition={{ duration: 0.6, delay: 0.2 }}
       >
         <p style={{ color: 'var(--s-text-300)', fontSize: '1rem', lineHeight: 1.8, maxWidth: 640, margin: '0 auto' }}>
-          This partnership ensures a{' '}
-          <strong style={{ color: 'var(--s-gold-400)' }}>high-level exchange of expertise</strong> and{' '}
-          <strong style={{ color: 'var(--s-blue-400)' }}>direct access to international networks</strong>{' '}
-          — connecting Egyptian youth to the European Union and beyond.
+          The summit is supported by the <strong style={{ color: 'var(--s-blue-400)' }}>European Union</strong>
+          {' '}and <strong style={{ color: 'var(--s-gold-400)' }}>EU MedBridge</strong>, creating a direct bridge between
+          {' '}Egyptian youth and global opportunities.
         </p>
       </motion.div>
     </div>
