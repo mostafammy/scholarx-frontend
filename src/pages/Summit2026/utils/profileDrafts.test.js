@@ -72,12 +72,6 @@ describe("Summit profile draft helpers", () => {
       major: "Computer Science",
       undergraduateYear: "year-3",
     });
-    expect(result.branchDrafts.undergraduate).toEqual({
-      universityName: "Nile University",
-      major: "Computer Science",
-      undergraduateYear: "year-3",
-    });
-    expect(result.branchDrafts.highSchool).toEqual({});
     expect(result.fullName).toBe("Summit Student");
     expect(result.email).toBe("student@example.com");
     expect(result.highSchoolName).toBeUndefined();

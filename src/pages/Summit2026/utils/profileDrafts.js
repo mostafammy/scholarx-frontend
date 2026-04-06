@@ -105,7 +105,6 @@ export const hydrateBranchDraft = (branchDrafts, profileType) => {
 export const pruneActiveBranchPayload = ({
   profileType,
   values = {},
-  branchDrafts,
   baseFields = [],
 }) => {
   const profileDetails = buildProfileDetails(profileType, values);
@@ -120,9 +119,5 @@ export const pruneActiveBranchPayload = ({
     ...payload,
     profileType,
     profileDetails,
-    branchDrafts: {
-      ...(branchDrafts || createBranchDraftStore()),
-      [profileType]: profileDetails,
-    },
   };
 };
