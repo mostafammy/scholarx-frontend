@@ -131,6 +131,32 @@ const Step1PersonalInfo = ({ form, showProfileSwitchNotice = false }) => {
       </div>
 
       <div className="summit-form-group">
+        <label
+          htmlFor="nationalId"
+          className="summit-form-label summit-form-label-required"
+        >
+          National ID
+        </label>
+        <input
+          id="nationalId"
+          type="text"
+          inputMode="numeric"
+          autoComplete="off"
+          maxLength={14}
+          placeholder="Enter your 14-digit national ID"
+          className={`summit-form-input${errors.nationalId ? " is-error" : ""}`}
+          aria-describedby={errors.nationalId ? "nationalId-error" : undefined}
+          aria-required="true"
+          {...register("nationalId")}
+        />
+        {errors.nationalId && (
+          <p id="nationalId-error" className="summit-form-error" role="alert">
+            ⚠ {errors.nationalId.message}
+          </p>
+        )}
+      </div>
+
+      <div className="summit-form-group">
         <span className="summit-form-label summit-form-label-required">
           Governorate
         </span>
@@ -150,7 +176,10 @@ const Step1PersonalInfo = ({ form, showProfileSwitchNotice = false }) => {
       </div>
 
       <div className="summit-form-group">
-        <span className="summit-form-label summit-form-label-required" id="status-label">
+        <span
+          className="summit-form-label summit-form-label-required"
+          id="status-label"
+        >
           What best describes you?
         </span>
         <div style={{ marginTop: 10 }}>

@@ -24,6 +24,11 @@ export const step1Schema = Yup.object({
     .min(7, "Please enter a valid phone number")
     .required("Phone number is required"),
 
+  nationalId: Yup.string()
+    .transform((value) => String(value || "").replace(/\D/g, ""))
+    .matches(/^\d{14}$/, "National ID must be exactly 14 digits")
+    .required("National ID is required"),
+
   governorate: Yup.string()
     .trim()
     .min(2, "Please select your governorate")

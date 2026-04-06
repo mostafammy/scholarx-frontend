@@ -181,6 +181,7 @@ export const useRegistration = () => {
             "fullName",
             "email",
             "phone",
+            "nationalId",
             "locale",
             "englishLevel",
             "appliedForScholarshipsRecently",
