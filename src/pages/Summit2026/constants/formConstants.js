@@ -61,6 +61,24 @@ export const ENGLISH_LEVEL_OPTIONS = Object.freeze([
   { value: "fluent", label: "Fluent" },
 ]);
 
+export const HIGH_SCHOOL_YEAR_OPTIONS = Object.freeze([
+  { value: "", label: "Select your current high school year..." },
+  { value: "grade-10", label: "Grade 10" },
+  { value: "grade-11", label: "Grade 11" },
+  { value: "grade-12", label: "Grade 12" },
+  { value: "gap-year", label: "Gap Year" },
+]);
+
+export const UNDERGRADUATE_YEAR_OPTIONS = Object.freeze([
+  { value: "", label: "Select your current university year..." },
+  { value: "year-1", label: "Year 1" },
+  { value: "year-2", label: "Year 2" },
+  { value: "year-3", label: "Year 3" },
+  { value: "year-4", label: "Year 4" },
+  { value: "year-5-plus", label: "Year 5+" },
+  { value: "gap-year", label: "Gap Year" },
+]);
+
 /**
  * How did you hear about us options (multi-select).
  * @type {readonly { value: string, label: string }[]}

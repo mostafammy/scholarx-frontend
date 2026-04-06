@@ -44,6 +44,9 @@ const COLUMNS = [
  *   toggleSort: (field: string) => void,
  *   clearAllData: () => void,
  *   exportFilteredCsv: () => Promise<void>,
+ *   hasNextPage?: boolean,
+ *   isLoadingMore?: boolean,
+ *   loadMore?: () => Promise<void>,
  * }} props
  */
 const RegistrantsTable = ({
@@ -54,6 +57,9 @@ const RegistrantsTable = ({
   toggleSort,
   clearAllData,
   exportFilteredCsv,
+  hasNextPage = false,
+  isLoadingMore = false,
+  loadMore,
 }) => {
   const handleExport = useCallback(() => {
     exportFilteredCsv();
@@ -87,6 +93,18 @@ const RegistrantsTable = ({
           <strong>{registrations.length}</strong> registrations
         </p>
         <div className="summit-db-table-actions">
+          {hasNextPage && loadMore && (
+            <button
+              type="button"
+              id="db-load-more-btn"
+              className="summit-db-btn-secondary"
+              onClick={loadMore}
+              disabled={isLoadingMore}
+              aria-label="Load more registrations"
+            >
+              {isLoadingMore ? "Loading more..." : "Load More"}
+            </button>
+          )}
           <button
             type="button"
             id="db-export-btn"
@@ -229,6 +247,9 @@ RegistrantsTable.propTypes = {
   toggleSort: PropTypes.func.isRequired,
   clearAllData: PropTypes.func.isRequired,
   exportFilteredCsv: PropTypes.func.isRequired,
+  hasNextPage: PropTypes.bool,
+  isLoadingMore: PropTypes.bool,
+  loadMore: PropTypes.func,
 };
 
 export default React.memo(RegistrantsTable);

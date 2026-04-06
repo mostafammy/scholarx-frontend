@@ -26,6 +26,9 @@ const SummitDashboard = () => {
     toggleSort,
     clearAllData,
     exportFilteredCsv,
+    loadMore,
+    hasNextPage,
+    isLoadingMore,
     refresh,
     isLoading,
     errorMessage,
@@ -108,6 +111,9 @@ const SummitDashboard = () => {
             toggleSort={toggleSort}
             clearAllData={clearAllData}
             exportFilteredCsv={exportFilteredCsv}
+            loadMore={loadMore}
+            hasNextPage={hasNextPage}
+            isLoadingMore={isLoadingMore}
           />
         </main>
       </div>

@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test:summit": "vitest run src/pages/Summit2026/utils/profileDrafts.test.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

@@ -6,13 +6,20 @@
  * @module useRegistration
  */
 
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Swal from "sweetalert2";
 import { registrationRepository } from "../services/RegistrationRepository";
 import { getSchemaForStep } from "../utils/validators";
 import { FORM_TOTAL_STEPS } from "../constants/formConstants";
+import {
+  PROFILE_FIELD_KEYS,
+  createBranchDraftStore,
+  hydrateBranchDraft,
+  snapshotBranchDraft,
+  pruneActiveBranchPayload,
+} from "../utils/profileDrafts";
 
 const mapGoalToTrack = (primaryGoal) => {
   switch (primaryGoal) {
@@ -26,6 +33,8 @@ const mapGoalToTrack = (primaryGoal) => {
       return "innovation-impact";
   }
 };
+
+const ALL_PROFILE_FIELDS = Object.values(PROFILE_FIELD_KEYS).flat();
 
 /**
  * @typedef {Object} UseRegistrationReturn
@@ -49,6 +58,7 @@ export const useRegistration = () => {
   const [allFormData, setAllFormData] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [showProfileSwitchNotice, setShowProfileSwitchNotice] = useState(false);
 
   const schema = useMemo(() => getSchemaForStep(currentStep), [currentStep]);
 
@@ -57,6 +67,58 @@ export const useRegistration = () => {
     mode: "onBlur",
     defaultValues: allFormData,
   });
+
+  const profileType = form.watch("status");
+  const previousProfileTypeRef = useRef();
+  const hasShownSwitchNoticeRef = useRef(false);
+  const branchDraftsRef = useRef({
+    ...createBranchDraftStore(),
+  });
+
+  useEffect(() => {
+    if (!profileType) {
+      return;
+    }
+
+    const previousProfileType = previousProfileTypeRef.current;
+    if (!previousProfileType) {
+      previousProfileTypeRef.current = profileType;
+      return;
+    }
+
+    if (previousProfileType === profileType) {
+      return;
+    }
+
+    branchDraftsRef.current[previousProfileType] = snapshotBranchDraft(
+      previousProfileType,
+      form.getValues(),
+    );
+
+    for (const field of ALL_PROFILE_FIELDS) {
+      form.setValue(field, undefined, {
+        shouldDirty: false,
+        shouldTouch: false,
+        shouldValidate: false,
+      });
+    }
+
+    const nextDraft = hydrateBranchDraft(branchDraftsRef.current, profileType);
+    Object.entries(nextDraft).forEach(([key, value]) => {
+      form.setValue(key, value, {
+        shouldDirty: false,
+        shouldTouch: false,
+        shouldValidate: false,
+      });
+    });
+
+    if (!hasShownSwitchNoticeRef.current) {
+      setShowProfileSwitchNotice(true);
+      hasShownSwitchNoticeRef.current = true;
+    }
+
+    previousProfileTypeRef.current = profileType;
+  }, [form, profileType]);
 
   const isFirstStep = currentStep === 1;
   const isLastStep = currentStep === FORM_TOTAL_STEPS;
@@ -78,17 +140,40 @@ export const useRegistration = () => {
       setIsSubmitting(true);
       try {
         const track = mapGoalToTrack(merged.primaryGoal);
-        const payload = {
-          ...merged,
-          graduationYear:
-            Number(merged.graduationYear) || new Date().getFullYear(),
-          status: merged.status,
+        const selectedProfileType = merged.status || "other";
+        const { profileDetails, ...payload } = pruneActiveBranchPayload({
+          profileType: selectedProfileType,
+          values: merged,
+          branchDrafts: branchDraftsRef.current,
+          baseFields: [
+            "fullName",
+            "email",
+            "phone",
+            "locale",
+            "englishLevel",
+            "appliedForScholarshipsRecently",
+            "biggestScholarshipHurdle",
+            "governorate",
+            "primaryGoal",
+            "referralSources",
+            "tracks",
+            "workshops",
+            "specialAccommodations",
+            "acceptTerms",
+          ],
+        });
+
+        await registrationRepository.save({
+          ...payload,
+          profileType: selectedProfileType,
+          profileDetails,
           englishLevel: merged.englishLevel || "intermediate",
           appliedForScholarshipsRecently:
             merged.appliedForScholarshipsRecently === "yes",
           biggestScholarshipHurdle:
             merged.biggestScholarshipHurdle?.trim() || "Not provided",
           governorate: merged.governorate || "cairo",
+          primaryGoal: merged.primaryGoal,
           referralSources: merged.referralSources?.length
             ? merged.referralSources
             : ["other"],
@@ -97,11 +182,8 @@ export const useRegistration = () => {
             ? merged.workshops
             : ["networking"],
           specialAccommodations: merged.specialAccommodations || "",
-          fieldOfStudy: merged.fieldOfStudy || "General Studies",
           acceptTerms: true,
-        };
-
-        await registrationRepository.save(payload);
+        });
         setIsSuccess(true);
         await Swal.fire({
           title: "🎉 Registration Confirmed!",
@@ -154,6 +236,7 @@ export const useRegistration = () => {
     isSubmitting,
     form,
     allFormData,
+    showProfileSwitchNotice,
     onNext,
     onBack,
     isSuccess,

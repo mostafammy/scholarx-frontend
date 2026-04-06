@@ -45,6 +45,7 @@ const RegistrationForm = () => {
     isLastStep,
     isSubmitting,
     form,
+    showProfileSwitchNotice,
     onNext,
     onBack,
     isSuccess,
@@ -142,7 +143,10 @@ const RegistrationForm = () => {
                 exit="exit"
                 transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
               >
-                <ActiveStep form={form} />
+                <ActiveStep
+                  form={form}
+                  showProfileSwitchNotice={showProfileSwitchNotice}
+                />
               </motion.div>
             </AnimatePresence>
 

@@ -80,6 +80,7 @@ class ApiRegistrationRepository {
         eventCode: this._eventCode,
         page: 1,
         limit: 100,
+        cursor: params.cursor,
         sortField: "createdAt",
         sortDirection: "desc",
         ...params,
@@ -109,10 +110,18 @@ class ApiRegistrationRepository {
 
   async save(data) {
     try {
-      const response = await api.post("/summit/registrations", {
-        ...data,
-        eventCode: this._eventCode,
-      });
+      const response = await api.post(
+        "/summit/registrations",
+        {
+          ...data,
+          eventCode: this._eventCode,
+        },
+        {
+          headers: {
+            "X-Summit-Registration-Schema": "2",
+          },
+        },
+      );
       return response.data?.data?.registration;
     } catch (error) {
       throw new Error(

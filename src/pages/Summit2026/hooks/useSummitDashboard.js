@@ -61,8 +61,11 @@ export const useSummitDashboard = () => {
   const [sortField, setSortField] = useState("createdAt");
   const [sortDirection, setSortDirection] = useState("desc");
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [lastUpdatedAt, setLastUpdatedAt] = useState(null);
+  const [nextCursor, setNextCursor] = useState(null);
+  const [hasNextPage, setHasNextPage] = useState(false);
   const isRefreshingRef = useRef(false);
 
   const toDashboardError = useCallback((error) => {
@@ -102,6 +105,8 @@ export const useSummitDashboard = () => {
       ]);
 
       setRegistrations(listResult.items || []);
+      setNextCursor(listResult.pagination?.nextCursor || null);
+      setHasNextPage(Boolean(listResult.pagination?.hasNextPage));
       setStats(statsResult);
       setErrorMessage("");
       setLastUpdatedAt(new Date());
@@ -113,6 +118,45 @@ export const useSummitDashboard = () => {
       isRefreshingRef.current = false;
     }
   }, [filters, sortField, sortDirection, toDashboardError]);
+
+  const loadMore = useCallback(async () => {
+    if (isLoadingMore || !hasNextPage || !nextCursor) {
+      return;
+    }
+
+    setIsLoadingMore(true);
+    try {
+      const listResult = await registrationRepository.findAll({
+        cursor: nextCursor,
+        limit: DASHBOARD_PAGE_LIMIT,
+        search: filters.search || undefined,
+        governorate: filters.governorate || undefined,
+        track: filters.track || undefined,
+        dateFrom: filters.dateFrom || undefined,
+        dateTo: filters.dateTo || undefined,
+        sortField,
+        sortDirection,
+      });
+
+      setRegistrations((prev) => [...prev, ...(listResult.items || [])]);
+      setNextCursor(listResult.pagination?.nextCursor || null);
+      setHasNextPage(Boolean(listResult.pagination?.hasNextPage));
+      setLastUpdatedAt(new Date());
+      setErrorMessage("");
+    } catch (error) {
+      setErrorMessage(toDashboardError(error));
+    } finally {
+      setIsLoadingMore(false);
+    }
+  }, [
+    filters,
+    sortField,
+    sortDirection,
+    hasNextPage,
+    nextCursor,
+    isLoadingMore,
+    toDashboardError,
+  ]);
 
   useEffect(() => {
     refresh();
@@ -143,10 +187,14 @@ export const useSummitDashboard = () => {
 
   const setFilter = useCallback((key, value) => {
     setFilters((prev) => ({ ...prev, [key]: value }));
+    setNextCursor(null);
+    setHasNextPage(false);
   }, []);
 
   const resetFilters = useCallback(() => {
     setFilters(DEFAULT_FILTERS);
+    setNextCursor(null);
+    setHasNextPage(false);
   }, []);
 
   const toggleSort = useCallback(
@@ -155,6 +203,8 @@ export const useSummitDashboard = () => {
         sortField === field ? (prev === "asc" ? "desc" : "asc") : "desc",
       );
       setSortField(field);
+      setNextCursor(null);
+      setHasNextPage(false);
     },
     [sortField],
   );
@@ -203,6 +253,9 @@ export const useSummitDashboard = () => {
     clearAllData,
     exportFilteredCsv,
     refresh,
+    loadMore,
+    hasNextPage,
+    isLoadingMore,
     isLoading,
     errorMessage,
     lastUpdatedAt,
