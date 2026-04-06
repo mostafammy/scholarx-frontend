@@ -145,18 +145,18 @@ const HeroSection = ({ onRegisterClick }) => {
 
   const containerVariants = {
     hidden: { opacity: 0 },
-    visible: { 
-      opacity: 1, 
-      transition: { staggerChildren: 0.15, delayChildren: 0.1 } 
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.15, delayChildren: 0.1 },
     },
   };
 
   const itemVariants = {
     hidden: { opacity: 0, y: 30 },
-    visible: { 
-      opacity: 1, 
-      y: 0, 
-      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } 
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
     },
   };
 
@@ -183,7 +183,7 @@ const HeroSection = ({ onRegisterClick }) => {
         }}
       />
 
-      <motion.div 
+      <motion.div
         className="summit-hero-content"
         variants={containerVariants}
         initial="hidden"
@@ -225,27 +225,47 @@ const HeroSection = ({ onRegisterClick }) => {
         </motion.h1>
 
         {/* Tagline */}
-        <motion.p className="summit-hero-tagline" aria-label="Summit theme" variants={itemVariants}>
-          Your compass to global opportunities: scholarships, future-ready
-          skills, and limitless possibilities.
+        <motion.p
+          className="summit-hero-tagline"
+          aria-label="Summit theme"
+          variants={itemVariants}
+        >
+          Where global opportunities begin
         </motion.p>
 
         {/* PROMINENT Event Meta (Date & Location) */}
-        <motion.div variants={itemVariants} style={{ display: 'flex', justifyContent: 'center', marginBottom: '3rem' }}>
-          <motion.div 
-            className="summit-hero-datetime-pill" 
-            role="group" 
+        <motion.div
+          variants={itemVariants}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginBottom: "3rem",
+          }}
+        >
+          <motion.div
+            className="summit-hero-datetime-pill"
+            role="group"
             aria-label="Event Date and Location"
             animate={{ y: [0, -8, 0] }}
-            transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-            whileHover={{ scale: 1.05, boxShadow: "0 16px 50px rgba(245,197,24,0.3), inset 0 1px 0 rgba(255,255,255,0.4)" }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            whileHover={{
+              scale: 1.05,
+              boxShadow:
+                "0 16px 50px rgba(245,197,24,0.3), inset 0 1px 0 rgba(255,255,255,0.4)",
+            }}
           >
             <div className="summit-hero-dt-item">
-              <motion.span 
+              <motion.span
                 className="summit-hero-dt-icon"
                 animate={{ rotate: [-5, 5, -5] }}
-                transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-              >📅</motion.span>
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              >
+                📅
+              </motion.span>
               <div className="summit-hero-dt-text">
                 <span className="summit-hero-dt-label">Date</span>
                 <span className="summit-hero-dt-value">May 1, 2026</span>
@@ -253,14 +273,22 @@ const HeroSection = ({ onRegisterClick }) => {
             </div>
             <div className="summit-hero-dt-divider" />
             <div className="summit-hero-dt-item">
-              <motion.span 
+              <motion.span
                 className="summit-hero-dt-icon"
                 animate={{ y: [0, -3, 0] }}
-                transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-              >📍</motion.span>
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              >
+                📍
+              </motion.span>
               <div className="summit-hero-dt-text">
                 <span className="summit-hero-dt-label">Location</span>
-                <span className="summit-hero-dt-value">Nile University, Giza</span>
+                <span className="summit-hero-dt-value">
+                  Nile University, Giza
+                </span>
               </div>
             </div>
           </motion.div>

@@ -1127,103 +1127,116 @@
   background: var(--s-bg-700);
 }
 
-.summit-partners-grid {
+.summit-spotlights-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--s-space-8);
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--s-space-6);
+  margin-top: var(--s-space-12);
 }
 
-.summit-partner-card {
-  padding: var(--s-space-12); /* More airy Apple-style padding */
-  border-radius: var(--s-radius-2xl);
-  background: rgba(255, 255, 255, 0.02);
-  backdrop-filter: blur(30px);
-  -webkit-backdrop-filter: blur(30px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+.summit-spotlight-card {
   position: relative;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--s-radius-2xl);
   overflow: hidden;
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), 
-              box-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-              border-color 0.4s ease;
-}
-
-.summit-partner-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 3px;
-  border-radius: var(--s-radius-full) var(--s-radius-full) 0 0;
-}
-
-.summit-partner-card--scholarx::before {
-  background: linear-gradient(90deg, var(--s-gold-500), #ff9f1c);
-}
-
-.summit-partner-card--eu::before {
-  background: linear-gradient(90deg, var(--s-blue-600), var(--s-blue-400));
-}
-
-.summit-partner-card--eu-jeel-connect::before {
-  background: linear-gradient(90deg, var(--s-blue-600), var(--s-blue-400));
-}
-
-.summit-partner-logo-area {
+  padding: var(--s-space-10);
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: var(--s-space-4);
-  margin-bottom: var(--s-space-6);
+  align-items: center;
+  justify-content: center;
+  min-height: 240px;
+  backdrop-filter: blur(20px);
+  will-change: transform;
+  transition: border-color var(--s-transition-base), transform var(--s-transition-base);
 }
 
-.summit-partner-logo-icon {
-  width: 84px;
-  height: 84px;
-  border-radius: var(--s-radius-md);
+.summit-spotlight-card:hover {
+  border-color: rgba(255, 255, 255, 0.15);
+  transform: translateY(-4px);
+}
+
+/* The actual spotlight gradient strictly tracking the mouse */
+.summit-spotlight-glow {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity var(--s-transition-base);
+  background: radial-gradient(
+    600px circle at var(--mouse-x, 0) var(--mouse-y, 0),
+    rgba(255, 255, 255, 0.05),
+    transparent 40%
+  );
+  will-change: background;
+}
+
+.summit-spotlight-card:hover .summit-spotlight-glow {
+  opacity: 1;
+}
+
+.summit-spotlight-content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.summit-spotlight-logo-wrap {
+  width: 100%;
+  height: 80px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.8rem;
-  flex-shrink: 0;
-  padding: 16px;
-  box-sizing: border-box;
+  transition: transform var(--s-transition-base), opacity var(--s-transition-base);
 }
 
-.summit-partner-logo-icon--wide {
-  width: auto;
-  min-width: 240px;
-  max-width: 100%;
-  height: 84px;
-  border-radius: var(--s-radius-lg);
-  padding: 16px 24px;
-  box-sizing: border-box;
+.summit-spotlight-card:hover .summit-spotlight-logo-wrap {
+  transform: translateY(-40px) scale(0.85);
+  opacity: 0.85;
 }
 
-.summit-partner-logo-img {
-  display: block;
+.summit-spotlight-logo {
+  max-width: 180px;
+  max-height: 100%;
   object-fit: contain;
-  width: 100%;
-  height: 100%;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.5));
 }
 
+.summit-spotlight-hover-reveal {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity var(--s-transition-base), transform var(--s-transition-base);
+  pointer-events: none;
+}
 
-.summit-partner-name {
+.summit-spotlight-card:hover .summit-spotlight-hover-reveal {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.summit-spotlight-name {
   font-family: var(--s-font-display);
-  font-size: 1.5rem;
+  font-size: 1.1rem;
   font-weight: 700;
-  color: var(--s-text-100);
+  margin: 0 0 var(--s-space-2);
 }
 
-.summit-partner-tagline {
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-weight: 600;
-}
-
-.summit-partner-desc {
+.summit-spotlight-desc {
+  font-size: 0.85rem;
   color: var(--s-text-300);
-  font-size: 0.9rem;
-  line-height: 1.8;
+  line-height: 1.6;
+  margin: 0;
 }
 
 /* --------------------------------------------------------------------------

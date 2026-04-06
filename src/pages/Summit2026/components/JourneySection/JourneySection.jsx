@@ -24,7 +24,7 @@ const JourneySection = () => (
     <div className="summit-container">
       <div className="summit-section-header">
         <div className="summit-badge" aria-hidden="true">
-          🎯 The Hook
+          🎯
         </div>
         <h2 id="journey-heading" className="summit-section-title">
           Looking for a Real Global Opportunity?

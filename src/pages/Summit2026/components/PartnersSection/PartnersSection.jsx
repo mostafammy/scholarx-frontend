@@ -1,37 +1,108 @@
 /**
- * @fileoverview PartnersSection — ScholarX × EU Jeel Connect partnership showcase.
+ * @fileoverview PartnersSection — Minimalist Logo Grid with Aceternity UI-style Spotlight.
  */
 
-import React from "react";
-import { motion } from "framer-motion"; // eslint-disable-line
-import { SUMMIT_PARTNERS } from "../../constants/eventData";
+import React, { useRef, useCallback } from "react";
+import { motion } from "framer-motion";
+
+const PARTNERS_GRID = [
+  {
+    id: "scholarx",
+    name: "ScholarX",
+    desc: "Egypt's leading platform for youth empowerment.",
+    logoSrc: "/ScholarX-Logo-Icon-Blue_ScholarX.svg",
+    color: "#0057f8",
+  },
+  {
+    id: "eu-jeel-connect",
+    name: "EU Jeel Connect",
+    desc: "Connecting youth in the Southern Neighbourhood to global opportunities.",
+    logoSrc: "/EU Jeel Connect.png",
+    color: "#003da5",
+  },
+  {
+    id: "eu-funded",
+    name: "Funded by the European Union",
+    desc: "Supporting impactful youth and sustainability initiatives across the Mediterranean.",
+    logoSrc: "/EN_fundedbyEU_VERTICAL_RGB_POS.png",
+    color: "#f5c518",
+  }
+];
 
 const containerVariants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.15 } },
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.15 } },
 };
 
 const cardVariants = {
-  hidden: { opacity: 0, y: 28 },
+  hidden: { opacity: 0, scale: 0.95, y: 30 },
   visible: {
     opacity: 1,
+    scale: 1,
     y: 0,
-    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
+    transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
   },
 };
 
-/** Partner logos mapped by ID */
-const PARTNER_LOGOS = {
-  scholarx: {
-    src: "/ScholarX-Logo-Icon-White-Blue-BG_ScholarX.svg",
-    alt: "ScholarX logo",
-    className: "summit-partner-logo-img summit-partner-logo-img--scholarx",
-  },
-  "eu-jeel-connect": {
-    src: "/_Colored, Transparent bkgd- EUJC EUMB logos.png",
-    alt: "EU Jeel Connect and EU MedBridge logos",
-    className: "summit-partner-logo-img summit-partner-logo-img--eujc",
-  },
+/**
+ * useSpotlight hook (Principal Engineer Pattern)
+ * Uses requestAnimationFrame to throttle 1000Hz+ mouse events, saving CPU cycles.
+ */
+const useSpotlight = (ref) => {
+  const rafRef = useRef(null);
+  
+  const onMouseMove = useCallback((e) => {
+    if (rafRef.current) return;
+    rafRef.current = requestAnimationFrame(() => {
+      if (!ref.current) {
+        rafRef.current = null;
+        return;
+      }
+      const rect = ref.current.getBoundingClientRect();
+      ref.current.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+      ref.current.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+      rafRef.current = null;
+    });
+  }, [ref]);
+  
+  return { onMouseMove };
+};
+
+const SpotlightCard = ({ partner }) => {
+  const cardRef = useRef(null);
+  const { onMouseMove } = useSpotlight(cardRef);
+
+  return (
+    <motion.article
+      ref={cardRef}
+      className={`summit-spotlight-card`}
+      onMouseMove={onMouseMove}
+      variants={cardVariants}
+      aria-label={partner.name}
+    >
+      <div className="summit-spotlight-glow" />
+      
+      <div className="summit-spotlight-content">
+        <div className="summit-spotlight-logo-wrap">
+          <img
+            src={partner.logoSrc}
+            alt={`${partner.name} logo`}
+            className={`summit-spotlight-logo`}
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+        
+        {/* Hover Reveal Content */}
+        <div className="summit-spotlight-hover-reveal">
+          <h3 className="summit-spotlight-name" style={{ color: partner.color }}>
+            {partner.name}
+          </h3>
+          <p className="summit-spotlight-desc">{partner.desc}</p>
+        </div>
+      </div>
+    </motion.article>
+  );
 };
 
 const PartnersSection = () => (
@@ -46,99 +117,21 @@ const PartnersSection = () => (
           🤝 Partners of Success
         </div>
         <h2 id="partners-heading" className="summit-section-title">
-          Built Through a Strategic Partnership
+          Powered By
         </h2>
-        <p className="summit-section-subtitle">
-          Organized by ScholarX and EU Jeel Connect, with support from the
-          European Union and EU MedBridge.
-        </p>
+        <p className="summit-section-subtitle">✨</p>
       </div>
 
       <motion.div
-        className="summit-partners-grid"
+        className="summit-spotlights-grid"
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, amount: 0.3 }}
+        viewport={{ once: true, amount: 0.2 }}
       >
-        {SUMMIT_PARTNERS.map((partner) => (
-          <motion.article
-            key={partner.id}
-            className={`summit-glass-card summit-glint-effect summit-partner-card summit-partner-card--${partner.id}`}
-            variants={cardVariants}
-            aria-label={partner.name}
-          >
-            <div className="summit-partner-logo-area">
-              <div
-                className={`summit-partner-logo-icon ${
-                  partner.id === "eu-jeel-connect"
-                    ? "summit-partner-logo-icon--wide"
-                    : ""
-                }`}
-                style={{
-                  background: `${partner.accentColor}18`,
-                  border: `1px solid ${partner.accentColor}30`,
-                }}
-                aria-hidden="true"
-              >
-                <img
-                  src={PARTNER_LOGOS[partner.id]?.src}
-                  alt={PARTNER_LOGOS[partner.id]?.alt || `${partner.name} logo`}
-                  className={
-                    PARTNER_LOGOS[partner.id]?.className ||
-                    "summit-partner-logo-img"
-                  }
-                  loading="lazy"
-                  decoding="async"
-                />
-              </div>
-              <div>
-                <h3 className="summit-partner-name">{partner.name}</h3>
-                <p
-                  className="summit-partner-tagline"
-                  style={{ color: partner.accentColor }}
-                >
-                  {partner.tagline}
-                </p>
-              </div>
-            </div>
-            <p className="summit-partner-desc">{partner.description}</p>
-          </motion.article>
+        {PARTNERS_GRID.map((partner) => (
+          <SpotlightCard key={partner.id} partner={partner} />
         ))}
-      </motion.div>
-
-      {/* Partnership statement */}
-      <motion.div
-        style={{
-          textAlign: "center",
-          marginTop: 48,
-          padding: "32px",
-          borderRadius: 20,
-          background:
-            "linear-gradient(135deg, rgba(245,197,24,0.06), rgba(0,61,165,0.06))",
-          border: "1px solid rgba(255,255,255,0.08)",
-        }}
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6, delay: 0.2 }}
-      >
-        <p
-          style={{
-            color: "var(--s-text-300)",
-            fontSize: "1rem",
-            lineHeight: 1.8,
-            maxWidth: 640,
-            margin: "0 auto",
-          }}
-        >
-          The summit is supported by the{" "}
-          <strong style={{ color: "var(--s-blue-400)" }}>European Union</strong>{" "}
-          and{" "}
-          <strong style={{ color: "var(--s-gold-400)" }}>EU MedBridge</strong>,
-          creating a direct bridge between Egyptian youth and global
-          opportunities.
-        </p>
       </motion.div>
     </div>
   </section>
