@@ -142,9 +142,17 @@ export const step1Schema = Yup.object({
       otherwise: (schema) => schema.notRequired(),
     }),
 
-  primaryGoal: Yup.string()
-    .oneOf(["find-scholarship", "develop-skills", "build-network", "other"])
-    .required("Please select your primary goal"),
+  primaryGoals: Yup.array()
+    .of(
+      Yup.string().oneOf([
+        "find-scholarship",
+        "develop-skills",
+        "build-network",
+        "other",
+      ]),
+    )
+    .min(1, "Please select at least one goal")
+    .required("Please select at least one goal"),
 
   englishLevel: Yup.string()
     .oneOf([

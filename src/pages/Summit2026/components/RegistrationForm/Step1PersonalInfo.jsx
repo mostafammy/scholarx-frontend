@@ -446,30 +446,54 @@ const Step1PersonalInfo = ({ form, showProfileSwitchNotice = false }) => {
       )}
 
       <div className="summit-form-group">
-        <label
-          htmlFor="primaryGoal"
-          className="summit-form-label summit-form-label-required"
-        >
-          What is your primary goal for attending?
-        </label>
-        <select
-          id="primaryGoal"
-          className={`summit-form-select${errors.primaryGoal ? " is-error" : ""}`}
-          aria-required="true"
-          aria-describedby={
-            errors.primaryGoal ? "primaryGoal-error" : undefined
-          }
-          {...register("primaryGoal")}
-        >
-          <option value="">Select your goal...</option>
-          <option value="find-scholarship">Finding a scholarship</option>
-          <option value="develop-skills">Developing my skills</option>
-          <option value="build-network">Building my network</option>
-          <option value="other">Other</option>
-        </select>
-        {errors.primaryGoal && (
-          <p id="primaryGoal-error" className="summit-form-error" role="alert">
-            ⚠ {errors.primaryGoal.message}
+        <span className="summit-form-label summit-form-label-required">
+          What are your goals for attending? (Select all that apply)
+        </span>
+        <div role="group" aria-describedby={errors.primaryGoals ? "primaryGoals-error" : undefined}>
+          <label className="summit-checkbox-item" htmlFor="goal-find-scholarship">
+            <input
+              id="goal-find-scholarship"
+              type="checkbox"
+              value="find-scholarship"
+              className="summit-checkbox-input"
+              {...register("primaryGoals")}
+            />
+            <span className="summit-checkbox-label">Finding a scholarship</span>
+          </label>
+          <label className="summit-checkbox-item" htmlFor="goal-develop-skills">
+            <input
+              id="goal-develop-skills"
+              type="checkbox"
+              value="develop-skills"
+              className="summit-checkbox-input"
+              {...register("primaryGoals")}
+            />
+            <span className="summit-checkbox-label">Developing my skills</span>
+          </label>
+          <label className="summit-checkbox-item" htmlFor="goal-build-network">
+            <input
+              id="goal-build-network"
+              type="checkbox"
+              value="build-network"
+              className="summit-checkbox-input"
+              {...register("primaryGoals")}
+            />
+            <span className="summit-checkbox-label">Building my network</span>
+          </label>
+          <label className="summit-checkbox-item" htmlFor="goal-other">
+            <input
+              id="goal-other"
+              type="checkbox"
+              value="other"
+              className="summit-checkbox-input"
+              {...register("primaryGoals")}
+            />
+            <span className="summit-checkbox-label">Other</span>
+          </label>
+        </div>
+        {errors.primaryGoals && (
+          <p id="primaryGoals-error" className="summit-form-error" role="alert">
+            ⚠ {errors.primaryGoals.message}
           </p>
         )}
       </div>

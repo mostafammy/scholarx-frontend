@@ -35,6 +35,12 @@ const mapGoalToTrack = (primaryGoal) => {
   }
 };
 
+const mapGoalsToTracks = (primaryGoals = []) => {
+  const goals = Array.isArray(primaryGoals) ? primaryGoals : [];
+  const tracks = goals.map(mapGoalToTrack);
+  return Array.from(new Set(tracks));
+};
+
 const ALL_PROFILE_FIELDS = Object.values(PROFILE_FIELD_KEYS).flat();
 
 /**
@@ -140,7 +146,11 @@ export const useRegistration = () => {
       // Final submission
       setIsSubmitting(true);
       try {
-        const track = mapGoalToTrack(merged.primaryGoal);
+        const selectedGoals =
+          merged.primaryGoals && merged.primaryGoals.length > 0
+            ? merged.primaryGoals
+            : ["other"];
+        const mappedTracks = mapGoalsToTracks(selectedGoals);
         const selectedProfileType =
           normalizeProfileType(merged.status) || "other";
         const { profileDetails, ...payload } = pruneActiveBranchPayload({
@@ -156,7 +166,7 @@ export const useRegistration = () => {
             "appliedForScholarshipsRecently",
             "biggestScholarshipHurdle",
             "governorate",
-            "primaryGoal",
+            "primaryGoals",
             "referralSources",
             "tracks",
             "workshops",
@@ -175,11 +185,12 @@ export const useRegistration = () => {
           biggestScholarshipHurdle:
             merged.biggestScholarshipHurdle?.trim() || "Not provided",
           governorate: merged.governorate || "cairo",
-          primaryGoal: merged.primaryGoal,
+          primaryGoals: selectedGoals,
+          primaryGoal: selectedGoals[0],
           referralSources: merged.referralSources?.length
             ? merged.referralSources
             : ["other"],
-          tracks: merged.tracks?.length ? merged.tracks : [track],
+          tracks: merged.tracks?.length ? merged.tracks : mappedTracks,
           workshops: merged.workshops?.length
             ? merged.workshops
             : ["networking"],
