@@ -13,9 +13,13 @@ const GOAL_OPTIONS = Object.freeze([
   { value: "find-scholarship", label: "Find a Scholarship", icon: "🎓" },
   { value: "develop-skills", label: "Develop My Skills", icon: "⚡" },
   { value: "build-network", label: "Build My Network", icon: "🤝" },
-  { value: "career-growth", label: "Accelerate My Career", icon: "🚀" },
-  { value: "meet-experts", label: "Meet Industry Experts", icon: "💡" },
-  { value: "other", label: "Something Else", icon: "✨" },
+  { value: "accelerate-career", label: "Accelerate My Career", icon: "🚀" },
+  {
+    value: "meet-industry-experts",
+    label: "Meet Industry Experts",
+    icon: "💡",
+  },
+  { value: "something-else", label: "Something Else", icon: "✨" },
 ]);
 
 const chipVariants = {

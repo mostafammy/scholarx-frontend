@@ -58,8 +58,18 @@ const getAuthHeader = () => {
 };
 
 const toErrorMessage = (error, fallback) => {
-  const firstValidationIssue = error?.response?.data?.data?.[0]?.message;
-  if (firstValidationIssue) return firstValidationIssue;
+  const responseData = error?.response?.data?.data;
+
+  const firstArrayIssue = Array.isArray(responseData)
+    ? responseData[0]?.message
+    : undefined;
+  if (firstArrayIssue) return firstArrayIssue;
+
+  const firstNestedIssue = Array.isArray(responseData?.issues)
+    ? responseData.issues[0]?.message
+    : undefined;
+  if (firstNestedIssue) return firstNestedIssue;
+
   if (error?.response?.data?.message) return error.response.data.message;
   if (error?.message) return error.message;
   return fallback;

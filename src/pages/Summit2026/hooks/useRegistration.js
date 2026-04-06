@@ -22,16 +22,30 @@ import {
   pruneActiveBranchPayload,
 } from "../utils/profileDrafts";
 
+const normalizeGoalValue = (goal) => {
+  switch (goal) {
+    case "career-growth":
+      return "accelerate-career";
+    case "meet-experts":
+      return "meet-industry-experts";
+    case "other":
+      return "something-else";
+    default:
+      return goal;
+  }
+};
+
 const mapGoalToTrack = (primaryGoal) => {
   switch (primaryGoal) {
     case "find-scholarship":
       return "global-education";
     case "develop-skills":
-    case "meet-experts":
       return "skills-development";
     case "build-network":
-    case "career-growth":
+    case "accelerate-career":
       return "career-excellence";
+    case "meet-industry-experts":
+    case "something-else":
     case "other":
     default:
       return "innovation-impact";
@@ -39,7 +53,9 @@ const mapGoalToTrack = (primaryGoal) => {
 };
 
 const mapGoalsToTracks = (primaryGoals = []) => {
-  const goals = Array.isArray(primaryGoals) ? primaryGoals : [];
+  const goals = (Array.isArray(primaryGoals) ? primaryGoals : []).map(
+    normalizeGoalValue,
+  );
   const tracks = goals.map(mapGoalToTrack);
   return Array.from(new Set(tracks));
 };
@@ -152,8 +168,8 @@ export const useRegistration = () => {
       try {
         const selectedGoals =
           merged.primaryGoals && merged.primaryGoals.length > 0
-            ? merged.primaryGoals
-            : ["other"];
+            ? merged.primaryGoals.map(normalizeGoalValue)
+            : ["something-else"];
         const mappedTracks = mapGoalsToTracks(selectedGoals);
         const selectedProfileType =
           normalizeProfileType(merged.status) || "other";
