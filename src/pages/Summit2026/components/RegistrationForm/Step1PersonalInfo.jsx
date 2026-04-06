@@ -449,8 +449,16 @@ const Step1PersonalInfo = ({ form, showProfileSwitchNotice = false }) => {
         <span className="summit-form-label summit-form-label-required">
           What are your goals for attending? (Select all that apply)
         </span>
-        <div role="group" aria-describedby={errors.primaryGoals ? "primaryGoals-error" : undefined}>
-          <label className="summit-checkbox-item" htmlFor="goal-find-scholarship">
+        <div
+          role="group"
+          aria-describedby={
+            errors.primaryGoals ? "primaryGoals-error" : undefined
+          }
+        >
+          <label
+            className="summit-checkbox-item"
+            htmlFor="goal-find-scholarship"
+          >
             <input
               id="goal-find-scholarship"
               type="checkbox"

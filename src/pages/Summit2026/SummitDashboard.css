@@ -423,18 +423,19 @@
 }
 
 .summit-db-table thead tr {
-  background: rgba(255,255,255,0.04);
-  border-bottom: 1px solid rgba(255,255,255,0.08);
+  background: rgba(13, 21, 41, 0.95);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
 }
 
 .summit-db-table th {
-  padding: 14px 16px;
+  padding: 18px 16px;
+  color: rgba(255, 255, 255, 0.7);
+  background: #0d1529; /* Solid dark background to ensure no bleed through */
   text-align: left;
   font-size: 0.72rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: rgba(255,255,255,0.45);
   white-space: nowrap;
   user-select: none;
 }
@@ -517,7 +518,7 @@
 }
 
 /* --------------------------------------------------------------------------
-   Table Empty State
+   Table Empty State & Skeleton Loaders
    -------------------------------------------------------------------------- */
 .summit-db-empty {
   text-align: center;
@@ -541,6 +542,33 @@
 .summit-db-empty-desc {
   font-size: 0.875rem;
   line-height: 1.6;
+}
+
+/* Skeleton Loading Shimmer Animation */
+@keyframes shimmer {
+  0% { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+
+.summit-db-skeleton {
+  animation: shimmer 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  background: linear-gradient(
+    90deg, 
+    rgba(255,255,255,0.03) 25%, 
+    rgba(255,255,255,0.08) 50%, 
+    rgba(255,255,255,0.03) 75%
+  );
+  background-size: 400px 100%;
+  border-radius: 4px;
+}
+
+/* Action Bar Refinements */
+.summit-hover-btn {
+  transition: all 200ms ease;
+}
+.summit-hover-btn:hover {
+  background: rgba(255,255,255,0.1) !important;
+  transform: translateY(-1px);
 }
 
 /* --------------------------------------------------------------------------

@@ -4,11 +4,12 @@
  * Protected by AdminRoute in App.jsx.
  */
 
-import React, { useCallback } from "react";
+import React from "react";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import { useSummitDashboard } from "./hooks/useSummitDashboard";
 import StatsCards from "./components/Dashboard/StatsCards";
+import VisualInsights from "./components/Dashboard/VisualInsights";
 import FilterBar from "./components/Dashboard/FilterBar";
 import RegistrantsTable from "./components/Dashboard/RegistrantsTable";
 import "./SummitDashboard.css";
@@ -97,6 +98,7 @@ const SummitDashboard = () => {
             </div>
           )}
 
+          <VisualInsights stats={stats} registrations={registrations} />
           <StatsCards stats={stats} />
           <FilterBar
             filters={filters}
@@ -114,6 +116,7 @@ const SummitDashboard = () => {
             loadMore={loadMore}
             hasNextPage={hasNextPage}
             isLoadingMore={isLoadingMore}
+            refresh={refresh}
           />
         </main>
       </div>
