@@ -5,6 +5,7 @@
  */
 
 import * as Yup from 'yup';
+import { normalizeProfileType } from './profileDrafts';
 
 /** @type {import('yup').ObjectSchema} */
 export const step1Schema = Yup.object({
@@ -29,6 +30,7 @@ export const step1Schema = Yup.object({
     .required('Governorate is required'),
 
   status: Yup.string()
+    .transform((value) => normalizeProfileType(value))
     .oneOf(['highSchool', 'undergraduate', 'graduate', 'professional', 'other'])
     .required('Please select your current status'),
 

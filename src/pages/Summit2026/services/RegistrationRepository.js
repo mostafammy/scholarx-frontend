@@ -74,13 +74,13 @@ class ApiRegistrationRepository {
 
   async findAll(params = {}) {
     const now = Date.now();
+    const isCursorMode = Boolean(params.cursor);
     const response = await api.get("/admin/summit/registrations", {
       params: {
         _ts: now,
         eventCode: this._eventCode,
-        page: 1,
+        page: isCursorMode ? undefined : 1,
         limit: 100,
-        cursor: params.cursor,
         sortField: "createdAt",
         sortDirection: "desc",
         ...params,

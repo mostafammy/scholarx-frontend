@@ -8,20 +8,22 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
-import { Controller } from 'react-hook-form';
+import { Controller, useWatch } from 'react-hook-form';
 import {
   ENGLISH_LEVEL_OPTIONS,
   EGYPTIAN_GOVERNORATES,
   HIGH_SCHOOL_YEAR_OPTIONS,
   UNDERGRADUATE_YEAR_OPTIONS,
 } from '../../constants/formConstants';
+import { normalizeProfileType } from '../../utils/profileDrafts';
 
 /**
  * @param {{ form: import('react-hook-form').UseFormReturn }} props
  */
 const Step1PersonalInfo = ({ form, showProfileSwitchNotice = false }) => {
-  const { register, control, watch, formState: { errors } } = form;
-  const profileType = watch('status');
+  const { register, control, formState: { errors } } = form;
+  const selectedStatus = useWatch({ control, name: 'status' });
+  const profileType = normalizeProfileType(selectedStatus);
 
   return (
     <div role="group" aria-labelledby="step1-title">
@@ -138,7 +140,9 @@ const Step1PersonalInfo = ({ form, showProfileSwitchNotice = false }) => {
           className={`summit-form-select${errors.status ? ' is-error' : ''}`}
           aria-required="true"
           aria-describedby={errors.status ? 'status-error' : undefined}
-          {...register('status')}
+          {...register('status', {
+            setValueAs: (value) => normalizeProfileType(value),
+          })}
         >
           <option value="">Select an option...</option>
           <option value="highSchool">High School</option>
@@ -468,4 +472,4 @@ Step1PersonalInfo.propTypes = {
   showProfileSwitchNotice: PropTypes.bool,
 };
 
-export default React.memo(Step1PersonalInfo);
+export default Step1PersonalInfo;

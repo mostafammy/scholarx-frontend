@@ -17,6 +17,7 @@ import {
   PROFILE_FIELD_KEYS,
   createBranchDraftStore,
   hydrateBranchDraft,
+  normalizeProfileType,
   snapshotBranchDraft,
   pruneActiveBranchPayload,
 } from "../utils/profileDrafts";
@@ -68,7 +69,7 @@ export const useRegistration = () => {
     defaultValues: allFormData,
   });
 
-  const profileType = form.watch("status");
+  const profileType = normalizeProfileType(form.watch("status"));
   const previousProfileTypeRef = useRef();
   const hasShownSwitchNoticeRef = useRef(false);
   const branchDraftsRef = useRef({
@@ -140,7 +141,7 @@ export const useRegistration = () => {
       setIsSubmitting(true);
       try {
         const track = mapGoalToTrack(merged.primaryGoal);
-        const selectedProfileType = merged.status || "other";
+        const selectedProfileType = normalizeProfileType(merged.status) || "other";
         const { profileDetails, ...payload } = pruneActiveBranchPayload({
           profileType: selectedProfileType,
           values: merged,

@@ -4,6 +4,7 @@ import {
   snapshotBranchDraft,
   hydrateBranchDraft,
   buildProfileDetails,
+  normalizeProfileType,
   pruneActiveBranchPayload,
 } from "./profileDrafts";
 
@@ -81,5 +82,13 @@ describe("Summit profile draft helpers", () => {
     expect(result.email).toBe("student@example.com");
     expect(result.highSchoolName).toBeUndefined();
     expect(result.jobTitle).toBeUndefined();
+  });
+
+  it("normalizes profile type aliases to canonical values", () => {
+    expect(normalizeProfileType("High School")).toBe("highSchool");
+    expect(normalizeProfileType("high-school")).toBe("highSchool");
+    expect(normalizeProfileType("  postgraduate  ")).toBe("graduate");
+    expect(normalizeProfileType("professional")).toBe("professional");
+    expect(normalizeProfileType("unknown")).toBe("");
   });
 });

@@ -20,6 +20,30 @@ export const PROFILE_TYPES = Object.freeze([
   "other",
 ]);
 
+export const normalizeProfileType = (value) => {
+  if (typeof value !== "string") {
+    return "";
+  }
+
+  const normalized = value.trim().toLowerCase().replace(/[\s_-]+/g, "");
+
+  switch (normalized) {
+    case "highschool":
+      return "highSchool";
+    case "undergraduate":
+      return "undergraduate";
+    case "graduate":
+    case "postgraduate":
+      return "graduate";
+    case "professional":
+      return "professional";
+    case "other":
+      return "other";
+    default:
+      return "";
+  }
+};
+
 export const createBranchDraftStore = () => ({
   highSchool: {},
   undergraduate: {},
