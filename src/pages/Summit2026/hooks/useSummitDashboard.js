@@ -16,6 +16,8 @@ import { registrationRepository } from "../services/RegistrationRepository";
  * @property {string} track - Filter by track id
  * @property {string} dateFrom - ISO date string lower bound
  * @property {string} dateTo - ISO date string upper bound
+ * @property {string} profileType - Filter by profile type
+ * @property {string} registrationStatus - Filter by registration status
  */
 
 /**
@@ -29,6 +31,8 @@ const DEFAULT_FILTERS = {
   track: "",
   dateFrom: "",
   dateTo: "",
+  profileType: "",
+  registrationStatus: "",
 };
 
 const DASHBOARD_PAGE_LIMIT = 100;
@@ -96,6 +100,8 @@ export const useSummitDashboard = () => {
           search: filters.search || undefined,
           governorate: filters.governorate || undefined,
           track: filters.track || undefined,
+          profileType: filters.profileType || undefined,
+          registrationStatus: filters.registrationStatus || undefined,
           dateFrom: filters.dateFrom || undefined,
           dateTo: filters.dateTo || undefined,
           sortField,
@@ -132,6 +138,8 @@ export const useSummitDashboard = () => {
         search: filters.search || undefined,
         governorate: filters.governorate || undefined,
         track: filters.track || undefined,
+        profileType: filters.profileType || undefined,
+        registrationStatus: filters.registrationStatus || undefined,
         dateFrom: filters.dateFrom || undefined,
         dateTo: filters.dateTo || undefined,
         sortField,

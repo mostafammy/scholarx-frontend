@@ -3,10 +3,10 @@
  * Controlled component: all filter state lives in parent (useSummitDashboard hook).
  */
 
-import React, { useCallback } from 'react';
-import PropTypes from 'prop-types';
-import { SUMMIT_TRACKS } from '../../constants/eventData';
-import { EGYPTIAN_GOVERNORATES } from '../../constants/governorates';
+import React, { useCallback } from "react";
+import PropTypes from "prop-types";
+import { SUMMIT_TRACKS } from "../../constants/eventData";
+import { EGYPTIAN_GOVERNORATES } from "../../constants/governorates";
 
 /**
  * @param {{
@@ -18,83 +18,146 @@ import { EGYPTIAN_GOVERNORATES } from '../../constants/governorates';
 const FilterBar = ({ filters, setFilter, resetFilters }) => {
   const handleChange = useCallback(
     (key) => (e) => setFilter(key, e.target.value),
-    [setFilter]
+    [setFilter],
   );
 
   return (
-    <div className="summit-db-filter-bar" role="search" aria-label="Filter registrations">
+    <div
+      className="summit-db-filter-bar"
+      role="search"
+      aria-label="Filter registrations"
+    >
       {/* Text Search */}
       <div className="summit-db-filter-group summit-db-filter-group--search">
-        <label htmlFor="db-search" className="summit-db-filter-label">Search</label>
+        <label htmlFor="db-search" className="summit-db-filter-label">
+          Search
+        </label>
         <input
           id="db-search"
           type="search"
           className="summit-db-filter-input"
           placeholder="Search by name, email, or university..."
           value={filters.search}
-          onChange={handleChange('search')}
+          onChange={handleChange("search")}
           aria-label="Search registrations"
         />
       </div>
 
       {/* Governorate */}
       <div className="summit-db-filter-group">
-        <label htmlFor="db-gov" className="summit-db-filter-label">Governorate</label>
+        <label htmlFor="db-gov" className="summit-db-filter-label">
+          Governorate
+        </label>
         <select
           id="db-gov"
           className="summit-db-filter-select"
           value={filters.governorate}
-          onChange={handleChange('governorate')}
+          onChange={handleChange("governorate")}
           aria-label="Filter by governorate"
         >
           <option value="">All Governorates</option>
           {EGYPTIAN_GOVERNORATES.map(({ value, label }) => (
-            <option key={value} value={value}>{label}</option>
+            <option key={value} value={value}>
+              {label}
+            </option>
           ))}
         </select>
       </div>
 
       {/* Track */}
       <div className="summit-db-filter-group">
-        <label htmlFor="db-track" className="summit-db-filter-label">Track</label>
+        <label htmlFor="db-track" className="summit-db-filter-label">
+          Track
+        </label>
         <select
           id="db-track"
           className="summit-db-filter-select"
           value={filters.track}
-          onChange={handleChange('track')}
+          onChange={handleChange("track")}
           aria-label="Filter by track"
         >
           <option value="">All Tracks</option>
           {SUMMIT_TRACKS.map(({ id, title }) => (
-            <option key={id} value={id}>{title}</option>
+            <option key={id} value={id}>
+              {title}
+            </option>
           ))}
+        </select>
+      </div>
+
+      {/* Profile Type */}
+      <div className="summit-db-filter-group">
+        <label htmlFor="db-profile" className="summit-db-filter-label">
+          Profile
+        </label>
+        <select
+          id="db-profile"
+          className="summit-db-filter-select"
+          value={filters.profileType || ""}
+          onChange={handleChange("profileType")}
+          aria-label="Filter by profile type"
+        >
+          <option value="">All Profiles</option>
+          <option value="highSchool">High School</option>
+          <option value="undergraduate">Undergraduate</option>
+          <option value="graduate">Graduate</option>
+          <option value="professional">Professional</option>
+          <option value="other">Other</option>
+          <option value="legacy">Legacy (V1)</option>
+        </select>
+      </div>
+
+      {/* Registration Status */}
+      <div className="summit-db-filter-group">
+        <label htmlFor="db-status" className="summit-db-filter-label">
+          Status
+        </label>
+        <select
+          id="db-status"
+          className="summit-db-filter-select"
+          value={filters.registrationStatus || ""}
+          onChange={handleChange("registrationStatus")}
+          aria-label="Filter by registration status"
+        >
+          <option value="">All Statuses</option>
+          <option value="new">New</option>
+          <option value="contacted">Contacted</option>
+          <option value="confirmed">Confirmed</option>
+          <option value="waitlisted">Waitlisted</option>
+          <option value="rejected">Rejected</option>
+          <option value="checked-in">Checked In</option>
+          <option value="cancelled">Cancelled</option>
         </select>
       </div>
 
       {/* Date Range */}
       <div className="summit-db-filter-group">
-        <label htmlFor="db-date-from" className="summit-db-filter-label">From Date</label>
+        <label htmlFor="db-date-from" className="summit-db-filter-label">
+          From Date
+        </label>
         <input
           id="db-date-from"
           type="date"
           className="summit-db-filter-input"
           value={filters.dateFrom}
-          onChange={handleChange('dateFrom')}
+          onChange={handleChange("dateFrom")}
           aria-label="Filter from date"
-          style={{ colorScheme: 'dark' }}
+          style={{ colorScheme: "dark" }}
         />
       </div>
 
       <div className="summit-db-filter-group">
-        <label htmlFor="db-date-to" className="summit-db-filter-label">To Date</label>
+        <label htmlFor="db-date-to" className="summit-db-filter-label">
+          To Date
+        </label>
         <input
           id="db-date-to"
           type="date"
           className="summit-db-filter-input"
           value={filters.dateTo}
-          onChange={handleChange('dateTo')}
+          onChange={handleChange("dateTo")}
           aria-label="Filter to date"
-          style={{ colorScheme: 'dark' }}
+          style={{ colorScheme: "dark" }}
         />
       </div>
 
@@ -119,6 +182,8 @@ FilterBar.propTypes = {
     search: PropTypes.string.isRequired,
     governorate: PropTypes.string.isRequired,
     track: PropTypes.string.isRequired,
+    profileType: PropTypes.string,
+    registrationStatus: PropTypes.string,
     dateFrom: PropTypes.string.isRequired,
     dateTo: PropTypes.string.isRequired,
   }).isRequired,
