@@ -13,7 +13,7 @@ import { EVENT_META } from "../../constants/eventData";
 const SPONSOR_ITEMS = [
   {
     id: "scholarx",
-    logoSrc: "/ScholarX-Logo-Icon-White-Blue-BG_ScholarX.svg",
+    logoSrc: "/ScholarX-Logo-Icon-Blue_ScholarX.svg",
     logoAlt: "ScholarX logo",
     name: "",
     logoClass: "summit-sponsor-logo summit-sponsor-logo--scholarx",
@@ -232,9 +232,20 @@ const HeroSection = ({ onRegisterClick }) => {
 
         {/* PROMINENT Event Meta (Date & Location) */}
         <motion.div variants={itemVariants} style={{ display: 'flex', justifyContent: 'center', marginBottom: '3rem' }}>
-          <div className="summit-hero-datetime-pill" role="group" aria-label="Event Date and Location">
+          <motion.div 
+            className="summit-hero-datetime-pill" 
+            role="group" 
+            aria-label="Event Date and Location"
+            animate={{ y: [0, -8, 0] }}
+            transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+            whileHover={{ scale: 1.05, boxShadow: "0 16px 50px rgba(245,197,24,0.3), inset 0 1px 0 rgba(255,255,255,0.4)" }}
+          >
             <div className="summit-hero-dt-item">
-              <span className="summit-hero-dt-icon">📅</span>
+              <motion.span 
+                className="summit-hero-dt-icon"
+                animate={{ rotate: [-5, 5, -5] }}
+                transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+              >📅</motion.span>
               <div className="summit-hero-dt-text">
                 <span className="summit-hero-dt-label">Date</span>
                 <span className="summit-hero-dt-value">May 1, 2026</span>
@@ -242,13 +253,17 @@ const HeroSection = ({ onRegisterClick }) => {
             </div>
             <div className="summit-hero-dt-divider" />
             <div className="summit-hero-dt-item">
-              <span className="summit-hero-dt-icon">📍</span>
+              <motion.span 
+                className="summit-hero-dt-icon"
+                animate={{ y: [0, -3, 0] }}
+                transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+              >📍</motion.span>
               <div className="summit-hero-dt-text">
                 <span className="summit-hero-dt-label">Location</span>
                 <span className="summit-hero-dt-value">Nile University, Giza</span>
               </div>
             </div>
-          </div>
+          </motion.div>
         </motion.div>
 
         {/* Countdown */}
