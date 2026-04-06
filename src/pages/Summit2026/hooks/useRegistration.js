@@ -27,9 +27,12 @@ const mapGoalToTrack = (primaryGoal) => {
     case "find-scholarship":
       return "global-education";
     case "develop-skills":
+    case "meet-experts":
       return "skills-development";
     case "build-network":
+    case "career-growth":
       return "career-excellence";
+    case "other":
     default:
       return "innovation-impact";
   }
@@ -71,7 +74,8 @@ export const useRegistration = () => {
 
   const form = useForm({
     resolver: yupResolver(schema),
-    mode: "onBlur",
+    mode: "onChange",
+    reValidateMode: "onChange",
     defaultValues: allFormData,
   });
 

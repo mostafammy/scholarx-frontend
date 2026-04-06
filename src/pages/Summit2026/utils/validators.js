@@ -148,8 +148,10 @@ export const step1Schema = Yup.object({
         "find-scholarship",
         "develop-skills",
         "build-network",
+        "career-growth",
+        "meet-experts",
         "other",
-      ]),
+      ])
     )
     .min(1, "Please select at least one goal")
     .required("Please select at least one goal"),

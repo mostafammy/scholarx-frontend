@@ -4,18 +4,18 @@
  * Single Responsibility: visual selection UX only.
  */
 
-import React, { useCallback } from 'react';
-import PropTypes from 'prop-types';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useCallback } from "react";
+import PropTypes from "prop-types";
+import { motion, AnimatePresence } from "framer-motion";
 
 /** @type {readonly { value: string, label: string, icon: string }[]} */
 const GOAL_OPTIONS = Object.freeze([
-  { value: 'find-scholarship', label: 'Find a Scholarship', icon: '🎓' },
-  { value: 'develop-skills', label: 'Develop My Skills', icon: '⚡' },
-  { value: 'build-network', label: 'Build My Network', icon: '🤝' },
-  { value: 'career-growth', label: 'Accelerate My Career', icon: '🚀' },
-  { value: 'meet-experts', label: 'Meet Industry Experts', icon: '💡' },
-  { value: 'other', label: 'Something Else', icon: '✨' },
+  { value: "find-scholarship", label: "Find a Scholarship", icon: "🎓" },
+  { value: "develop-skills", label: "Develop My Skills", icon: "⚡" },
+  { value: "build-network", label: "Build My Network", icon: "🤝" },
+  { value: "career-growth", label: "Accelerate My Career", icon: "🚀" },
+  { value: "meet-experts", label: "Meet Industry Experts", icon: "💡" },
+  { value: "other", label: "Something Else", icon: "✨" },
 ]);
 
 const chipVariants = {
@@ -30,7 +30,11 @@ const chipVariants = {
 
 const checkmarkPath = {
   hidden: { pathLength: 0, opacity: 0 },
-  visible: { pathLength: 1, opacity: 1, transition: { duration: 0.3, ease: 'easeOut' } },
+  visible: {
+    pathLength: 1,
+    opacity: 1,
+    transition: { duration: 0.3, ease: "easeOut" },
+  },
 };
 
 /**
@@ -41,20 +45,23 @@ const checkmarkPath = {
  * }} props
  */
 const GoalChips = ({ value: selected = [], onChange, error }) => {
-  const toggle = useCallback((chipValue) => {
-    const next = selected.includes(chipValue)
-      ? selected.filter((v) => v !== chipValue)
-      : [...selected, chipValue];
-    onChange(next);
-  }, [selected, onChange]);
+  const toggle = useCallback(
+    (chipValue) => {
+      const next = selected.includes(chipValue)
+        ? selected.filter((v) => v !== chipValue)
+        : [...selected, chipValue];
+      onChange(next);
+    },
+    [selected, onChange],
+  );
 
   return (
     <div>
       <motion.div
         style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          gap: '10px',
+          display: "flex",
+          flexWrap: "wrap",
+          gap: "10px",
         }}
         role="group"
         aria-label="Your goals for attending"
@@ -77,13 +84,13 @@ const GoalChips = ({ value: selected = [], onChange, error }) => {
               whileTap={{ scale: 0.95 }}
               className="summit-goal-chip"
               style={{
-                borderColor: isSelected ? 'rgba(245,197,24,0.6)' : undefined,
+                borderColor: isSelected ? "rgba(245,197,24,0.6)" : undefined,
                 background: isSelected
-                  ? 'linear-gradient(135deg, rgba(245,197,24,0.15), rgba(255,159,28,0.08))'
+                  ? "linear-gradient(135deg, rgba(245,197,24,0.15), rgba(255,159,28,0.08))"
                   : undefined,
-                color: isSelected ? '#f5c518' : undefined,
+                color: isSelected ? "#f5c518" : undefined,
                 boxShadow: isSelected
-                  ? '0 0 0 1px rgba(245,197,24,0.3), 0 4px 16px rgba(245,197,24,0.12)'
+                  ? "0 0 0 1px rgba(245,197,24,0.3), 0 4px 16px rgba(245,197,24,0.12)"
                   : undefined,
               }}
             >
@@ -141,13 +148,13 @@ const GoalChips = ({ value: selected = [], onChange, error }) => {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
             style={{
-              marginTop: '10px',
-              fontSize: '0.78rem',
-              color: 'rgba(245,197,24,0.7)',
+              marginTop: "10px",
+              fontSize: "0.78rem",
+              color: "rgba(245,197,24,0.7)",
               fontWeight: 600,
             }}
           >
-            {selected.length} goal{selected.length !== 1 ? 's' : ''} selected ✓
+            {selected.length} goal{selected.length !== 1 ? "s" : ""} selected ✓
           </motion.div>
         )}
       </AnimatePresence>
