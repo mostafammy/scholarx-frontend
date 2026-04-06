@@ -19,6 +19,7 @@ const DEFAULT_EVENT_CODE = "summit-2026";
 
 const api = axios.create({
   baseURL: API_URL,
+  timeout: 15000,
   headers: {
     "Content-Type": "application/json",
   },
@@ -109,21 +110,44 @@ class ApiRegistrationRepository {
   }
 
   async save(data) {
+    const payload = {
+      ...data,
+      eventCode: this._eventCode,
+    };
+
+    const requestConfig = {
+      headers: {
+        "X-Summit-Registration-Schema": "2",
+      },
+    };
+
     try {
       const response = await api.post(
         "/summit/registrations",
-        {
-          ...data,
-          eventCode: this._eventCode,
-        },
-        {
-          headers: {
-            "X-Summit-Registration-Schema": "2",
-          },
-        },
+        payload,
+        requestConfig,
       );
       return response.data?.data?.registration;
     } catch (error) {
+      const status = error?.response?.status;
+      const shouldRetry =
+        !status || status >= 500 || error?.code === "ECONNABORTED";
+
+      if (shouldRetry) {
+        try {
+          const retryResponse = await api.post(
+            "/summit/registrations",
+            payload,
+            requestConfig,
+          );
+          return retryResponse.data?.data?.registration;
+        } catch (retryError) {
+          throw new Error(
+            toErrorMessage(retryError, "Failed to submit summit registration"),
+          );
+        }
+      }
+
       throw new Error(
         toErrorMessage(error, "Failed to submit summit registration"),
       );

@@ -217,15 +217,35 @@ export const useRegistration = () => {
           customClass: { confirmButton: "summit-swal-btn" },
         });
       } catch (error) {
-        const isDuplicate = error?.message
-          ?.toLowerCase?.()
-          .includes("already registered");
+        const normalizedMessage = String(error?.message || "").toLowerCase();
+        const isDuplicate = normalizedMessage.includes("already registered");
+        const isRateLimited =
+          normalizedMessage.includes("too many") ||
+          normalizedMessage.includes("rate limit") ||
+          normalizedMessage.includes("429");
+        const isTimeoutOrNetwork =
+          normalizedMessage.includes("timeout") ||
+          normalizedMessage.includes("network") ||
+          normalizedMessage.includes("failed to submit summit registration");
+
+        const title = isDuplicate
+          ? "⚠️ Already Registered"
+          : isRateLimited
+            ? "⏳ Too Many Attempts"
+            : "❌ Submission Failed";
+
+        const text = isDuplicate
+          ? "This email address is already registered for the summit."
+          : isRateLimited
+            ? "We received too many requests from your network. Please wait a minute, then try again."
+            : isTimeoutOrNetwork
+              ? "Your connection looks unstable. Please check internet and try again."
+              : "Something went wrong. Please try again.";
+
         await Swal.fire({
-          title: isDuplicate ? "⚠️ Already Registered" : "❌ Submission Failed",
-          text: isDuplicate
-            ? "This email address is already registered for the summit."
-            : "Something went wrong. Please try again.",
-          icon: isDuplicate ? "warning" : "error",
+          title,
+          text,
+          icon: isDuplicate || isRateLimited ? "warning" : "error",
           confirmButtonText: "OK",
           background: "#0d1529",
           color: "#ffffff",
