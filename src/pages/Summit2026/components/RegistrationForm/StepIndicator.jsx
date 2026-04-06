@@ -5,6 +5,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import { motion } from 'framer-motion';
 import { FORM_STEPS_META } from '../../constants/formConstants';
 
 /**
@@ -22,18 +23,29 @@ const StepIndicator = ({ currentStep }) => (
       ].filter(Boolean).join(' ');
 
       return (
-        <div
+        <motion.div
           key={step}
           className={className}
           role="listitem"
           aria-current={isActive ? 'step' : undefined}
           aria-label={`Step ${step}: ${title}${isCompleted ? ' (completed)' : isActive ? ' (current)' : ''}`}
+          initial={false}
+          animate={{ scale: isActive ? 1.05 : 1 }}
+          transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
         >
-          <div className="summit-step-circle">
+          <motion.div 
+            className="summit-step-circle"
+            layout
+          >
             {isCompleted ? '✓' : step}
-          </div>
-          <span className="summit-step-title">{title}</span>
-        </div>
+          </motion.div>
+          <motion.span 
+            className="summit-step-title"
+            layout
+          >
+            {title}
+          </motion.span>
+        </motion.div>
       );
     })}
   </nav>

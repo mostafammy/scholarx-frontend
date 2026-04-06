@@ -118,6 +118,8 @@ CountdownUnit.propTypes = {
 
 /* ── Hero Section ───────────────────────────────────────────────────────── */
 
+import { motion } from "framer-motion";
+
 /**
  * @param {{ onRegisterClick: () => void }} props
  */
@@ -141,13 +143,33 @@ const HeroSection = ({ onRegisterClick }) => {
       ?.scrollIntoView({ behavior: "smooth" });
   }, []);
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { 
+      opacity: 1, 
+      transition: { staggerChildren: 0.15, delayChildren: 0.1 } 
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { 
+      opacity: 1, 
+      y: 0, 
+      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } 
+    },
+  };
+
   return (
     <section className="summit-hero" aria-label="Event Hero">
       <StarField />
 
-      {/* Decorative glow orbs */}
-      <div
+      {/* Decorative glow orbs - Animated */}
+      <motion.div
         aria-hidden="true"
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 2, ease: "easeOut" }}
         style={{
           position: "absolute",
           width: 500,
@@ -161,11 +183,17 @@ const HeroSection = ({ onRegisterClick }) => {
         }}
       />
 
-      <div className="summit-hero-content">
+      <motion.div 
+        className="summit-hero-content"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
         {/* Animated sponsor bar */}
-        <div
+        <motion.div
           className="summit-sponsor-marquee-wrap"
           aria-label="Sponsors and partners"
+          variants={itemVariants}
         >
           <Marquee
             speed={36}
@@ -189,44 +217,48 @@ const HeroSection = ({ onRegisterClick }) => {
               </div>
             ))}
           </Marquee>
-        </div>
+        </motion.div>
 
         {/* Main title */}
-        <h1 className="summit-hero-title">{EVENT_META.name}</h1>
+        <motion.h1 className="summit-hero-title" variants={itemVariants}>
+          {EVENT_META.name}
+        </motion.h1>
 
         {/* Tagline */}
-        <p className="summit-hero-tagline" aria-label="Summit theme">
+        <motion.p className="summit-hero-tagline" aria-label="Summit theme" variants={itemVariants}>
           Your compass to global opportunities: scholarships, future-ready
           skills, and limitless possibilities.
-        </p>
+        </motion.p>
 
-        {/* Event meta */}
-        <div
-          className="summit-hero-meta"
-          role="list"
-          aria-label="Event details"
-        >
-          <div className="summit-hero-meta-item" role="listitem">
-            <span className="summit-hero-meta-icon" aria-hidden="true">
-              📅
-            </span>
-            <span>May 1, 2026</span>
+        {/* PROMINENT Event Meta (Date & Location) */}
+        <motion.div variants={itemVariants} style={{ display: 'flex', justifyContent: 'center', marginBottom: '3rem' }}>
+          <div className="summit-hero-datetime-pill" role="group" aria-label="Event Date and Location">
+            <div className="summit-hero-dt-item">
+              <span className="summit-hero-dt-icon">📅</span>
+              <div className="summit-hero-dt-text">
+                <span className="summit-hero-dt-label">Date</span>
+                <span className="summit-hero-dt-value">May 1, 2026</span>
+              </div>
+            </div>
+            <div className="summit-hero-dt-divider" />
+            <div className="summit-hero-dt-item">
+              <span className="summit-hero-dt-icon">📍</span>
+              <div className="summit-hero-dt-text">
+                <span className="summit-hero-dt-label">Location</span>
+                <span className="summit-hero-dt-value">Nile University, Giza</span>
+              </div>
+            </div>
           </div>
-          <div className="summit-hero-meta-item" role="listitem">
-            <span className="summit-hero-meta-icon" aria-hidden="true">
-              📍
-            </span>
-            <span>Nile University, Giza</span>
-          </div>
-        </div>
+        </motion.div>
 
         {/* Countdown */}
         {!isExpired && (
-          <div
+          <motion.div
             className="summit-countdown"
             role="timer"
             aria-live="polite"
             aria-label="Countdown to summit"
+            variants={itemVariants}
           >
             <p className="summit-countdown-label">
               Time left until the most important event in your growth journey.
@@ -239,11 +271,11 @@ const HeroSection = ({ onRegisterClick }) => {
               label="Seconds"
               showSeparator={false}
             />
-          </div>
+          </motion.div>
         )}
 
         {/* CTAs */}
-        <div className="summit-hero-ctas">
+        <motion.div className="summit-hero-ctas" variants={itemVariants}>
           <a
             href="#registration"
             id="hero-register-btn"
@@ -263,8 +295,8 @@ const HeroSection = ({ onRegisterClick }) => {
           >
             Learn More
           </a>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </section>
   );
 };

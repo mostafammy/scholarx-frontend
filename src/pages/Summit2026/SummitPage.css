@@ -172,13 +172,16 @@
    5. GLASSMORPHISM CARD UTILITY
    -------------------------------------------------------------------------- */
 .summit-glass-card {
-  background: var(--s-glass-bg);
-  border: 1px solid var(--s-glass-border);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+  border: 1px solid rgba(255,255,255,0.1);
+  backdrop-filter: blur(40px) saturate(120%);
+  -webkit-backdrop-filter: blur(40px) saturate(120%);
   border-radius: var(--s-radius-xl);
-  box-shadow: var(--s-shadow-card);
-  transition: transform var(--s-transition-base), box-shadow var(--s-transition-base), border-color var(--s-transition-base);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.4), 
+    0 1px 0 rgba(255, 255, 255, 0.2) inset,
+    0 1px 2px rgba(0,0,0,0.5);
+  transition: all var(--s-transition-base);
 }
 
 .summit-glass-card:hover {
@@ -517,25 +520,79 @@
   margin: 0 0 var(--s-space-8);
 }
 
-.summit-hero-meta {
+.summit-hero-datetime-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-space-6);
+  background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%);
+  border: 1px solid rgba(255,255,255,0.15);
+  backdrop-filter: blur(24px) saturate(150%);
+  -webkit-backdrop-filter: blur(24px) saturate(150%);
+  border-radius: var(--s-radius-full);
+  padding: var(--s-space-3) var(--s-space-8);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.2);
+}
+
+.summit-hero-dt-item {
+  display: flex;
+  align-items: center;
+  gap: var(--s-space-3);
+  text-align: left;
+}
+
+.summit-hero-dt-icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--s-space-6);
-  flex-wrap: wrap;
-  margin-bottom: var(--s-space-12);
+  width: 48px;
+  height: 48px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 50%;
+  font-size: 1.25rem;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
 }
 
-.summit-hero-meta-item {
+.summit-hero-dt-text {
   display: flex;
-  align-items: center;
-  gap: var(--s-space-2);
-  color: var(--s-text-300);
-  font-size: 0.9rem;
+  flex-direction: column;
 }
 
-.summit-hero-meta-icon {
-  font-size: 1rem;
+.summit-hero-dt-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: var(--s-text-400);
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.summit-hero-dt-value {
+  font-family: var(--s-font-display);
+  font-size: 1.15rem;
+  color: var(--s-text-100);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.summit-hero-dt-divider {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.15), transparent);
+}
+
+@media (max-width: 640px) {
+  .summit-hero-datetime-pill {
+    flex-direction: column;
+    align-items: flex-start;
+    border-radius: var(--s-radius-xl);
+    padding: var(--s-space-5);
+    gap: var(--s-space-4);
+  }
+  .summit-hero-dt-divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(255,255,255,0.15), transparent);
+  }
 }
 
 .summit-hero-cta {
@@ -1279,12 +1336,13 @@
 
 /* Form Card */
 .summit-form-card {
-  background: rgba(13,21,41,0.8);
-  border: 1px solid var(--s-glass-border);
+  background: rgba(13,21,41,0.6);
+  border: 1px solid rgba(255,255,255,0.12);
   border-radius: var(--s-radius-2xl);
-  padding: var(--s-space-10);
-  backdrop-filter: blur(30px);
-  box-shadow: 0 40px 80px rgba(0,0,0,0.4);
+  padding: var(--s-space-12);
+  backdrop-filter: blur(40px) saturate(120%);
+  -webkit-backdrop-filter: blur(40px) saturate(120%);
+  box-shadow: 0 40px 80px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.1);
 }
 
 .summit-form-step-title {
@@ -1331,16 +1389,17 @@
 .summit-form-select,
 .summit-form-textarea {
   width: 100%;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(0,0,0,0.2);
+  border: 1px solid rgba(255,255,255,0.08);
   border-radius: var(--s-radius-md);
   color: var(--s-text-100);
   font-family: var(--s-font-body);
   font-size: 0.95rem;
   padding: var(--s-space-3) var(--s-space-4);
-  transition: all var(--s-transition-fast);
+  transition: all var(--s-transition-base);
   outline: none;
   box-sizing: border-box;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
 }
 
 .summit-form-input::placeholder,
@@ -1351,9 +1410,9 @@
 .summit-form-input:focus,
 .summit-form-select:focus,
 .summit-form-textarea:focus {
-  border-color: var(--s-gold-500);
-  background: rgba(255,255,255,0.07);
-  box-shadow: 0 0 0 3px var(--s-gold-glow);
+  border-color: rgba(245, 197, 24, 0.6);
+  background: rgba(0,0,0,0.4);
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.1), 0 0 0 4px rgba(245, 197, 24, 0.15);
 }
 
 .summit-form-input.is-error,
