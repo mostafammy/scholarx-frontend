@@ -149,6 +149,17 @@ const authSlice = createSlice({
       .addCase(getCurrentUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+        if (
+          String(action?.error?.message || "").includes("401") ||
+          String(action?.error?.message || "").includes("403")
+        ) {
+          state.user = null;
+          state.token = null;
+          state.isAuthenticated = false;
+          state.isAdmin = false;
+          Cookies.remove(AUTH_TOKEN_KEY, cookieOptions);
+          Cookies.remove(USER_ROLE_KEY, cookieOptions);
+        }
       })
       // Update Profile
       .addCase(updateProfile.pending, (state) => {

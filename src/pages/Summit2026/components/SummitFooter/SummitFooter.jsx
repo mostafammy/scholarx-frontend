@@ -8,7 +8,10 @@ import { useSelector } from "react-redux";
 import { EVENT_META } from "../../constants/eventData";
 
 const SummitFooter = () => {
-  const isAdmin = useSelector((state) => state?.auth?.isAdmin);
+  const isAdmin = useSelector((state) => {
+    const auth = state?.auth;
+    return Boolean(auth?.isAuthenticated && auth?.user?.role === "admin");
+  });
 
   return (
     <footer className="summit-footer" role="contentinfo">
