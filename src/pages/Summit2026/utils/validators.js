@@ -6,7 +6,10 @@
 
 import * as Yup from "yup";
 import { normalizeProfileType } from "./profileDrafts";
-import { normalisePhoneNumber, isValidE164YupTest } from "../../../utils/phoneValidation";
+import {
+  normalisePhoneNumber,
+  isValidE164YupTest,
+} from "../../../utils/phoneValidation";
 
 /** @type {import('yup').ObjectSchema} */
 export const step1Schema = Yup.object({
@@ -23,7 +26,11 @@ export const step1Schema = Yup.object({
 
   phone: Yup.string()
     .transform((value) => normalisePhoneNumber(value))
-    .test("e164", "Please enter a valid international phone number (e.g. +20 111...)", isValidE164YupTest)
+    .test(
+      "e164",
+      "Please enter a valid international phone number (e.g. +20 111...)",
+      isValidE164YupTest,
+    )
     .required("Phone number is required"),
 
   nationalId: Yup.string()
