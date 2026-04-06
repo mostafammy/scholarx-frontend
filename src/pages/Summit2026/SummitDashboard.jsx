@@ -99,7 +99,7 @@ const SummitDashboard = () => {
           )}
 
           <VisualInsights stats={stats} registrations={registrations} />
-          <StatsCards stats={stats} />
+          <StatsCards stats={stats} isLoading={isLoading} />
           <FilterBar
             filters={filters}
             setFilter={setFilter}

@@ -9,9 +9,13 @@ import PropTypes from 'prop-types';
 /**
  * @param {{ stats: ReturnType<typeof import('../../services/RegistrationRepository').registrationRepository.getStats> }} props
  */
-const StatsCards = ({ stats }) => {
+const StatsCards = ({ stats, isLoading }) => {
   const topGovernorate = Object.entries(stats.byGovernorate).sort(([, a], [, b]) => b - a)[0];
   const topTrack       = Object.entries(stats.byTrack).sort(([, a], [, b]) => b - a)[0];
+
+  const Shimmer = () => (
+    <div className="summit-db-skeleton" style={{ height: '32px', width: '100%', marginBottom: '4px' }} />
+  );
 
   return (
     <div className="summit-db-stats-row" role="list" aria-label="Dashboard statistics">
@@ -19,7 +23,7 @@ const StatsCards = ({ stats }) => {
       <div className="summit-db-stat-card summit-db-stat-card--total" role="listitem">
         <div className="summit-db-stat-icon summit-db-stat-icon--total" aria-hidden="true">📋</div>
         <div className="summit-db-stat-value" aria-label={`${stats.total} total registrations`}>
-          {stats.total.toLocaleString()}
+          {isLoading ? <Shimmer /> : stats.total.toLocaleString()}
         </div>
         <div className="summit-db-stat-label">Total Registrations</div>
         <div className="summit-db-stat-sub">All-time entries</div>
@@ -29,7 +33,7 @@ const StatsCards = ({ stats }) => {
       <div className="summit-db-stat-card summit-db-stat-card--today" role="listitem">
         <div className="summit-db-stat-icon summit-db-stat-icon--today" aria-hidden="true">📅</div>
         <div className="summit-db-stat-value" aria-label={`${stats.todayCount} registrations today`}>
-          {stats.todayCount}
+          {isLoading ? <Shimmer /> : stats.todayCount}
         </div>
         <div className="summit-db-stat-label">Today's Signups</div>
         <div className="summit-db-stat-sub">{new Date().toLocaleDateString('en-EG', { month: 'short', day: 'numeric' })}</div>
@@ -39,7 +43,7 @@ const StatsCards = ({ stats }) => {
       <div className="summit-db-stat-card summit-db-stat-card--gov" role="listitem">
         <div className="summit-db-stat-icon summit-db-stat-icon--gov" aria-hidden="true">📍</div>
         <div className="summit-db-stat-value" aria-label={topGovernorate ? `${topGovernorate[1]} from top governorate` : '0'}>
-          {topGovernorate ? topGovernorate[1] : '—'}
+          {isLoading ? <Shimmer /> : (topGovernorate ? topGovernorate[1] : '—')}
         </div>
         <div className="summit-db-stat-label">Top Governorate</div>
         <div className="summit-db-stat-sub">
@@ -51,7 +55,7 @@ const StatsCards = ({ stats }) => {
       <div className="summit-db-stat-card summit-db-stat-card--track" role="listitem">
         <div className="summit-db-stat-icon summit-db-stat-icon--track" aria-hidden="true">🎯</div>
         <div className="summit-db-stat-value" aria-label={topTrack ? `${topTrack[1]} for top track` : '0'}>
-          {topTrack ? topTrack[1] : '—'}
+          {isLoading ? <Shimmer /> : (topTrack ? topTrack[1] : '—')}
         </div>
         <div className="summit-db-stat-label">Most Popular Track</div>
         <div className="summit-db-stat-sub">
@@ -69,6 +73,7 @@ StatsCards.propTypes = {
     byGovernorate: PropTypes.objectOf(PropTypes.number).isRequired,
     byTrack: PropTypes.objectOf(PropTypes.number).isRequired,
   }).isRequired,
+  isLoading: PropTypes.bool,
 };
 
 export default React.memo(StatsCards);
