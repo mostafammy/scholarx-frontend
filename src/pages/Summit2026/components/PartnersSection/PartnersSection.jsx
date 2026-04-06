@@ -26,6 +26,13 @@ const PARTNERS_GRID = [
     desc: "Supporting impactful youth and sustainability initiatives across the Mediterranean.",
     logoSrc: "/EN_fundedbyEU_VERTICAL_RGB_POS.png",
     color: "#f5c518",
+  },
+  {
+    id: "eu-medbridge",
+    name: "EU MedBridge",
+    desc: "Creating a direct bridge between Egyptian youth and global educational opportunities.",
+    logoSrc: "/EU MedBridge.png",
+    color: "#3d7bff",
   }
 ];
 
