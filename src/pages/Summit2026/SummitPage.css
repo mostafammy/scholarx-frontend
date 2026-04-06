@@ -378,8 +378,9 @@
 }
 
 .summit-sponsor-logo-wrap {
-  width: clamp(84px, 10vw, 132px);
-  height: clamp(50px, 6vw, 76px);
+  min-width: 100px;
+  max-width: 320px;
+  height: clamp(50px, 6vw, 100px);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -407,8 +408,8 @@
 }
 
 .summit-sponsor-logo--jeel-connect {
-  max-width: clamp(110px, 14vw, 190px);
-  max-height: clamp(44px, 5vw, 74px);
+  max-width: clamp(160px, 20vw, 280px);
+  max-height: clamp(60px, 8vw, 110px);
 }
 
 .summit-sponsor-logo--eu-funded {
