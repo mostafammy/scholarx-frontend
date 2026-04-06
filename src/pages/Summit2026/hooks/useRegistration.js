@@ -141,7 +141,8 @@ export const useRegistration = () => {
       setIsSubmitting(true);
       try {
         const track = mapGoalToTrack(merged.primaryGoal);
-        const selectedProfileType = normalizeProfileType(merged.status) || "other";
+        const selectedProfileType =
+          normalizeProfileType(merged.status) || "other";
         const { profileDetails, ...payload } = pruneActiveBranchPayload({
           profileType: selectedProfileType,
           values: merged,

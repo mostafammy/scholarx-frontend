@@ -4,35 +4,46 @@
  * Validation handled by Yup schema in validators.js.
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
-import PhoneInput from 'react-phone-input-2';
-import 'react-phone-input-2/lib/style.css';
-import { Controller, useWatch } from 'react-hook-form';
+import React from "react";
+import PropTypes from "prop-types";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
+import { Controller, useWatch } from "react-hook-form";
 import {
   ENGLISH_LEVEL_OPTIONS,
   EGYPTIAN_GOVERNORATES,
   HIGH_SCHOOL_YEAR_OPTIONS,
   UNDERGRADUATE_YEAR_OPTIONS,
-} from '../../constants/formConstants';
-import { normalizeProfileType } from '../../utils/profileDrafts';
+} from "../../constants/formConstants";
+import { normalizeProfileType } from "../../utils/profileDrafts";
 
 /**
  * @param {{ form: import('react-hook-form').UseFormReturn }} props
  */
 const Step1PersonalInfo = ({ form, showProfileSwitchNotice = false }) => {
-  const { register, control, formState: { errors } } = form;
-  const selectedStatus = useWatch({ control, name: 'status' });
+  const {
+    register,
+    control,
+    formState: { errors },
+  } = form;
+  const selectedStatus = useWatch({ control, name: "status" });
   const profileType = normalizeProfileType(selectedStatus);
 
   return (
     <div role="group" aria-labelledby="step1-title">
-      <h3 id="step1-title" className="summit-form-step-title">Simple Registration Form</h3>
-      <p className="summit-form-step-subtitle">Fill in your details and secure your seat now.</p>
+      <h3 id="step1-title" className="summit-form-step-title">
+        Simple Registration Form
+      </h3>
+      <p className="summit-form-step-subtitle">
+        Fill in your details and secure your seat now.
+      </p>
 
       {/* Full Name */}
       <div className="summit-form-group">
-        <label htmlFor="fullName" className="summit-form-label summit-form-label-required">
+        <label
+          htmlFor="fullName"
+          className="summit-form-label summit-form-label-required"
+        >
           Full Name (Three Names)
         </label>
         <input
@@ -40,10 +51,10 @@ const Step1PersonalInfo = ({ form, showProfileSwitchNotice = false }) => {
           type="text"
           autoComplete="name"
           placeholder="e.g. Ahmed Mohamed Hassan"
-          className={`summit-form-input${errors.fullName ? ' is-error' : ''}`}
-          aria-describedby={errors.fullName ? 'fullName-error' : undefined}
+          className={`summit-form-input${errors.fullName ? " is-error" : ""}`}
+          aria-describedby={errors.fullName ? "fullName-error" : undefined}
           aria-required="true"
-          {...register('fullName')}
+          {...register("fullName")}
         />
         {errors.fullName && (
           <p id="fullName-error" className="summit-form-error" role="alert">
@@ -54,7 +65,10 @@ const Step1PersonalInfo = ({ form, showProfileSwitchNotice = false }) => {
 
       {/* Email */}
       <div className="summit-form-group">
-        <label htmlFor="email" className="summit-form-label summit-form-label-required">
+        <label
+          htmlFor="email"
+          className="summit-form-label summit-form-label-required"
+        >
           Email Address
         </label>
         <input
@@ -62,10 +76,10 @@ const Step1PersonalInfo = ({ form, showProfileSwitchNotice = false }) => {
           type="email"
           autoComplete="email"
           placeholder="your@email.com"
-          className={`summit-form-input${errors.email ? ' is-error' : ''}`}
-          aria-describedby={errors.email ? 'email-error' : undefined}
+          className={`summit-form-input${errors.email ? " is-error" : ""}`}
+          aria-describedby={errors.email ? "email-error" : undefined}
           aria-required="true"
-          {...register('email')}
+          {...register("email")}
         />
         {errors.email && (
           <p id="email-error" className="summit-form-error" role="alert">
@@ -76,7 +90,10 @@ const Step1PersonalInfo = ({ form, showProfileSwitchNotice = false }) => {
 
       {/* Phone */}
       <div className="summit-form-group">
-        <label htmlFor="phone" className="summit-form-label summit-form-label-required">
+        <label
+          htmlFor="phone"
+          className="summit-form-label summit-form-label-required"
+        >
           WhatsApp Phone Number
         </label>
         <div className="summit-phone-wrap">
@@ -89,11 +106,11 @@ const Step1PersonalInfo = ({ form, showProfileSwitchNotice = false }) => {
                 value={value}
                 onChange={onChange}
                 inputProps={{
-                  id: 'phone',
-                  name: 'phone',
+                  id: "phone",
+                  name: "phone",
                   required: true,
-                  'aria-required': 'true',
-                  'aria-describedby': errors.phone ? 'phone-error' : undefined,
+                  "aria-required": "true",
+                  "aria-describedby": errors.phone ? "phone-error" : undefined,
                 }}
                 enableSearch
                 searchPlaceholder="Search country..."
@@ -109,19 +126,26 @@ const Step1PersonalInfo = ({ form, showProfileSwitchNotice = false }) => {
       </div>
 
       <div className="summit-form-group">
-        <label htmlFor="governorate" className="summit-form-label summit-form-label-required">
+        <label
+          htmlFor="governorate"
+          className="summit-form-label summit-form-label-required"
+        >
           Governorate
         </label>
         <select
           id="governorate"
-          className={`summit-form-select${errors.governorate ? ' is-error' : ''}`}
+          className={`summit-form-select${errors.governorate ? " is-error" : ""}`}
           aria-required="true"
-          aria-describedby={errors.governorate ? 'governorate-error' : undefined}
-          {...register('governorate')}
+          aria-describedby={
+            errors.governorate ? "governorate-error" : undefined
+          }
+          {...register("governorate")}
         >
           <option value="">Select your governorate...</option>
           {EGYPTIAN_GOVERNORATES.map(({ value, label, region }) => (
-            <option key={value} value={value}>{label} ({region})</option>
+            <option key={value} value={value}>
+              {label} ({region})
+            </option>
           ))}
         </select>
         {errors.governorate && (
@@ -132,15 +156,18 @@ const Step1PersonalInfo = ({ form, showProfileSwitchNotice = false }) => {
       </div>
 
       <div className="summit-form-group">
-        <label htmlFor="status" className="summit-form-label summit-form-label-required">
+        <label
+          htmlFor="status"
+          className="summit-form-label summit-form-label-required"
+        >
           What best describes you?
         </label>
         <select
           id="status"
-          className={`summit-form-select${errors.status ? ' is-error' : ''}`}
+          className={`summit-form-select${errors.status ? " is-error" : ""}`}
           aria-required="true"
-          aria-describedby={errors.status ? 'status-error' : undefined}
-          {...register('status', {
+          aria-describedby={errors.status ? "status-error" : undefined}
+          {...register("status", {
             setValueAs: (value) => normalizeProfileType(value),
           })}
         >
@@ -161,15 +188,19 @@ const Step1PersonalInfo = ({ form, showProfileSwitchNotice = false }) => {
       {showProfileSwitchNotice && (
         <div className="summit-form-group" role="status" aria-live="polite">
           <p className="summit-form-step-subtitle" style={{ marginTop: 0 }}>
-            We saved your previous answers for this path. Only fields for your current selection will be submitted.
+            We saved your previous answers for this path. Only fields for your
+            current selection will be submitted.
           </p>
         </div>
       )}
 
-      {profileType === 'highSchool' && (
+      {profileType === "highSchool" && (
         <>
           <div className="summit-form-group">
-            <label htmlFor="highSchoolName" className="summit-form-label summit-form-label-required">
+            <label
+              htmlFor="highSchoolName"
+              className="summit-form-label summit-form-label-required"
+            >
               High School Name
             </label>
             <input
@@ -177,35 +208,52 @@ const Step1PersonalInfo = ({ form, showProfileSwitchNotice = false }) => {
               type="text"
               autoComplete="organization"
               placeholder="e.g. STEM High School for Boys - 6th of October"
-              className={`summit-form-input${errors.highSchoolName ? ' is-error' : ''}`}
-              aria-describedby={errors.highSchoolName ? 'highSchoolName-error' : undefined}
+              className={`summit-form-input${errors.highSchoolName ? " is-error" : ""}`}
+              aria-describedby={
+                errors.highSchoolName ? "highSchoolName-error" : undefined
+              }
               aria-required="true"
-              {...register('highSchoolName')}
+              {...register("highSchoolName")}
             />
             {errors.highSchoolName && (
-              <p id="highSchoolName-error" className="summit-form-error" role="alert">
+              <p
+                id="highSchoolName-error"
+                className="summit-form-error"
+                role="alert"
+              >
                 ⚠ {errors.highSchoolName.message}
               </p>
             )}
           </div>
 
           <div className="summit-form-group">
-            <label htmlFor="highSchoolYear" className="summit-form-label summit-form-label-required">
+            <label
+              htmlFor="highSchoolYear"
+              className="summit-form-label summit-form-label-required"
+            >
               Current High School Year
             </label>
             <select
               id="highSchoolYear"
-              className={`summit-form-select${errors.highSchoolYear ? ' is-error' : ''}`}
+              className={`summit-form-select${errors.highSchoolYear ? " is-error" : ""}`}
               aria-required="true"
-              aria-describedby={errors.highSchoolYear ? 'highSchoolYear-error' : undefined}
-              {...register('highSchoolYear')}
+              aria-describedby={
+                errors.highSchoolYear ? "highSchoolYear-error" : undefined
+              }
+              {...register("highSchoolYear")}
             >
               {HIGH_SCHOOL_YEAR_OPTIONS.map(({ value, label }) => (
-                <option key={value || 'empty'} value={value}>{label}</option>
+                <option key={value || "empty"} value={value}>
+                  {label}
+                </option>
               ))}
             </select>
             {errors.highSchoolYear && (
-              <p id="highSchoolYear-error" className="summit-form-error" role="alert">
+              <p
+                id="highSchoolYear-error"
+                className="summit-form-error"
+                role="alert"
+              >
                 ⚠ {errors.highSchoolYear.message}
               </p>
             )}
@@ -213,10 +261,13 @@ const Step1PersonalInfo = ({ form, showProfileSwitchNotice = false }) => {
         </>
       )}
 
-      {(profileType === 'undergraduate' || profileType === 'graduate') && (
+      {(profileType === "undergraduate" || profileType === "graduate") && (
         <>
           <div className="summit-form-group">
-            <label htmlFor="universityName" className="summit-form-label summit-form-label-required">
+            <label
+              htmlFor="universityName"
+              className="summit-form-label summit-form-label-required"
+            >
               University Name
             </label>
             <input
@@ -224,30 +275,39 @@ const Step1PersonalInfo = ({ form, showProfileSwitchNotice = false }) => {
               type="text"
               autoComplete="organization"
               placeholder="e.g. Nile University"
-              className={`summit-form-input${errors.universityName ? ' is-error' : ''}`}
-              aria-describedby={errors.universityName ? 'universityName-error' : undefined}
+              className={`summit-form-input${errors.universityName ? " is-error" : ""}`}
+              aria-describedby={
+                errors.universityName ? "universityName-error" : undefined
+              }
               aria-required="true"
-              {...register('universityName')}
+              {...register("universityName")}
             />
             {errors.universityName && (
-              <p id="universityName-error" className="summit-form-error" role="alert">
+              <p
+                id="universityName-error"
+                className="summit-form-error"
+                role="alert"
+              >
                 ⚠ {errors.universityName.message}
               </p>
             )}
           </div>
 
           <div className="summit-form-group">
-            <label htmlFor="major" className="summit-form-label summit-form-label-required">
+            <label
+              htmlFor="major"
+              className="summit-form-label summit-form-label-required"
+            >
               Major / Specialization
             </label>
             <input
               id="major"
               type="text"
               placeholder="e.g. Computer Science"
-              className={`summit-form-input${errors.major ? ' is-error' : ''}`}
-              aria-describedby={errors.major ? 'major-error' : undefined}
+              className={`summit-form-input${errors.major ? " is-error" : ""}`}
+              aria-describedby={errors.major ? "major-error" : undefined}
               aria-required="true"
-              {...register('major')}
+              {...register("major")}
             />
             {errors.major && (
               <p id="major-error" className="summit-form-error" role="alert">
@@ -256,24 +316,37 @@ const Step1PersonalInfo = ({ form, showProfileSwitchNotice = false }) => {
             )}
           </div>
 
-          {profileType === 'undergraduate' && (
+          {profileType === "undergraduate" && (
             <div className="summit-form-group">
-              <label htmlFor="undergraduateYear" className="summit-form-label summit-form-label-required">
+              <label
+                htmlFor="undergraduateYear"
+                className="summit-form-label summit-form-label-required"
+              >
                 Current University Year
               </label>
               <select
                 id="undergraduateYear"
-                className={`summit-form-select${errors.undergraduateYear ? ' is-error' : ''}`}
+                className={`summit-form-select${errors.undergraduateYear ? " is-error" : ""}`}
                 aria-required="true"
-                aria-describedby={errors.undergraduateYear ? 'undergraduateYear-error' : undefined}
-                {...register('undergraduateYear')}
+                aria-describedby={
+                  errors.undergraduateYear
+                    ? "undergraduateYear-error"
+                    : undefined
+                }
+                {...register("undergraduateYear")}
               >
                 {UNDERGRADUATE_YEAR_OPTIONS.map(({ value, label }) => (
-                  <option key={value || 'empty'} value={value}>{label}</option>
+                  <option key={value || "empty"} value={value}>
+                    {label}
+                  </option>
                 ))}
               </select>
               {errors.undergraduateYear && (
-                <p id="undergraduateYear-error" className="summit-form-error" role="alert">
+                <p
+                  id="undergraduateYear-error"
+                  className="summit-form-error"
+                  role="alert"
+                >
                   ⚠ {errors.undergraduateYear.message}
                 </p>
               )}
@@ -282,20 +355,23 @@ const Step1PersonalInfo = ({ form, showProfileSwitchNotice = false }) => {
         </>
       )}
 
-      {profileType === 'professional' && (
+      {profileType === "professional" && (
         <>
           <div className="summit-form-group">
-            <label htmlFor="jobTitle" className="summit-form-label summit-form-label-required">
+            <label
+              htmlFor="jobTitle"
+              className="summit-form-label summit-form-label-required"
+            >
               Current Job Title
             </label>
             <input
               id="jobTitle"
               type="text"
               placeholder="e.g. Product Manager"
-              className={`summit-form-input${errors.jobTitle ? ' is-error' : ''}`}
-              aria-describedby={errors.jobTitle ? 'jobTitle-error' : undefined}
+              className={`summit-form-input${errors.jobTitle ? " is-error" : ""}`}
+              aria-describedby={errors.jobTitle ? "jobTitle-error" : undefined}
               aria-required="true"
-              {...register('jobTitle')}
+              {...register("jobTitle")}
             />
             {errors.jobTitle && (
               <p id="jobTitle-error" className="summit-form-error" role="alert">
@@ -305,7 +381,10 @@ const Step1PersonalInfo = ({ form, showProfileSwitchNotice = false }) => {
           </div>
 
           <div className="summit-form-group">
-            <label htmlFor="yearsOfExperience" className="summit-form-label summit-form-label-required">
+            <label
+              htmlFor="yearsOfExperience"
+              className="summit-form-label summit-form-label-required"
+            >
               Years of Experience
             </label>
             <input
@@ -315,13 +394,19 @@ const Step1PersonalInfo = ({ form, showProfileSwitchNotice = false }) => {
               max="50"
               step="1"
               placeholder="e.g. 4"
-              className={`summit-form-input${errors.yearsOfExperience ? ' is-error' : ''}`}
-              aria-describedby={errors.yearsOfExperience ? 'yearsOfExperience-error' : undefined}
+              className={`summit-form-input${errors.yearsOfExperience ? " is-error" : ""}`}
+              aria-describedby={
+                errors.yearsOfExperience ? "yearsOfExperience-error" : undefined
+              }
               aria-required="true"
-              {...register('yearsOfExperience')}
+              {...register("yearsOfExperience")}
             />
             {errors.yearsOfExperience && (
-              <p id="yearsOfExperience-error" className="summit-form-error" role="alert">
+              <p
+                id="yearsOfExperience-error"
+                className="summit-form-error"
+                role="alert"
+              >
                 ⚠ {errors.yearsOfExperience.message}
               </p>
             )}
@@ -329,22 +414,31 @@ const Step1PersonalInfo = ({ form, showProfileSwitchNotice = false }) => {
         </>
       )}
 
-      {profileType === 'other' && (
+      {profileType === "other" && (
         <div className="summit-form-group">
-          <label htmlFor="profileDescription" className="summit-form-label summit-form-label-required">
+          <label
+            htmlFor="profileDescription"
+            className="summit-form-label summit-form-label-required"
+          >
             Tell us about your current profile
           </label>
           <textarea
             id="profileDescription"
             rows={3}
             placeholder="Briefly describe your current background"
-            className={`summit-form-textarea${errors.profileDescription ? ' is-error' : ''}`}
-            aria-describedby={errors.profileDescription ? 'profileDescription-error' : undefined}
+            className={`summit-form-textarea${errors.profileDescription ? " is-error" : ""}`}
+            aria-describedby={
+              errors.profileDescription ? "profileDescription-error" : undefined
+            }
             aria-required="true"
-            {...register('profileDescription')}
+            {...register("profileDescription")}
           />
           {errors.profileDescription && (
-            <p id="profileDescription-error" className="summit-form-error" role="alert">
+            <p
+              id="profileDescription-error"
+              className="summit-form-error"
+              role="alert"
+            >
               ⚠ {errors.profileDescription.message}
             </p>
           )}
@@ -352,15 +446,20 @@ const Step1PersonalInfo = ({ form, showProfileSwitchNotice = false }) => {
       )}
 
       <div className="summit-form-group">
-        <label htmlFor="primaryGoal" className="summit-form-label summit-form-label-required">
+        <label
+          htmlFor="primaryGoal"
+          className="summit-form-label summit-form-label-required"
+        >
           What is your primary goal for attending?
         </label>
         <select
           id="primaryGoal"
-          className={`summit-form-select${errors.primaryGoal ? ' is-error' : ''}`}
+          className={`summit-form-select${errors.primaryGoal ? " is-error" : ""}`}
           aria-required="true"
-          aria-describedby={errors.primaryGoal ? 'primaryGoal-error' : undefined}
-          {...register('primaryGoal')}
+          aria-describedby={
+            errors.primaryGoal ? "primaryGoal-error" : undefined
+          }
+          {...register("primaryGoal")}
         >
           <option value="">Select your goal...</option>
           <option value="find-scholarship">Finding a scholarship</option>
@@ -376,18 +475,25 @@ const Step1PersonalInfo = ({ form, showProfileSwitchNotice = false }) => {
       </div>
 
       <div className="summit-form-group">
-        <label htmlFor="englishLevel" className="summit-form-label summit-form-label-required">
+        <label
+          htmlFor="englishLevel"
+          className="summit-form-label summit-form-label-required"
+        >
           What is your English level?
         </label>
         <select
           id="englishLevel"
-          className={`summit-form-select${errors.englishLevel ? ' is-error' : ''}`}
+          className={`summit-form-select${errors.englishLevel ? " is-error" : ""}`}
           aria-required="true"
-          aria-describedby={errors.englishLevel ? 'englishLevel-error' : undefined}
-          {...register('englishLevel')}
+          aria-describedby={
+            errors.englishLevel ? "englishLevel-error" : undefined
+          }
+          {...register("englishLevel")}
         >
           {ENGLISH_LEVEL_OPTIONS.map(({ value, label }) => (
-            <option key={value || 'empty'} value={value}>{label}</option>
+            <option key={value || "empty"} value={value}>
+              {label}
+            </option>
           ))}
         </select>
         {errors.englishLevel && (
@@ -398,42 +504,64 @@ const Step1PersonalInfo = ({ form, showProfileSwitchNotice = false }) => {
       </div>
 
       <div className="summit-form-group">
-        <label htmlFor="appliedForScholarshipsRecently" className="summit-form-label summit-form-label-required">
+        <label
+          htmlFor="appliedForScholarshipsRecently"
+          className="summit-form-label summit-form-label-required"
+        >
           Have you applied for scholarships recently?
         </label>
         <select
           id="appliedForScholarshipsRecently"
-          className={`summit-form-select${errors.appliedForScholarshipsRecently ? ' is-error' : ''}`}
+          className={`summit-form-select${errors.appliedForScholarshipsRecently ? " is-error" : ""}`}
           aria-required="true"
-          aria-describedby={errors.appliedForScholarshipsRecently ? 'appliedForScholarshipsRecently-error' : undefined}
-          {...register('appliedForScholarshipsRecently')}
+          aria-describedby={
+            errors.appliedForScholarshipsRecently
+              ? "appliedForScholarshipsRecently-error"
+              : undefined
+          }
+          {...register("appliedForScholarshipsRecently")}
         >
           <option value="">Select an option...</option>
           <option value="yes">Yes</option>
           <option value="no">No</option>
         </select>
         {errors.appliedForScholarshipsRecently && (
-          <p id="appliedForScholarshipsRecently-error" className="summit-form-error" role="alert">
+          <p
+            id="appliedForScholarshipsRecently-error"
+            className="summit-form-error"
+            role="alert"
+          >
             ⚠ {errors.appliedForScholarshipsRecently.message}
           </p>
         )}
       </div>
 
       <div className="summit-form-group">
-        <label htmlFor="biggestScholarshipHurdle" className="summit-form-label summit-form-label-required">
+        <label
+          htmlFor="biggestScholarshipHurdle"
+          className="summit-form-label summit-form-label-required"
+        >
           What is the biggest hurdle you faced?
         </label>
         <textarea
           id="biggestScholarshipHurdle"
           rows={4}
           placeholder="Share your biggest challenge (e.g., essay writing, finding opportunities, interview prep)..."
-          className={`summit-form-textarea${errors.biggestScholarshipHurdle ? ' is-error' : ''}`}
+          className={`summit-form-textarea${errors.biggestScholarshipHurdle ? " is-error" : ""}`}
           aria-required="true"
-          aria-describedby={errors.biggestScholarshipHurdle ? 'biggestScholarshipHurdle-error' : undefined}
-          {...register('biggestScholarshipHurdle')}
+          aria-describedby={
+            errors.biggestScholarshipHurdle
+              ? "biggestScholarshipHurdle-error"
+              : undefined
+          }
+          {...register("biggestScholarshipHurdle")}
         />
         {errors.biggestScholarshipHurdle && (
-          <p id="biggestScholarshipHurdle-error" className="summit-form-error" role="alert">
+          <p
+            id="biggestScholarshipHurdle-error"
+            className="summit-form-error"
+            role="alert"
+          >
             ⚠ {errors.biggestScholarshipHurdle.message}
           </p>
         )}
@@ -441,20 +569,25 @@ const Step1PersonalInfo = ({ form, showProfileSwitchNotice = false }) => {
 
       <div className="summit-form-group">
         <label
-          className={`summit-checkbox-item${errors.acceptTerms ? ' is-error' : ''}`}
+          className={`summit-checkbox-item${errors.acceptTerms ? " is-error" : ""}`}
           htmlFor="acceptTerms"
-          style={{ border: errors.acceptTerms ? '1px solid rgba(255,107,107,0.4)' : undefined }}
+          style={{
+            border: errors.acceptTerms
+              ? "1px solid rgba(255,107,107,0.4)"
+              : undefined,
+          }}
         >
           <input
             id="acceptTerms"
             type="checkbox"
             className="summit-checkbox-input"
             aria-required="true"
-            aria-describedby={errors.acceptTerms ? 'terms-error' : undefined}
-            {...register('acceptTerms')}
+            aria-describedby={errors.acceptTerms ? "terms-error" : undefined}
+            {...register("acceptTerms")}
           />
           <span className="summit-checkbox-label">
-            I agree to the Terms and Conditions and consent to data processing for registration.
+            I agree to the Terms and Conditions and consent to data processing
+            for registration.
           </span>
         </label>
         {errors.acceptTerms && (

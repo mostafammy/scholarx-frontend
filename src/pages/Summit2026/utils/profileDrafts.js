@@ -25,7 +25,10 @@ export const normalizeProfileType = (value) => {
     return "";
   }
 
-  const normalized = value.trim().toLowerCase().replace(/[\s_-]+/g, "");
+  const normalized = value
+    .trim()
+    .toLowerCase()
+    .replace(/[\s_-]+/g, "");
 
   switch (normalized) {
     case "highschool":
