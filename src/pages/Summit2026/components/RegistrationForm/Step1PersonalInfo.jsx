@@ -16,6 +16,8 @@ import {
   UNDERGRADUATE_YEAR_OPTIONS,
 } from "../../constants/formConstants";
 import { normalizeProfileType } from "../../utils/profileDrafts";
+import StatusPickerCard from "./StatusPickerCard";
+import GoalChips from "./GoalChips";
 
 /**
  * @param {{ form: import('react-hook-form').UseFormReturn }} props
@@ -156,33 +158,22 @@ const Step1PersonalInfo = ({ form, showProfileSwitchNotice = false }) => {
       </div>
 
       <div className="summit-form-group">
-        <label
-          htmlFor="status"
-          className="summit-form-label summit-form-label-required"
-        >
+        <span className="summit-form-label summit-form-label-required" id="status-label">
           What best describes you?
-        </label>
-        <select
-          id="status"
-          className={`summit-form-select${errors.status ? " is-error" : ""}`}
-          aria-required="true"
-          aria-describedby={errors.status ? "status-error" : undefined}
-          {...register("status", {
-            setValueAs: (value) => normalizeProfileType(value),
-          })}
-        >
-          <option value="">Select an option...</option>
-          <option value="highSchool">High School</option>
-          <option value="undergraduate">Undergraduate</option>
-          <option value="graduate">Graduate</option>
-          <option value="professional">Professional</option>
-          <option value="other">Other</option>
-        </select>
-        {errors.status && (
-          <p id="status-error" className="summit-form-error" role="alert">
-            ⚠ {errors.status.message}
-          </p>
-        )}
+        </span>
+        <div style={{ marginTop: 10 }}>
+          <Controller
+            name="status"
+            control={control}
+            render={({ field: { value, onChange } }) => (
+              <StatusPickerCard
+                value={normalizeProfileType(value)}
+                onChange={(v) => onChange(v)}
+                error={errors.status}
+              />
+            )}
+          />
+        </div>
       </div>
 
       {showProfileSwitchNotice && (
@@ -447,63 +438,22 @@ const Step1PersonalInfo = ({ form, showProfileSwitchNotice = false }) => {
 
       <div className="summit-form-group">
         <span className="summit-form-label summit-form-label-required">
-          What are your goals for attending? (Select all that apply)
+          What are your goals for attending?
         </span>
-        <div
-          role="group"
-          aria-describedby={
-            errors.primaryGoals ? "primaryGoals-error" : undefined
-          }
-        >
-          <label
-            className="summit-checkbox-item"
-            htmlFor="goal-find-scholarship"
-          >
-            <input
-              id="goal-find-scholarship"
-              type="checkbox"
-              value="find-scholarship"
-              className="summit-checkbox-input"
-              {...register("primaryGoals")}
-            />
-            <span className="summit-checkbox-label">Finding a scholarship</span>
-          </label>
-          <label className="summit-checkbox-item" htmlFor="goal-develop-skills">
-            <input
-              id="goal-develop-skills"
-              type="checkbox"
-              value="develop-skills"
-              className="summit-checkbox-input"
-              {...register("primaryGoals")}
-            />
-            <span className="summit-checkbox-label">Developing my skills</span>
-          </label>
-          <label className="summit-checkbox-item" htmlFor="goal-build-network">
-            <input
-              id="goal-build-network"
-              type="checkbox"
-              value="build-network"
-              className="summit-checkbox-input"
-              {...register("primaryGoals")}
-            />
-            <span className="summit-checkbox-label">Building my network</span>
-          </label>
-          <label className="summit-checkbox-item" htmlFor="goal-other">
-            <input
-              id="goal-other"
-              type="checkbox"
-              value="other"
-              className="summit-checkbox-input"
-              {...register("primaryGoals")}
-            />
-            <span className="summit-checkbox-label">Other</span>
-          </label>
+        <div style={{ marginTop: 10 }}>
+          <Controller
+            name="primaryGoals"
+            control={control}
+            defaultValue={[]}
+            render={({ field: { value, onChange } }) => (
+              <GoalChips
+                value={value}
+                onChange={onChange}
+                error={errors.primaryGoals}
+              />
+            )}
+          />
         </div>
-        {errors.primaryGoals && (
-          <p id="primaryGoals-error" className="summit-form-error" role="alert">
-            ⚠ {errors.primaryGoals.message}
-          </p>
-        )}
       </div>
 
       <div className="summit-form-group">

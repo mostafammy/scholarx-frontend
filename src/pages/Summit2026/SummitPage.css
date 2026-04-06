@@ -1492,12 +1492,117 @@
   gap: var(--s-space-1);
 }
 
+/* ── Status Picker Cards ─────────────────────────────────── */
+.summit-status-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 18px 12px 14px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  cursor: pointer;
+  color: var(--s-text-300);
+  font-family: var(--s-font-body);
+  overflow: hidden;
+  transition: border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+  will-change: transform;
+}
+
+.summit-status-card:hover {
+  border-color: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.summit-status-card__ring {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.summit-status-card__icon {
+  font-size: 1.8rem;
+  line-height: 1;
+  display: block;
+}
+
+.summit-status-card__label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  font-family: var(--s-font-display);
+  color: var(--s-text-200);
+  transition: color 0.25s ease;
+  text-align: center;
+}
+
+.summit-status-card__desc {
+  font-size: 0.72rem;
+  color: var(--s-text-400);
+  text-align: center;
+  line-height: 1.3;
+}
+
+/* ── Goal Chips ──────────────────────────────────────────── */
+.summit-goal-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 100px;
+  cursor: pointer;
+  font-family: var(--s-font-body);
+  font-size: 0.875rem;
+  color: var(--s-text-300);
+  white-space: nowrap;
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+  will-change: transform;
+}
+
+.summit-goal-chip:hover {
+  border-color: rgba(245, 197, 24, 0.3);
+  background: rgba(245, 197, 24, 0.04);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.summit-goal-chip__check {
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.summit-goal-chip__empty-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+}
+
+.summit-goal-chip__icon {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.summit-goal-chip__label {
+  font-weight: 500;
+}
+
 /* Checkbox Group */
 .summit-checkbox-group {
   display: flex;
   flex-direction: column;
   gap: var(--s-space-2);
 }
+
 
 .summit-checkbox-item {
   display: flex;
