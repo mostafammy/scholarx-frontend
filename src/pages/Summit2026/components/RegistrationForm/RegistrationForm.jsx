@@ -205,6 +205,61 @@ const RegistrationForm = () => {
             </div>
           </div>
         </div>
+
+        {/* Beautiful Support / Help Contact Block */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5, duration: 0.5 }}
+          style={{ marginTop: 40, display: "flex", justifyContent: "center" }}
+        >
+          <div style={{ 
+            background: "rgba(255,255,255,0.02)", 
+            border: "1px solid rgba(255,255,255,0.06)", 
+            borderRadius: 100, 
+            padding: "10px 24px 10px 10px", 
+            display: "inline-flex", 
+            alignItems: "center", 
+            gap: 16,
+            backdropFilter: "blur(12px)",
+            boxShadow: "0 10px 30px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.05)",
+            transition: "all 0.3s ease",
+            cursor: "default"
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = "rgba(255,255,255,0.04)";
+            e.currentTarget.style.borderColor = "rgba(245,197,24,0.2)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = "rgba(255,255,255,0.02)";
+            e.currentTarget.style.borderColor = "rgba(255,255,255,0.06)";
+          }}
+          >
+            <div style={{ 
+              width: 48, 
+              height: 48, 
+              borderRadius: "50%", 
+              background: "linear-gradient(135deg, rgba(245,197,24,0.15), rgba(255,159,28,0.05))", 
+              border: "1px solid rgba(245,197,24,0.2)",
+              display: "flex", 
+              alignItems: "center", 
+              justifyContent: "center", 
+              fontSize: "1.3rem", 
+              color: "#f5c518",
+              boxShadow: "0 4px 12px rgba(245,197,24,0.15)"
+            }}>
+              🎧
+            </div>
+            <div style={{ textAlign: "left" }}>
+              <div style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.45)", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 2 }}>
+                Facing any issues?
+              </div>
+              <div style={{ fontSize: "1rem", color: "#e2e8f0", fontWeight: 500 }}>
+                We're here to help! <a href="https://wa.me/201012072516" target="_blank" rel="noreferrer" style={{ color: "#f5c518", textDecoration: "none", marginLeft: 4, fontWeight: 700, transition: "color 0.2s ease" }} onMouseEnter={(e) => e.target.style.color = "#ff9f1c"} onMouseLeave={(e) => e.target.style.color = "#f5c518"}>Contact 01012072516</a>
+              </div>
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

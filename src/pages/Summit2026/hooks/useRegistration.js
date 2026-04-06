@@ -264,13 +264,27 @@ export const useRegistration = () => {
               : "Something went wrong. Please try again.";
 
         await Swal.fire({
-          title,
-          text,
+          title: title,
+          html: `
+            <div style="margin-bottom: 24px; color: #e2e8f0; font-size: 0.95rem; line-height: 1.5; text-align: center;">
+              ${text}
+            </div>
+            <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 16px; display: flex; align-items: center; gap: 16px; text-align: left; box-shadow: 0 4px 16px rgba(0,0,0,0.2);">
+              <div style="width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, rgba(245,197,24,0.15), rgba(255,159,28,0.05)); border: 1px solid rgba(245,197,24,0.2); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; box-shadow: 0 4px 12px rgba(245,197,24,0.15);">
+                🎧
+              </div>
+              <div>
+                <div style="font-size: 0.75rem; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 2px;">Need Help?</div>
+                <div style="font-size: 1rem; color: #fff; font-weight: 500;">We're here to help! <br/><a href="https://wa.me/201012072516" target="_blank" rel="noreferrer" style="color: #f5c518; text-decoration: none; font-weight: 700;">Contact 01012072516</a></div>
+              </div>
+            </div>
+          `,
           icon: isDuplicate || isRateLimited ? "warning" : "error",
-          confirmButtonText: "OK",
+          confirmButtonText: "Close",
           background: "#0d1529",
           color: "#ffffff",
           confirmButtonColor: "#f5c518",
+          customClass: { confirmButton: "summit-swal-btn" },
         });
       } finally {
         setIsSubmitting(false);
