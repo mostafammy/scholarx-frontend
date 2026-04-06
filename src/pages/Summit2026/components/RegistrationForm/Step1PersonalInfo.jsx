@@ -11,13 +11,16 @@ import "react-phone-input-2/lib/style.css";
 import { Controller, useWatch } from "react-hook-form";
 import {
   ENGLISH_LEVEL_OPTIONS,
-  EGYPTIAN_GOVERNORATES,
   HIGH_SCHOOL_YEAR_OPTIONS,
   UNDERGRADUATE_YEAR_OPTIONS,
 } from "../../constants/formConstants";
 import { normalizeProfileType } from "../../utils/profileDrafts";
 import StatusPickerCard from "./StatusPickerCard";
 import GoalChips from "./GoalChips";
+import GovernorateSearch from "./GovernorateSearch";
+import OptionPicker from "./OptionPicker";
+import EnglishLevelMeter from "./EnglishLevelMeter";
+import BinaryToggle from "./BinaryToggle";
 
 /**
  * @param {{ form: import('react-hook-form').UseFormReturn }} props
@@ -128,33 +131,22 @@ const Step1PersonalInfo = ({ form, showProfileSwitchNotice = false }) => {
       </div>
 
       <div className="summit-form-group">
-        <label
-          htmlFor="governorate"
-          className="summit-form-label summit-form-label-required"
-        >
+        <span className="summit-form-label summit-form-label-required">
           Governorate
-        </label>
-        <select
-          id="governorate"
-          className={`summit-form-select${errors.governorate ? " is-error" : ""}`}
-          aria-required="true"
-          aria-describedby={
-            errors.governorate ? "governorate-error" : undefined
-          }
-          {...register("governorate")}
-        >
-          <option value="">Select your governorate...</option>
-          {EGYPTIAN_GOVERNORATES.map(({ value, label, region }) => (
-            <option key={value} value={value}>
-              {label} ({region})
-            </option>
-          ))}
-        </select>
-        {errors.governorate && (
-          <p id="governorate-error" className="summit-form-error" role="alert">
-            ⚠ {errors.governorate.message}
-          </p>
-        )}
+        </span>
+        <div style={{ marginTop: 8 }}>
+          <Controller
+            name="governorate"
+            control={control}
+            render={({ field: { value, onChange } }) => (
+              <GovernorateSearch
+                value={value}
+                onChange={onChange}
+                error={errors.governorate}
+              />
+            )}
+          />
+        </div>
       </div>
 
       <div className="summit-form-group">
@@ -218,36 +210,24 @@ const Step1PersonalInfo = ({ form, showProfileSwitchNotice = false }) => {
           </div>
 
           <div className="summit-form-group">
-            <label
-              htmlFor="highSchoolYear"
-              className="summit-form-label summit-form-label-required"
-            >
+            <span className="summit-form-label summit-form-label-required">
               Current High School Year
-            </label>
-            <select
-              id="highSchoolYear"
-              className={`summit-form-select${errors.highSchoolYear ? " is-error" : ""}`}
-              aria-required="true"
-              aria-describedby={
-                errors.highSchoolYear ? "highSchoolYear-error" : undefined
-              }
-              {...register("highSchoolYear")}
-            >
-              {HIGH_SCHOOL_YEAR_OPTIONS.map(({ value, label }) => (
-                <option key={value || "empty"} value={value}>
-                  {label}
-                </option>
-              ))}
-            </select>
-            {errors.highSchoolYear && (
-              <p
-                id="highSchoolYear-error"
-                className="summit-form-error"
-                role="alert"
-              >
-                ⚠ {errors.highSchoolYear.message}
-              </p>
-            )}
+            </span>
+            <div style={{ marginTop: 8 }}>
+              <Controller
+                name="highSchoolYear"
+                control={control}
+                render={({ field: { value, onChange } }) => (
+                  <OptionPicker
+                    options={HIGH_SCHOOL_YEAR_OPTIONS}
+                    value={value}
+                    onChange={onChange}
+                    error={errors.highSchoolYear}
+                    name="High School Year"
+                  />
+                )}
+              />
+            </div>
           </div>
         </>
       )}
@@ -309,38 +289,24 @@ const Step1PersonalInfo = ({ form, showProfileSwitchNotice = false }) => {
 
           {profileType === "undergraduate" && (
             <div className="summit-form-group">
-              <label
-                htmlFor="undergraduateYear"
-                className="summit-form-label summit-form-label-required"
-              >
+              <span className="summit-form-label summit-form-label-required">
                 Current University Year
-              </label>
-              <select
-                id="undergraduateYear"
-                className={`summit-form-select${errors.undergraduateYear ? " is-error" : ""}`}
-                aria-required="true"
-                aria-describedby={
-                  errors.undergraduateYear
-                    ? "undergraduateYear-error"
-                    : undefined
-                }
-                {...register("undergraduateYear")}
-              >
-                {UNDERGRADUATE_YEAR_OPTIONS.map(({ value, label }) => (
-                  <option key={value || "empty"} value={value}>
-                    {label}
-                  </option>
-                ))}
-              </select>
-              {errors.undergraduateYear && (
-                <p
-                  id="undergraduateYear-error"
-                  className="summit-form-error"
-                  role="alert"
-                >
-                  ⚠ {errors.undergraduateYear.message}
-                </p>
-              )}
+              </span>
+              <div style={{ marginTop: 8 }}>
+                <Controller
+                  name="undergraduateYear"
+                  control={control}
+                  render={({ field: { value, onChange } }) => (
+                    <OptionPicker
+                      options={UNDERGRADUATE_YEAR_OPTIONS}
+                      value={value}
+                      onChange={onChange}
+                      error={errors.undergraduateYear}
+                      name="University Year"
+                    />
+                  )}
+                />
+              </div>
             </div>
           )}
         </>
@@ -457,65 +423,41 @@ const Step1PersonalInfo = ({ form, showProfileSwitchNotice = false }) => {
       </div>
 
       <div className="summit-form-group">
-        <label
-          htmlFor="englishLevel"
-          className="summit-form-label summit-form-label-required"
-        >
+        <span className="summit-form-label summit-form-label-required">
           What is your English level?
-        </label>
-        <select
-          id="englishLevel"
-          className={`summit-form-select${errors.englishLevel ? " is-error" : ""}`}
-          aria-required="true"
-          aria-describedby={
-            errors.englishLevel ? "englishLevel-error" : undefined
-          }
-          {...register("englishLevel")}
-        >
-          {ENGLISH_LEVEL_OPTIONS.map(({ value, label }) => (
-            <option key={value || "empty"} value={value}>
-              {label}
-            </option>
-          ))}
-        </select>
-        {errors.englishLevel && (
-          <p id="englishLevel-error" className="summit-form-error" role="alert">
-            ⚠ {errors.englishLevel.message}
-          </p>
-        )}
+        </span>
+        <div style={{ marginTop: 10 }}>
+          <Controller
+            name="englishLevel"
+            control={control}
+            render={({ field: { value, onChange } }) => (
+              <EnglishLevelMeter
+                value={value}
+                onChange={onChange}
+                error={errors.englishLevel}
+              />
+            )}
+          />
+        </div>
       </div>
 
       <div className="summit-form-group">
-        <label
-          htmlFor="appliedForScholarshipsRecently"
-          className="summit-form-label summit-form-label-required"
-        >
+        <span className="summit-form-label summit-form-label-required">
           Have you applied for scholarships recently?
-        </label>
-        <select
-          id="appliedForScholarshipsRecently"
-          className={`summit-form-select${errors.appliedForScholarshipsRecently ? " is-error" : ""}`}
-          aria-required="true"
-          aria-describedby={
-            errors.appliedForScholarshipsRecently
-              ? "appliedForScholarshipsRecently-error"
-              : undefined
-          }
-          {...register("appliedForScholarshipsRecently")}
-        >
-          <option value="">Select an option...</option>
-          <option value="yes">Yes</option>
-          <option value="no">No</option>
-        </select>
-        {errors.appliedForScholarshipsRecently && (
-          <p
-            id="appliedForScholarshipsRecently-error"
-            className="summit-form-error"
-            role="alert"
-          >
-            ⚠ {errors.appliedForScholarshipsRecently.message}
-          </p>
-        )}
+        </span>
+        <div style={{ marginTop: 10 }}>
+          <Controller
+            name="appliedForScholarshipsRecently"
+            control={control}
+            render={({ field: { value, onChange } }) => (
+              <BinaryToggle
+                value={value}
+                onChange={onChange}
+                error={errors.appliedForScholarshipsRecently}
+              />
+            )}
+          />
+        </div>
       </div>
 
       <div className="summit-form-group">
