@@ -265,6 +265,57 @@ const RegistrantsTable = ({
     [selectedIds, refresh],
   );
 
+  const handleDeleteSelectedOne = useCallback(async () => {
+    const ids = Array.from(selectedIds);
+    if (ids.length !== 1) {
+      return;
+    }
+
+    const id = ids[0];
+    const target = filtered.find((r) => (r._id || r.id) === id);
+    const targetName = target?.fullName || "this registration";
+
+    const result = await Swal.fire({
+      title: "Delete selected registration?",
+      html: `<p style="color:#e2e8f0;">This will permanently delete <strong style="color:#f5c518">${targetName}</strong>.</p>`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, delete",
+      cancelButtonText: "Cancel",
+      confirmButtonColor: "#ff6b6b",
+      cancelButtonColor: "#374151",
+      background: "#0d1529",
+      color: "#ffffff",
+    });
+
+    if (!result.isConfirmed) {
+      return;
+    }
+
+    try {
+      await deleteRegistration(id);
+      setSelectedIds(new Set());
+      Swal.fire({
+        toast: true,
+        position: "top-end",
+        icon: "success",
+        title: "Registration deleted",
+        showConfirmButton: false,
+        timer: 1800,
+        background: "#0d1529",
+        color: "#fff",
+      });
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Delete failed",
+        text: error?.message || "Could not delete the selected registration.",
+        background: "#0d1529",
+        color: "#fff",
+      });
+    }
+  }, [selectedIds, filtered, deleteRegistration]);
+
   return (
     <div>
       {/* Toolbar */}
@@ -546,6 +597,22 @@ const RegistrantsTable = ({
             >
               ⬇ Export
             </button>
+            {selectedIds.size === 1 && (
+              <button
+                disabled={isBulkLoading}
+                onClick={handleDeleteSelectedOne}
+                style={{
+                  background: "rgba(255,107,107,0.1)",
+                  border: "1px solid rgba(255,138,128,0.35)",
+                  color: "#ff8a80",
+                  cursor: "pointer",
+                  padding: "6px 12px",
+                  borderRadius: "16px",
+                }}
+              >
+                🗑 Delete Selected
+              </button>
+            )}
             <button
               disabled={isBulkLoading}
               onClick={() => handleBulkUpdateStatus("verified")}

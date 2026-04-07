@@ -27,9 +27,10 @@ const formatText = (value) =>
     .replace(/\b\w/g, (m) => m.toUpperCase());
 
 const RegistrantDrawer = ({ registrant, isOpen, onClose, onDelete }) => {
-  if (!isOpen || !registrant) return null;
-
   const [isDeleting, setIsDeleting] = useState(false);
+  const MotionDiv = motion.div;
+
+  if (!isOpen || !registrant) return null;
 
   const handleDelete = async () => {
     const confirmation = await Swal.fire({
@@ -42,7 +43,7 @@ const RegistrantDrawer = ({ registrant, isOpen, onClose, onDelete }) => {
       confirmButtonText: "Yes, delete it!",
     });
 
-    if (confirmation.isConfirmed) {
+    if (confirmation.isConfirmed && typeof onDelete === "function") {
       try {
         setIsDeleting(true);
         await onDelete(registrant._id || registrant.id);
@@ -81,7 +82,7 @@ const RegistrantDrawer = ({ registrant, isOpen, onClose, onDelete }) => {
           />
 
           {/* Drawer Panel */}
-          <motion.div
+          <MotionDiv
             initial={{ x: "100%", boxShadow: "0 0 0 rgba(0,0,0,0)" }}
             animate={{ x: 0, boxShadow: "-10px 0 30px rgba(0,0,0,0.5)" }}
             exit={{ x: "100%", boxShadow: "0 0 0 rgba(0,0,0,0)" }}
@@ -457,7 +458,34 @@ const RegistrantDrawer = ({ registrant, isOpen, onClose, onDelete }) => {
                 )}
               </div>
             </div>
-          </motion.div>
+
+            <div
+              style={{
+                marginTop: "auto",
+                paddingTop: "8px",
+                display: "flex",
+                justifyContent: "flex-end",
+              }}
+            >
+              <button
+                type="button"
+                onClick={handleDelete}
+                disabled={isDeleting}
+                style={{
+                  background: "rgba(255,107,107,0.12)",
+                  border: "1px solid rgba(255,138,128,0.35)",
+                  color: "#ff8a80",
+                  padding: "10px 14px",
+                  borderRadius: "10px",
+                  fontWeight: 600,
+                  cursor: isDeleting ? "not-allowed" : "pointer",
+                  opacity: isDeleting ? 0.7 : 1,
+                }}
+              >
+                {isDeleting ? "Deleting..." : "Delete Registration"}
+              </button>
+            </div>
+          </MotionDiv>
         </>
       )}
     </AnimatePresence>
