@@ -6,8 +6,10 @@
 import React, { useState, useCallback, useMemo } from "react";
 import PropTypes from "prop-types";
 import Swal from "sweetalert2";
+import { motion, AnimatePresence } from "framer-motion";
 import { registrationRepository } from "../../services/RegistrationRepository";
 import RegistrantDrawer from "./RegistrantDrawer";
+import DashboardSpotlight from "./DashboardSpotlight";
 
 /**
  * Formats an ISO timestamp to a readable local date/time string.
@@ -292,6 +294,8 @@ const RegistrantsTable = ({
       cancelButtonColor: "#374151",
       background: "#0d1529",
       color: "#ffffff",
+      heightAuto: false, // Prevents scroll-to-top layout jumping
+      scrollbarPadding: false,
     });
 
     if (!result.isConfirmed) {
@@ -324,6 +328,8 @@ const RegistrantsTable = ({
 
   return (
     <div>
+      <DashboardSpotlight registrations={registrations} onSelectRegistrant={(r) => setActiveRegistrant(r)} />
+      
       {/* Toolbar */}
       <div className="summit-db-table-toolbar">
         <p className="summit-db-table-count">
@@ -431,7 +437,8 @@ const RegistrantsTable = ({
               </tr>
             </thead>
             <tbody>
-              {filtered.map((reg, idx) => {
+              <AnimatePresence initial={false}>
+                {filtered.map((reg, idx) => {
                 const id = reg._id || reg.id;
                 const isSelected = selectedIds.has(id);
                 const workflowStatus = String(
@@ -441,8 +448,13 @@ const RegistrantsTable = ({
                   STATUS_COLORS[workflowStatus] || STATUS_COLORS.new;
 
                 return (
-                  <tr
+                  <motion.tr
                     key={id}
+                    layout
+                    initial={{ opacity: 0, y: 10, scale: 0.98 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.2 } }}
+                    transition={{ type: "spring", stiffness: 300, damping: 25 }}
                     onClick={() => handleRowClick(reg)}
                     style={{
                       cursor: "pointer",
@@ -559,9 +571,10 @@ const RegistrantsTable = ({
                     <td className="summit-db-cell-date">
                       {formatDate(reg.createdAt)}
                     </td>
-                  </tr>
+                  </motion.tr>
                 );
               })}
+              </AnimatePresence>
             </tbody>
           </table>
         )}

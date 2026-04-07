@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import { useSummitDashboard } from "./hooks/useSummitDashboard";
 import StatsCards from "./components/Dashboard/StatsCards";
 import VisualInsights from "./components/Dashboard/VisualInsights";
+import VelocityChart from "./components/Dashboard/VelocityChart";
 import FilterBar from "./components/Dashboard/FilterBar";
 import RegistrantsTable from "./components/Dashboard/RegistrantsTable";
 import "./SummitDashboard.css";
@@ -60,6 +61,10 @@ const SummitDashboard = () => {
             </div>
           </div>
           <div className="summit-db-header-right">
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '4px 12px', background: 'rgba(255,255,255,0.05)', borderRadius: '100px', border: '1px solid rgba(255,255,255,0.1)', marginRight: '16px' }}>
+              <span aria-hidden="true" style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.5)' }}>🔍</span>
+              <span style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.7)' }}>Press <kbd style={{ background: 'rgba(255,255,255,0.1)', padding: '2px 6px', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.2)', fontFamily: 'monospace' }}>⌘K</kbd> to search</span>
+            </div>
             <button
               type="button"
               id="db-refresh-btn"
@@ -98,8 +103,13 @@ const SummitDashboard = () => {
             </div>
           )}
 
-          <VisualInsights stats={stats} registrations={registrations} />
           <StatsCards stats={stats} isLoading={isLoading} />
+          
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '24px', marginBottom: '24px' }}>
+             <VelocityChart registrations={registrations} />
+          </div>
+
+          <VisualInsights stats={stats} registrations={registrations} />
           <FilterBar
             filters={filters}
             setFilter={setFilter}

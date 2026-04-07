@@ -6,11 +6,9 @@
 
 import React, { useMemo, useState, useEffect, useRef } from 'react';
 import {
-  AreaChart,
-  Area,
-  XAxis,
-  YAxis,
-  CartesianGrid,
+  PieChart,
+  Pie,
+  Cell,
   Tooltip,
   ResponsiveContainer,
 } from 'recharts';
@@ -344,14 +342,14 @@ const InsightCard = ({ title, subtitle, icon, children, index }) => (
 // MAIN COMPONENT
 // ─────────────────────────────────────────────────────────────
 const VisualInsights = ({ stats, registrations = [] }) => {
-  const timeSeriesData = useMemo(() => {
+  const profileData = useMemo(() => {
     if (!registrations?.length) return [];
-    const groups = {};
+    const profiles = {};
     registrations.forEach(r => {
-      const d = new Date(r.createdAt || Date.now()).toLocaleDateString('en-EG', { month: 'short', day: 'numeric' });
-      groups[d] = (groups[d] || 0) + 1;
+      const type = r.profileType || 'legacy';
+      profiles[type] = (profiles[type] || 0) + 1;
     });
-    return Object.entries(groups).map(([date, count]) => ({ date, count })).sort((a, b) => new Date(a.date) - new Date(b.date));
+    return Object.entries(profiles).map(([name, value]) => ({ name, value })).sort((a, b) => b.value - a.value);
   }, [registrations]);
 
   const trackData = useMemo(() => {
@@ -365,59 +363,12 @@ const VisualInsights = ({ stats, registrations = [] }) => {
   }, [stats]);
 
   const maxGov = govData[0]?.value || 1;
+  const maxProfile = profileData[0]?.value || 1;
 
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '20px', marginBottom: '28px' }}>
-
-      {/* ── Registration Pulse ── */}
-      <InsightCard title="Registration Pulse" subtitle="Over Time" icon="📈" index={0}>
-        {timeSeriesData.length > 0 ? (
-          <div style={{ height: '220px' }}>
-            <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={timeSeriesData} margin={{ top: 8, right: 8, left: -28, bottom: 0 }}>
-                <defs>
-                  <linearGradient id="areaGold" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%"  stopColor="#f5c518" stopOpacity={0.35} />
-                    <stop offset="100%" stopColor="#f5c518" stopOpacity={0.01} />
-                  </linearGradient>
-                </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" vertical={false} />
-                <XAxis
-                  dataKey="date"
-                  stroke="transparent"
-                  tick={{ fill: 'rgba(255,255,255,0.35)', fontSize: 11 }}
-                  tickLine={false}
-                  axisLine={false}
-                />
-                <YAxis
-                  stroke="transparent"
-                  tick={{ fill: 'rgba(255,255,255,0.3)', fontSize: 11 }}
-                  tickLine={false}
-                  axisLine={false}
-                  allowDecimals={false}
-                />
-                <Tooltip content={<PremiumTooltip />} cursor={{ stroke: 'rgba(245,197,24,0.15)', strokeWidth: 1 }} />
-                <Area
-                  type="monotone"
-                  dataKey="count"
-                  name="Registrations"
-                  stroke="#f5c518"
-                  strokeWidth={3}
-                  dot={{ fill: '#f5c518', r: 4, strokeWidth: 0 }}
-                  activeDot={{ r: 7, fill: '#f5c518', stroke: '#fff', strokeWidth: 2 }}
-                  fill="url(#areaGold)"
-                  animationDuration={1800}
-                  animationEasing="ease-out"
-                />
-              </AreaChart>
-            </ResponsiveContainer>
-          </div>
-        ) : (
-          <EmptyState icon="📈" message="Registrations will appear here as data comes in" />
-        )}
-      </InsightCard>
-
-      {/* ── Track Popularity ── */}
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '20px', marginBottom: '28px' }}>
+      
+      {/* ── Track Popularity (Bento Block 1) ── */}
       <InsightCard title="Track Popularity" subtitle="Interests" icon="🎯" index={1}>
         {trackData.length > 0 ? (
           <AnimatedDonut data={trackData} />
@@ -426,7 +377,7 @@ const VisualInsights = ({ stats, registrations = [] }) => {
         )}
       </InsightCard>
 
-      {/* ── Governorate Leaders ── */}
+      {/* ── Governorate Leaders (Bento Block 2) ── */}
       <InsightCard title="Governorate Leaders" subtitle="Geographic Reach" icon="📍" index={2}>
         {govData.length > 0 ? (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', paddingTop: '4px' }}>
@@ -443,6 +394,26 @@ const VisualInsights = ({ stats, registrations = [] }) => {
           </div>
         ) : (
           <EmptyState icon="📍" message="Geographic data will populate here" />
+        )}
+      </InsightCard>
+
+      {/* ── Profile Distribution (Bento Block 3) ── */}
+      <InsightCard title="Profile Demographics" subtitle="Attendees" icon="🎓" index={3}>
+        {profileData.length > 0 ? (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', paddingTop: '4px' }}>
+            {profileData.map((p, i) => (
+              <AnimatedBar
+                key={p.name}
+                name={p.name}
+                value={p.value}
+                max={maxProfile}
+                color={PALETTE[(i + 4) % PALETTE.length]}
+                index={i}
+              />
+            ))}
+          </div>
+        ) : (
+          <EmptyState icon="🎓" message="Profile distribution will appear here" />
         )}
       </InsightCard>
 
