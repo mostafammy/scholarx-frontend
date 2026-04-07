@@ -25,7 +25,7 @@ const SummitDashboard = () => {
     sortField,
     sortDirection,
     toggleSort,
-    clearAllData,
+    deleteRegistration,
     exportFilteredCsv,
     loadMore,
     hasNextPage,
@@ -111,7 +111,7 @@ const SummitDashboard = () => {
             sortField={sortField}
             sortDirection={sortDirection}
             toggleSort={toggleSort}
-            clearAllData={clearAllData}
+            deleteRegistration={deleteRegistration}
             exportFilteredCsv={exportFilteredCsv}
             loadMore={loadMore}
             hasNextPage={hasNextPage}

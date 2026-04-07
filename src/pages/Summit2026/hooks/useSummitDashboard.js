@@ -49,7 +49,7 @@ const DASHBOARD_PAGE_LIMIT = 100;
  *   sortField: SortField,
  *   sortDirection: SortDirection,
  *   toggleSort: (field: SortField) => void,
- *   clearAllData: () => void,
+ *   deleteRegistration: (id: string) => Promise<void>,
  *   refresh: () => void,
  * }}
  */
@@ -219,15 +219,22 @@ export const useSummitDashboard = () => {
 
   const filtered = useMemo(() => registrations, [registrations]);
 
-  const clearAllData = useCallback(async () => {
-    setIsLoading(true);
-    try {
-      await registrationRepository.deleteAll();
-      await refresh();
-    } finally {
-      setIsLoading(false);
-    }
-  }, [refresh]);
+  const deleteRegistration = useCallback(
+    async (id) => {
+      try {
+        await registrationRepository.deleteById(id);
+        setRegistrations((prev) => prev.filter((r) => (r._id || r.id) !== id));
+
+        const statsResult = await registrationRepository.getStats();
+        setStats(statsResult);
+      } catch (error) {
+        const msg = toDashboardError(error);
+        setErrorMessage(msg);
+        throw new Error(msg);
+      }
+    },
+    [toDashboardError],
+  );
 
   const exportFilteredCsv = useCallback(async () => {
     const blob = await registrationRepository.exportCsv({
@@ -258,7 +265,7 @@ export const useSummitDashboard = () => {
     sortField,
     sortDirection,
     toggleSort,
-    clearAllData,
+    deleteRegistration,
     exportFilteredCsv,
     refresh,
     loadMore,

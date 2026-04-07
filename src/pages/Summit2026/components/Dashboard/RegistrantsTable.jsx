@@ -147,7 +147,6 @@ const getProfileSummary = (reg) => {
  *   sortField: string,
  *   sortDirection: 'asc' | 'desc',
  *   toggleSort: (field: string) => void,
- *   clearAllData: () => void,
  *   exportFilteredCsv: () => Promise<void>,
  *   hasNextPage?: boolean,
  *   isLoadingMore?: boolean,
@@ -160,7 +159,7 @@ const RegistrantsTable = ({
   sortField,
   sortDirection,
   toggleSort,
-  clearAllData,
+  deleteRegistration,
   exportFilteredCsv,
   hasNextPage = false,
   isLoadingMore = false,
@@ -266,25 +265,6 @@ const RegistrantsTable = ({
     [selectedIds, refresh],
   );
 
-  const handleClearAll = useCallback(async () => {
-    const result = await Swal.fire({
-      title: "⚠️ Clear All Data?",
-      html: `
-        <p style="color:#e2e8f0;">This will permanently delete all <strong style="color:#f5c518">${registrations.length}</strong> registrations.
-        This action cannot be undone.</p>
-      `,
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Yes, Delete All",
-      cancelButtonText: "Cancel",
-      confirmButtonColor: "#ff6b6b",
-      cancelButtonColor: "#374151",
-      background: "#0d1529",
-      color: "#ffffff",
-    });
-    if (result.isConfirmed) clearAllData();
-  }, [registrations.length, clearAllData]);
-
   return (
     <div>
       {/* Toolbar */}
@@ -316,17 +296,6 @@ const RegistrantsTable = ({
           >
             ⬇ Export CSV
           </button>
-          {registrations.length > 0 && (
-            <button
-              type="button"
-              id="db-clear-btn"
-              className="summit-db-btn-danger"
-              onClick={handleClearAll}
-              aria-label="Clear all registration data"
-            >
-              🗑 Clear All
-            </button>
-          )}
         </div>
       </div>
 
@@ -626,6 +595,10 @@ const RegistrantsTable = ({
           registrant={activeRegistrant}
           isOpen={!!activeRegistrant}
           onClose={() => setActiveRegistrant(null)}
+          onDelete={async (id) => {
+            await deleteRegistration(id);
+            setActiveRegistrant(null);
+          }}
         />
       </div>
     </div>
@@ -638,7 +611,7 @@ RegistrantsTable.propTypes = {
   sortField: PropTypes.string.isRequired,
   sortDirection: PropTypes.string.isRequired,
   toggleSort: PropTypes.func.isRequired,
-  clearAllData: PropTypes.func.isRequired,
+  deleteRegistration: PropTypes.func.isRequired,
   exportFilteredCsv: PropTypes.func.isRequired,
   hasNextPage: PropTypes.bool,
   isLoadingMore: PropTypes.bool,

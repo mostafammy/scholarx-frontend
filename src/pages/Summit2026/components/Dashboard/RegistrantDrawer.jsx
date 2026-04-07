@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Swal from "sweetalert2";
 
 const PROFILE_LABELS = {
   highSchool: "High School",
@@ -25,8 +26,38 @@ const formatText = (value) =>
     .replace(/-/g, " ")
     .replace(/\b\w/g, (m) => m.toUpperCase());
 
-const RegistrantDrawer = ({ registrant, isOpen, onClose }) => {
+const RegistrantDrawer = ({ registrant, isOpen, onClose, onDelete }) => {
   if (!isOpen || !registrant) return null;
+
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const handleDelete = async () => {
+    const confirmation = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    });
+
+    if (confirmation.isConfirmed) {
+      try {
+        setIsDeleting(true);
+        await onDelete(registrant._id || registrant.id);
+        Swal.fire("Deleted!", "Registration has been deleted.", "success");
+      } catch (error) {
+        Swal.fire(
+          "Error",
+          error.message || "Failed to delete registration",
+          "error",
+        );
+      } finally {
+        setIsDeleting(false);
+      }
+    }
+  };
 
   const details = registrant.profileDetails || {};
 
