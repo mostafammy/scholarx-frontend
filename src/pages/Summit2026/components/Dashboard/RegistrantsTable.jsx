@@ -32,6 +32,7 @@ const COLUMNS = [
   { field: "fullName", label: "Registrant", sortable: true },
   { field: "nationalId", label: "National ID", sortable: false },
   { field: "profileType", label: "Profile", sortable: false },
+  { field: "englishLevel", label: "English Level", sortable: false },
   { field: "registrationStatus", label: "Workflow", sortable: false },
   { field: "tracks", label: "Goals & Tracks", sortable: false },
   { field: "createdAt", label: "Registered At", sortable: true },
@@ -97,6 +98,11 @@ const toTitleText = (value) =>
   String(value || "")
     .replace(/-/g, " ")
     .replace(/\b\w/g, (m) => m.toUpperCase());
+
+const formatEnglishLevel = (value) => {
+  if (!value) return "—";
+  return toTitleText(value);
+};
 
 const getProfileSummary = (reg) => {
   const details = reg?.profileDetails || {};
@@ -495,6 +501,18 @@ const RegistrantsTable = ({
                       >
                         {reg.governorate?.replace(/-/g, " ") || "—"}
                       </div>
+                    </td>
+                    <td style={{ textTransform: "capitalize" }}>
+                      <span
+                        className="summit-db-tag"
+                        style={{
+                          background: "rgba(79,195,247,0.1)",
+                          border: "1px solid rgba(79,195,247,0.3)",
+                          color: "#4fc3f7",
+                        }}
+                      >
+                        {formatEnglishLevel(reg.englishLevel)}
+                      </span>
                     </td>
                     <td style={{ textTransform: "capitalize" }}>
                       <span

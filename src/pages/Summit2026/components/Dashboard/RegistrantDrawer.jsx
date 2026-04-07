@@ -26,6 +26,8 @@ const formatText = (value) =>
     .replace(/-/g, " ")
     .replace(/\b\w/g, (m) => m.toUpperCase());
 
+const formatEnglishLevel = (value) => formatText(value || "—");
+
 const RegistrantDrawer = ({ registrant, isOpen, onClose, onDelete }) => {
   const [isDeleting, setIsDeleting] = useState(false);
   const MotionDiv = motion.div;
@@ -269,6 +271,21 @@ const RegistrantDrawer = ({ registrant, isOpen, onClose, onDelete }) => {
                 </div>
                 <div style={{ color: "#fff", fontWeight: 500 }}>
                   {PROFILE_LABELS[registrant.profileType] || "Legacy"}
+                </div>
+              </div>
+              <div style={{ gridColumn: "span 2" }}>
+                <div
+                  style={{
+                    fontSize: "0.75rem",
+                    color: "var(--s-text-400)",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.05em",
+                  }}
+                >
+                  English Level
+                </div>
+                <div style={{ color: "#fff", fontWeight: 500 }}>
+                  {formatEnglishLevel(registrant.englishLevel)}
                 </div>
               </div>
             </div>
