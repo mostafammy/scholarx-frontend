@@ -12,6 +12,7 @@ import StatsBar from "./components/StatsBar/StatsBar";
 import TracksSection from "./components/TracksSection/TracksSection";
 import PartnersSection from "./components/PartnersSection/PartnersSection";
 import HostingPartnersSection from "./components/HostingPartnersSection/HostingPartnersSection";
+import FBPartnersSection from "./components/FBPartnersSection/FBPartnersSection";
 import RegistrationForm from "./components/RegistrationForm/RegistrationForm";
 import SummitFooter from "./components/SummitFooter/SummitFooter";
 import { EVENT_META } from "./constants/eventData";
@@ -72,6 +73,9 @@ const SummitPage = () => {
 
         {/* 5.5 Hosting Partners */}
         <HostingPartnersSection />
+
+        {/* 5.6 F&B Partners */}
+        <FBPartnersSection />
 
         {/* 6. Registration */}
         <div ref={registrationRef}>

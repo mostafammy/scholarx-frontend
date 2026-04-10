@@ -1208,6 +1208,16 @@
   filter: drop-shadow(0 4px 12px rgba(0,0,0,0.5));
 }
 
+.summit-spotlight-logo--msc,
+.summit-spotlight-logo--kelloggs {
+  max-width: 420px;
+  transform: scale(1.6);
+}
+
+.summit-spotlight-logo-wrap--large {
+  height: 140px;
+}
+
 .summit-spotlight-hover-reveal {
   position: absolute;
   bottom: 0;

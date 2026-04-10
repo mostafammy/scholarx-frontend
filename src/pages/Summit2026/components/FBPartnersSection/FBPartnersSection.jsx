@@ -1,18 +1,18 @@
 /**
- * @fileoverview HostingPartnersSection — Minimalist Logo Grid with Aceternity UI-style Spotlight.
+ * @fileoverview FBPartnersSection — Minimalist Logo Grid with Aceternity UI-style Spotlight.
  */
 
 import React, { useRef, useCallback } from "react";
 import { motion } from "framer-motion";
 
-const HOSTING_PARTNERS_GRID = [
+const FB_PARTNERS_GRID = [
   {
-    id: "msc-nu",
-    name: "Microsoft Students Club - NU",
-    desc: "Empowering students at Nile University through technology, innovation, and community-driven learning.",
-    logoSrc: "/microsoft-students-club-nile-university.png",
-    color: "#00A4EF",
-    logoClass: "summit-spotlight-logo--msc",
+    id: "kelloggs",
+    name: "Kellogg's",
+    desc: "A global leader in cereal and snack production, supporting youth and community growth.",
+    logoSrc: "/kelloggs-logo.png",
+    color: "#D31245",
+    logoClass: "summit-spotlight-logo--kelloggs",
     wrapClass: "summit-spotlight-logo-wrap--large",
   }
 ];
@@ -93,19 +93,19 @@ const SpotlightCard = ({ partner }) => {
   );
 };
 
-const HostingPartnersSection = () => (
+const FBPartnersSection = () => (
   <section
-    id="summit-hosting-partners"
+    id="summit-fb-partners"
     className="summit-section summit-partners"
-    aria-labelledby="hosting-partners-heading"
+    aria-labelledby="fb-partners-heading"
   >
     <div className="summit-container">
       <div className="summit-section-header">
         <div className="summit-badge" aria-hidden="true">
-          🏢 Hosting Partners
+          🍎 F&B Partners
         </div>
-        <h2 id="hosting-partners-heading" className="summit-section-title">
-          Hosting Partners
+        <h2 id="fb-partners-heading" className="summit-section-title">
+          F&B Partners
         </h2>
         <p className="summit-section-subtitle">✨</p>
       </div>
@@ -117,7 +117,7 @@ const HostingPartnersSection = () => (
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
       >
-        {HOSTING_PARTNERS_GRID.map((partner) => (
+        {FB_PARTNERS_GRID.map((partner) => (
           <SpotlightCard key={partner.id} partner={partner} />
         ))}
       </motion.div>
@@ -125,4 +125,4 @@ const HostingPartnersSection = () => (
   </section>
 );
 
-export default React.memo(HostingPartnersSection);
+export default React.memo(FBPartnersSection);
