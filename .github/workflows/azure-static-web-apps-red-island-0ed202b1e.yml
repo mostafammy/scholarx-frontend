@@ -55,6 +55,13 @@ jobs:
           SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
           SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
 
+      # ── Strip source maps from dist before deploying ───────────────────────
+      # Sentry already uploaded the .map files during the Build step above.
+      # Azure Static Web Apps rejects deploys with too many files, and .map
+      # files are not needed in the browser (hidden sourcemaps mode).
+      - name: Strip source maps from dist
+        run: find dist -name "*.map" -delete && echo "Source maps removed from dist/"
+
       # ── Deploy pre-built dist to Azure Static Web Apps ─────────────────────
       - name: Deploy to Azure
         id: builddeploy
