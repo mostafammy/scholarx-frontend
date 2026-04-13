@@ -47,7 +47,6 @@ import PrivacyPolicy from "./pages/PrivacyPolicy/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService/TermsOfService";
 // Summit 2026
 import { SummitPage, SummitDashboard } from "./pages/Summit2026";
-import ErrorButton from "./components/ErrorButton";
 
 // Layout component to ensure navbar consistency
 const Layout = ({ children, path }) => {
@@ -310,14 +309,6 @@ function App() {
                   }
                 />
 
-                <Route
-                  path="/debug-sentry"
-                  element={
-                    <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
-                      <ErrorButton />
-                    </div>
-                  }
-                />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </div>

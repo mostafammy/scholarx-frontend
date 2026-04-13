@@ -40,5 +40,3 @@ next-env.d.ts
 *.cursor/
 *.log/
 /dist
-# Sentry Config File
-.env.sentry-build-plugin

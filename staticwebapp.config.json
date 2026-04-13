@@ -5,7 +5,6 @@
       "/images/*.{png,jpg,gif,ico,svg}",
       "/css/*",
       "/js/*",
-      "/assets/*",
       "/*.{png,jpg,gif,ico,svg,json,txt}"
     ]
   },
@@ -13,6 +12,11 @@
     {
       "route": "/api/*",
       "allowedRoles": ["anonymous"]
+    },
+    {
+      "route": "/*",
+      "serve": "/index.html",
+      "statusCode": 200
     }
   ],
   "responseOverrides": {
@@ -22,15 +26,14 @@
     }
   },
   "globalHeaders": {
-    "content-security-policy": "default-src 'self' https: 'unsafe-inline' 'unsafe-eval'; img-src 'self' https: data: blob:; font-src 'self' https: data:;",
+    "content-security-policy": "default-src 'self' https: 'unsafe-inline' 'unsafe-eval'; img-src 'self' https: data: blob:",
     "X-Content-Type-Options": "nosniff",
     "X-Frame-Options": "DENY",
     "X-XSS-Protection": "1; mode=block"
   },
   "mimeTypes": {
     ".json": "application/json",
-    ".js": "application/javascript",
-    ".mjs": "application/javascript",
+    ".js": "text/javascript",
     ".css": "text/css",
     ".html": "text/html",
     ".png": "image/png",
