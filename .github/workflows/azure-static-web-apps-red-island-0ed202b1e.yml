@@ -55,12 +55,22 @@ jobs:
           SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
           SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
 
-      # ── Strip source maps from dist before deploying ───────────────────────
-      # Sentry already uploaded the .map files during the Build step above.
-      # Azure Static Web Apps rejects deploys with too many files, and .map
-      # files are not needed in the browser (hidden sourcemaps mode).
-      - name: Strip source maps from dist
-        run: find dist -name "*.map" -delete && echo "Source maps removed from dist/"
+      # ── Clean workspace before Azure deploy ────────────────────────────────
+      # Azure SWA scans the ENTIRE /github/workspace file count (not just dist/).
+      # node_modules alone can exceed 100k files — far over Azure's limit.
+      # The build is complete at this point; node_modules are no longer needed.
+      - name: Clean workspace for deploy
+        run: |
+          # Remove source maps — Sentry already uploaded them above
+          find dist -name "*.map" -delete
+          echo "✅ Source maps stripped from dist/"
+
+          # Remove node_modules — not needed after build, would blow Azure's file limit
+          rm -rf node_modules
+          echo "✅ node_modules removed"
+
+          # Show what remains so we can confirm file counts in logs
+          echo "📦 Files in dist/: $(find dist -type f | wc -l)"
 
       # ── Deploy pre-built dist to Azure Static Web Apps ─────────────────────
       - name: Deploy to Azure
