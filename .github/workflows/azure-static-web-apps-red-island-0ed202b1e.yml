@@ -65,6 +65,10 @@ jobs:
           find dist -name "*.map" -delete
           echo "✅ Source maps stripped from dist/"
 
+          # Copy SWA configuration so it is deployed with the pre-built output
+          cp staticwebapp.config.json dist/
+          echo "✅ SWA Configuration copied to dist/"
+
           # Remove node_modules — not needed after build, would blow Azure's file limit
           rm -rf node_modules
           echo "✅ node_modules removed"

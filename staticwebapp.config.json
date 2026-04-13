@@ -5,6 +5,7 @@
       "/images/*.{png,jpg,gif,ico,svg}",
       "/css/*",
       "/js/*",
+      "/assets/*",
       "/*.{png,jpg,gif,ico,svg,json,txt}"
     ]
   },
