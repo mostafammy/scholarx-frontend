@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
+import * as Sentry from '@sentry/react';
 import authReducer from './slices/authSlice.js';
 // import userReducer from './slices/userSlice';
 import courseReducer from './slices/courseSlice.js';
@@ -25,6 +26,8 @@ const store = configureStore({
         getDefaultMiddleware({
             serializableCheck: false,
         }),
+    enhancers: (getDefaultEnhancers) =>
+        getDefaultEnhancers().concat(Sentry.createReduxEnhancer()),
 });
 
 export default store; 

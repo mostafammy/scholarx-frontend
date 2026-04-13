@@ -17,10 +17,20 @@ import {
 import waterMark from "../../assets/Images/WaterMark.png";
 import waterMark2 from "../../assets/Images/image.png";
 import styles from "./Home.module.css";
+import ErrorButton from "../../components/ErrorButton";
 
 const Home = memo(function Home() {
+  const isDev = import.meta.env.MODE === "development";
+
   return (
     <main className={styles.page}>
+      {/* Sentry Test Button (Dev Only) */}
+      {isDev && (
+        <div style={{ position: "fixed", bottom: "20px", right: "20px", zIndex: 1000 }}>
+          <ErrorButton />
+        </div>
+      )}
+
       {/* Hero Section */}
       <Hero />
 
