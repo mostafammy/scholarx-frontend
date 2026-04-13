@@ -2133,3 +2133,76 @@
   outline: 2px solid var(--s-gold-500);
   outline-offset: 3px;
 }
+
+/* --------------------------------------------------------------------------
+   GOOGLE FORM FALLBACK — CTA Button
+   -------------------------------------------------------------------------- */
+.summit-gform-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  border-radius: var(--s-radius-full);
+  font-family: var(--s-font-display);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-decoration: none;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+  /* Google-blue gradient */
+  background: linear-gradient(135deg, #4285F4 0%, #3367D6 100%);
+  border: 1px solid rgba(66, 133, 244, 0.5);
+  box-shadow:
+    0 4px 20px rgba(66, 133, 244, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  transition:
+    transform var(--s-transition-spring),
+    box-shadow var(--s-transition-base),
+    background var(--s-transition-fast);
+  cursor: pointer;
+}
+
+/* Glint shine overlay */
+.summit-gform-cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, transparent 55%);
+  opacity: 0;
+  transition: opacity var(--s-transition-fast);
+  border-radius: inherit;
+}
+
+.summit-gform-cta:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow:
+    0 8px 36px rgba(66, 133, 244, 0.5),
+    0 2px 8px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  background: linear-gradient(135deg, #5a95f5 0%, #4285F4 100%);
+}
+
+.summit-gform-cta:hover::before {
+  opacity: 1;
+}
+
+.summit-gform-cta:active {
+  transform: translateY(0) scale(0.98);
+  box-shadow: 0 2px 12px rgba(66, 133, 244, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.summit-gform-cta:focus-visible {
+  outline: 2px solid #4285F4;
+  outline-offset: 3px;
+}
+
+@media (max-width: 640px) {
+  .summit-gform-cta {
+    width: 100%;
+    justify-content: center;
+    padding: 16px 24px;
+  }
+}
