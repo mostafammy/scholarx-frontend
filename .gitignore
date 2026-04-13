@@ -40,3 +40,7 @@ next-env.d.ts
 *.cursor/
 *.log/
 /dist
+
+# Sentry
+.sentryclirc
+.env.sentry-build-plugin
