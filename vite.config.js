@@ -1,5 +1,6 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import { sentryVitePlugin } from "@sentry/vite-plugin";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -12,7 +13,18 @@ export default defineConfig({
         plugins: [],
       },
     }),
-  ],
+    // Upload source maps to Sentry on production builds (requires SENTRY_AUTH_TOKEN)
+    process.env.SENTRY_AUTH_TOKEN &&
+      sentryVitePlugin({
+        org: process.env.SENTRY_ORG,
+        project: process.env.SENTRY_PROJECT,
+        authToken: process.env.SENTRY_AUTH_TOKEN,
+        // Automatically inject release version into the bundle
+        release: {
+          inject: true,
+        },
+      }),
+  ].filter(Boolean),
 
   define: {
     "process.env": {},
@@ -27,7 +39,9 @@ export default defineConfig({
   build: {
     outDir: "dist",
     assetsDir: "assets",
-    sourcemap: false,
+    // "hidden" generates source maps but doesn't expose them publicly —
+    // Sentry uploads them; browsers never load them
+    sourcemap: "hidden",
     rollupOptions: {
       output: {
         manualChunks: {
