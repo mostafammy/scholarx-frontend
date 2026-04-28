@@ -1,113 +1,11 @@
 /**
- * @fileoverview RegistrationForm — Multi-step form orchestrator.
- * Delegates: step state to useRegistration, validation to Yup schemas,
- * persistence to RegistrationRepository. This component is ONLY a UI shell.
- * Open/Closed: adding a new step requires only a new StepN component + constants update.
+ * @fileoverview RegistrationForm — Only shows Google Form registration CTA.
  */
 
-import React, { useCallback, useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { useRegistration } from "../../hooks/useRegistration";
-import StepIndicator from "./StepIndicator";
-import Step1PersonalInfo from "./Step1PersonalInfo";
-import { FORM_TOTAL_STEPS } from "../../constants/formConstants";
-
-/** Step component registry — OCP: add steps without modifying this orchestrator */
-const STEP_COMPONENTS = {
-  1: Step1PersonalInfo,
-};
-
-const stepVariants = {
-  enter: (dir) => ({
-    opacity: 0,
-    x: dir > 0 ? 30 : -30,
-    scale: 0.98,
-    filter: "blur(4px)",
-  }),
-  center: {
-    opacity: 1,
-    x: 0,
-    scale: 1,
-    filter: "blur(0px)",
-  },
-  exit: (dir) => ({
-    opacity: 0,
-    x: dir > 0 ? -30 : 30,
-    scale: 1.02,
-    filter: "blur(8px)",
-  }),
-};
+import React from "react";
+import { motion } from "framer-motion";
 
 const RegistrationForm = () => {
-  const {
-    currentStep,
-    isFirstStep,
-    isLastStep,
-    isSubmitting,
-    form,
-    showProfileSwitchNotice,
-    onNext,
-    onBack,
-    isSuccess,
-  } = useRegistration();
-
-  const [direction, setDirection] = React.useState(1);
-
-  const handleNext = useCallback(() => {
-    setDirection(1);
-    form.handleSubmit(onNext)();
-  }, [form, onNext]);
-
-  const handleBack = useCallback(() => {
-    setDirection(-1);
-    onBack();
-  }, [onBack]);
-
-  const ActiveStep = useMemo(() => STEP_COMPONENTS[currentStep], [currentStep]);
-
-  if (isSuccess) {
-    return (
-      <section
-        id="registration"
-        className="summit-section summit-registration"
-        aria-label="Registration confirmed"
-      >
-        <div className="summit-container">
-          <div className="summit-form-container">
-            <div className="summit-form-card summit-form-success">
-              <div className="summit-form-success-icon" aria-hidden="true">
-                🎉
-              </div>
-              <h2 className="summit-section-title" style={{ marginTop: 24 }}>
-                You're Registered!
-              </h2>
-              <p className="summit-section-subtitle" style={{ marginTop: 12 }}>
-                We've received your registration for{" "}
-                <strong style={{ color: "var(--s-gold-400)" }}>
-                  Next Scholar Summit 2026
-                </strong>
-                . We'll be in touch with more details soon.
-              </p>
-              <div
-                style={{
-                  marginTop: 32,
-                  display: "flex",
-                  justifyContent: "center",
-                  gap: 12,
-                  flexWrap: "wrap",
-                }}
-              >
-                <a href="#summit-tracks" className="summit-hero-cta-secondary">
-                  Explore Tracks
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    );
-  }
-
   return (
     <section
       id="registration"
@@ -120,7 +18,7 @@ const RegistrationForm = () => {
             📝 Free Registration
           </div>
           <h2 id="registration-heading" className="summit-section-title">
-            Confirm Your Registration and Join the Summit
+            Register and Join the Summit
           </h2>
           <p className="summit-section-subtitle">
             Seats are very limited and reserved for the most committed
@@ -129,14 +27,13 @@ const RegistrationForm = () => {
           </p>
         </div>
 
-        {/* ── Alternative Registration — Google Form Fallback ─────────────── */}
         <motion.div
           initial={{ opacity: 0, y: 32 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ delay: 0.2, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           style={{ marginBottom: 40 }}
         >
-          {/* Fallback Card */}
+          {/* Card */}
           <div
             id="google-form-fallback-card"
             style={{
@@ -256,7 +153,7 @@ const RegistrationForm = () => {
                     marginBottom: 6,
                   }}
                 >
-                  Having trouble filling the form?
+                  Official Registration
                 </div>
                 <h3
                   style={{
@@ -269,7 +166,7 @@ const RegistrationForm = () => {
                     letterSpacing: "-0.02em",
                   }}
                 >
-                  Register via Google Form instead
+                  Register via Google Form
                 </h3>
                 <p
                   style={{
@@ -280,9 +177,7 @@ const RegistrationForm = () => {
                     maxWidth: 460,
                   }}
                 >
-                  If you experience any difficulty with the form below, use this
-                  direct Google Form as an alternative. All submissions are
-                  reviewed by our team.
+                  Please fill out the official Google Form to secure your spot at the Next Scholar Summit 2026.
                 </p>
               </div>
 
@@ -293,7 +188,7 @@ const RegistrationForm = () => {
                   href="https://docs.google.com/forms/d/e/1FAIpQLSdIDeHaSu6KcpRBbSZZtixCzMmIYvoGMIFesM_8G1XiMsjTeQ/viewform?usp=publish-editor"
                   target="_blank"
                   rel="noreferrer noopener"
-                  aria-label="Open alternative registration Google Form in a new tab"
+                  aria-label="Open registration Google Form in a new tab"
                   className="summit-gform-cta"
                 >
                   <svg
@@ -345,90 +240,13 @@ const RegistrationForm = () => {
                   lineHeight: 1.5,
                 }}
               >
-                This is an official alternative channel. All form data is
+                This is the official channel. All form data is
                 managed securely by the Next Scholar Summit 2026 organizing
                 team.
               </p>
             </div>
           </div>
         </motion.div>
-
-        <div className="summit-form-container">
-          <StepIndicator currentStep={currentStep} />
-
-          <div className="summit-form-card">
-            <AnimatePresence mode="wait" custom={direction}>
-              <motion.div
-                key={currentStep}
-                custom={direction}
-                variants={stepVariants}
-                initial="enter"
-                animate="center"
-                exit="exit"
-                transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-              >
-                <ActiveStep
-                  form={form}
-                  showProfileSwitchNotice={showProfileSwitchNotice}
-                />
-              </motion.div>
-            </AnimatePresence>
-
-            {/* Navigation */}
-            <div className="summit-form-nav">
-              <div>
-                {!isFirstStep && (
-                  <button
-                    type="button"
-                    id="form-back-btn"
-                    className="summit-btn-secondary"
-                    onClick={handleBack}
-                    aria-label="Go to previous step"
-                  >
-                    ← Back
-                  </button>
-                )}
-              </div>
-
-              <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                <span
-                  style={{ fontSize: "0.8rem", color: "var(--s-text-400)" }}
-                >
-                  Step {currentStep} of {FORM_TOTAL_STEPS}
-                </span>
-                <button
-                  type="button"
-                  id="form-next-btn"
-                  className="summit-btn-primary"
-                  onClick={handleNext}
-                  disabled={isSubmitting}
-                  aria-label={
-                    isLastStep ? "Submit registration" : "Continue to next step"
-                  }
-                  aria-busy={isSubmitting}
-                >
-                  {isSubmitting ? (
-                    <>
-                      <span
-                        style={{
-                          display: "inline-block",
-                          animation: "summitSpin 0.8s linear infinite",
-                        }}
-                      >
-                        ⏳
-                      </span>
-                      Submitting...
-                    </>
-                  ) : isLastStep ? (
-                    <>Confirm Registration and Join the Summit</>
-                  ) : (
-                    <>Continue →</>
-                  )}
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
 
         {/* Beautiful Support / Help Contact Block */}
         <motion.div 
@@ -484,8 +302,6 @@ const RegistrationForm = () => {
             </div>
           </div>
         </motion.div>
-
-
       </div>
     </section>
   );
